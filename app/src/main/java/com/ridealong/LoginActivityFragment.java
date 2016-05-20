@@ -17,7 +17,7 @@ public class LoginActivityFragment extends Fragment implements View.OnClickListe
     public LoginActivityFragment() {
     }
 
-    Button elogin;
+    Button eloginBtn;
     TextView registerlink;
 
     @Override
@@ -26,10 +26,10 @@ public class LoginActivityFragment extends Fragment implements View.OnClickListe
 //        return inflater.inflate(R.layout.fragment_login, container, false);
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        elogin = (Button) view.findViewById(R.id.elogin);
+        eloginBtn = (Button) view.findViewById(R.id.elogin);
         registerlink = (TextView) view.findViewById(R.id.registerlink);
 
-        elogin.setOnClickListener(this);
+        eloginBtn.setOnClickListener(this);
         registerlink.setOnClickListener(this);
         return view;
     }
