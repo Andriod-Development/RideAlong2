@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-//car details
+//car details for passenger
 public class CarDetailsActivity extends AppCompatActivity {
 
     @Override
