@@ -17,7 +17,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
     public WelcomeActivityFragment() {
     }
 
-    Button driver;
+    Button driver, rider;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,8 +26,11 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
 
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
         driver = (Button) view.findViewById(R.id.driver);
+        rider = (Button) view.findViewById(R.id.rider);
+
 
         driver.setOnClickListener(this);
+        rider.setOnClickListener(this);
         return view;
     }
 
@@ -36,6 +39,9 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
         switch (v.getId()) {
             case R.id.driver:
                 startActivity(new Intent(getActivity(), CarDetailsActivity.class));
+                break;
+            case R.id.rider:
+                startActivity(new Intent(getActivity(), PassengerActivity.class));
                 break;
 
         }

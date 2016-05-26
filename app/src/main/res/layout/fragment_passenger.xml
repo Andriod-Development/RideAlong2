@@ -8,50 +8,48 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="20dp"
-    android:weightSum="1"
-    tools:context="com.ridealong.CarDetailsActivityFragment"
-    tools:showIn="@layout/activity_car_details">
-
+    tools:context="com.ridealong.PassengerActivityFragment"
+    tools:showIn="@layout/activity_passenger">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Driver Details"
+        android:text="Passenger Details"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="30dp"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/dfirstname"
+        android:id="@+id/pfirstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:editable="true"
         android:ems="10"
         android:hint="First Name"
-        android:inputType="textPersonName"
-        android:editable="true" />
+        android:inputType="textPersonName" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp">
 
         <EditText
-            android:id="@+id/dfrom"
+            android:id="@+id/pfrom"
             android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="center_horizontal"
-            android:hint="From"
-            android:editable="true" />
+            android:editable="true"
+            android:hint="From" />
 
         <EditText
-            android:id="@+id/dto"
+            android:id="@+id/pto"
             android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -67,49 +65,32 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/ddate"
+            android:id="@+id/pdate"
             android:layout_width="155dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Date"
-            android:inputType="date"
+            android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal"
             android:editable="true"
-            android:layout_alignParentTop="true" />
+            android:ems="10"
+            android:hint="Date"
+            android:inputType="date" />
 
         <EditText
+            android:id="@+id/ptime"
             android:layout_width="155dp"
             android:layout_height="wrap_content"
-            android:inputType="time"
-            android:ems="10"
-            android:id="@+id/dtime"
-            android:editable="true"
-            android:hint="Time"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentTop="true"
+            android:editable="true"
+            android:ems="10"
+            android:hint="Time"
+            android:inputType="time" />
 
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/dmodel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:hint="Car Model"
-        android:editable="true" />
-
-    <EditText
-        android:id="@+id/dlicense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="License ID"
-        android:editable="true" />
-
     <Button
-        android:id="@+id/dbutton"
+        android:id="@+id/pbutton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="114dp"
         android:layout_height="wrap_content"
@@ -118,5 +99,6 @@
         android:clickable="true"
         android:text="Submit"
         android:textStyle="bold" />
+
 </LinearLayout>
 

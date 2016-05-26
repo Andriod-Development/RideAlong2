@@ -71,6 +71,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ridealong.WelcomeActivity" />
         </activity>
+        <activity
+            android:name=".PassengerActivity"
+            android:label="@string/title_activity_passenger"
+            android:parentActivityName=".WelcomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ridealong.WelcomeActivity" />
+        </activity>
     </application>
 
 </manifest>
