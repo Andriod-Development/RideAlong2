@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -38,7 +37,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.driver:
-                startActivity(new Intent(getActivity(), CarDetailsActivity.class));
+                startActivity(new Intent(getActivity(), DriverActivity.class));
                 break;
             case R.id.rider:
                 startActivity(new Intent(getActivity(), PassengerActivity.class));

@@ -9,8 +9,8 @@
     android:paddingRight="20dp"
     android:paddingTop="20dp"
     android:weightSum="1"
-    tools:context="com.ridealong.CarDetailsActivityFragment"
-    tools:showIn="@layout/activity_car_details">
+    tools:context=".DriverActivityFragment"
+    tools:showIn="@layout/activity_driver">
 
 
     <TextView
