@@ -88,16 +88,33 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-
-        <!--<activity-->
-            <!--android:name=".DriverDetailsActivity"-->
-            <!--android:label="@string/title_activity_driver_details"-->
-            <!--android:parentActivityName=".WelcomeActivity"-->
-            <!--android:theme="@style/AppTheme.NoActionBar">-->
-            <!--<meta-data-->
-                <!--android:name="android.support.PARENT_ACTIVITY"-->
-                <!--android:value="com.ridealong.CarDetailsActivity" />-->
-        <!--</activity>-->
+        <!-- <activity -->
+        <!-- android:name=".DriverDetailsActivity" -->
+        <!-- android:label="@string/title_activity_driver_details" -->
+        <!-- android:parentActivityName=".WelcomeActivity" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.PARENT_ACTIVITY" -->
+        <!-- android:value="com.ridealong.CarDetailsActivity" /> -->
+        <!-- </activity> -->
+        <activity
+            android:name=".PassengerListActivity"
+            android:label="@string/title_activity_passenger_details"
+            android:parentActivityName=".DriverActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ridealong.DriverActivity" />
+        </activity>
+        <activity
+            android:name=".DriverListActivity"
+            android:label="@string/title_activity_driver_list"
+            android:parentActivityName=".PassengerActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ridealong.PassengerActivity" />
+        </activity>
     </application>
 
 </manifest>
