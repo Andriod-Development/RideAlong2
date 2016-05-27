@@ -91,7 +91,7 @@
         <activity
             android:name=".DriverDetailsActivity"
             android:label="@string/title_activity_driver_details"
-            android:parentActivityName=".CarDetailsActivity"
+            android:parentActivityName=".WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
