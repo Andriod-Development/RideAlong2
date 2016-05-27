@@ -37,6 +37,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.driver:
+
                 startActivity(new Intent(getActivity(), DriverActivity.class));
                 break;
             case R.id.rider:
