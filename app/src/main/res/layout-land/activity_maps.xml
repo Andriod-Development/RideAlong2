@@ -15,7 +15,7 @@
             android:layout_width="151dp"
             android:layout_height="wrap_content"
             android:id="@+id/TFaddress"
-            android:layout_weight="0.83" />
+            android:layout_weight="0.88" />
         <Button
             style="?android:attr/buttonStyleSmall"
             android:id="@+id/button"
