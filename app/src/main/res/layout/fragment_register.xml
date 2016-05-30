@@ -11,6 +11,15 @@
     tools:context="com.ridealong.RegisterActivityFragment"
     tools:showIn="@layout/activity_register">
 
+
+    <TextView
+        android:id="@+id/elogin"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorAccent"
+        android:text="Already Registered ? Login Now !"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <EditText
         android:id="@+id/efirstname"
         android:layout_width="match_parent"
@@ -26,7 +35,7 @@
         android:editable="true" />
 
     <EditText
-        android:id="@+id/eusername"
+        android:id="@+id/e_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
@@ -37,7 +46,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/epassword"
         android:layout_gravity="center_horizontal"
         android:hint="Password"
         android:editable="true" />
@@ -46,7 +55,7 @@
         android:id="@+id/eregister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create"
+        android:text="Register"
         android:gravity="center_vertical"
         android:textAlignment="center"
         android:layout_gravity="center_horizontal"
