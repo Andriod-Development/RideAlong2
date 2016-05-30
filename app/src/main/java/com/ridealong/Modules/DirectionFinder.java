@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class DirectionFinder {
     private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json?";
-    private static final String GOOGLE_API_KEY = "AIzaSyAQcoMPPji0v9Ie1fFPYrZHW7QfRZvQOtU";
+    private static final String GOOGLE_API_KEY = "AIzaSyDaOb_hCQZhyI60WDJ0QZbU7EuPn30-K1o";
     private DirectionFinderListener listener;
     private String origin;
     private String destination;
@@ -75,15 +75,15 @@ public class DirectionFinder {
 
         @Override
         protected void onPostExecute(String res) {
-            /*try {
+            try {
                 parseJSon(res);
             } catch (JSONException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
     }
 
-    /*private void parseJSon(String data) throws JSONException {
+    private void parseJSon(String data) throws JSONException {
         if (data == null)
             return;
 
@@ -114,7 +114,7 @@ public class DirectionFinder {
         }
 
         listener.onDirectionFinderSuccess(routes);
-    }*/
+    }
 
     private List<LatLng> decodePolyLine(final String poly) {
         int len = poly.length();
