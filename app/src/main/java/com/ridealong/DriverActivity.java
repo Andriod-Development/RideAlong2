@@ -38,7 +38,7 @@ public class DriverActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.dbutton){
+        if (v.getId() == R.id.dbutton) {
             startActivity(new Intent(this, PassengerListActivity.class));
         }
 

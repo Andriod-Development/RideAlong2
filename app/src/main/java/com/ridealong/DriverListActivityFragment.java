@@ -34,19 +34,16 @@ public class DriverListActivityFragment extends Fragment {
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.driver_list_items, R.id.driver_list_item, y);
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
-                Toast.makeText(getActivity(), adapter.getItem(i).toString(),Toast.LENGTH_LONG).show();
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(), adapter.getItem(i).toString(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getActivity(), DriverDetailActivity.class);
                 intent.putExtra("driver", adapter.getItem(i).toString());
                 startActivity(intent);
             }
         });
-
-
         return view;
     }
 }
