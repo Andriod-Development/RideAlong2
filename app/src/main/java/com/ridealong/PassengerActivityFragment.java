@@ -40,7 +40,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
         View rootView = inflater.inflate(R.layout.fragment_passenger, container, false);
         submitBtn = (Button) rootView.findViewById(R.id.pbutton);
         submitBtn.setOnClickListener(this);
-        firstName = (EditText) rootView.findViewById(R.id.pfirstname);
+//        firstName = (EditText) rootView.findViewById(R.id.pfirstname);
         fromCity = (EditText) rootView.findViewById(R.id.pfrom);
         toCity = (EditText) rootView.findViewById(R.id.pto);
         leavingDate = (EditText) rootView.findViewById(R.id.pdate);

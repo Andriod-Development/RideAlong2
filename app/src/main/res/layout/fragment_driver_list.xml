@@ -14,5 +14,5 @@
         android:id="@+id/driverList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"></ListView>
+        android:layout_gravity="center_horizontal|top" />
 </FrameLayout>
