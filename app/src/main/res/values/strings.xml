@@ -9,4 +9,5 @@
     <string name="title_activity_driver_details">DriverDetailsActivity</string>
     <string name="title_activity_passenger_details">PassengerDetailsActivity</string>
     <string name="title_activity_driver_list">DriverListActivity</string>
+    <string name="title_activity_driver_detail">DriverDetailActivity</string>
 </resources>
