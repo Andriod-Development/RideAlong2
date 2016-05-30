@@ -12,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
@@ -33,11 +35,15 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
     public WelcomeActivityFragment() {
     }
 
-    Button driver;
+
+
     private SharedPreferences pref;
     private TextView u_name , u_email ,u_logout;
     private Button btn_logout;
 
+
+
+    Button driver, rider;
 
 
     @Override
@@ -47,8 +53,11 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
 
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
         driver = (Button) view.findViewById(R.id.driver);
+        rider = (Button) view.findViewById(R.id.rider);
+
 
         driver.setOnClickListener(this);
+        rider.setOnClickListener(this);
         return view;
     }
 
@@ -73,7 +82,11 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.driver:
-                startActivity(new Intent(getActivity(), CarDetailsActivity.class));
+
+                startActivity(new Intent(getActivity(), DriverActivity.class));
+                break;
+            case R.id.rider:
+                startActivity(new Intent(getActivity(), PassengerActivity.class));
                 break;
 
             case R.id.btn_logout:

@@ -1,0 +1,31 @@
+Index: app/src/main/res/layout/activity_maps.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_maps.xml	(date 1464554890000)
++++ app/src/main/res/layout/activity_maps.xml	(revision )
+@@ -36,4 +36,5 @@
+     android:layout_height="match_parent"
+     tools:context="com.ridealong.MapsActivity"
+     tools:layout="@layout/abc_activity_chooser_view_list_item" />
+-</LinearLayout>
+\ No newline at end of file
++</LinearLayout>
++
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules.xml	(date 1464554890000)
++++ .idea/modules.xml	(revision )
+@@ -3,7 +3,6 @@
+   <component name="ProjectModuleManager">
+     <modules>
+       <module fileurl="file://$PROJECT_DIR$/RideAlong.iml" filepath="$PROJECT_DIR$/RideAlong.iml" />
+-      <module fileurl="file://$PROJECT_DIR$/RideAlong2.iml" filepath="$PROJECT_DIR$/RideAlong2.iml" />
+       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+     </modules>
+   </component>
+\ No newline at end of file
