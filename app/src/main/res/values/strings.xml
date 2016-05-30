@@ -7,7 +7,8 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_passenger">PassengerActivity</string>
     <string name="title_activity_driver_details">DriverDetailsActivity</string>
-    <string name="title_activity_passenger_details">PassengerDetailsActivity</string>
+    <string name="title_activity_passenger_details">PassengerListActivity</string>
     <string name="title_activity_driver_list">DriverListActivity</string>
     <string name="title_activity_driver_detail">DriverDetailActivity</string>
+    <string name="title_activity_passenger_detail">PassengerDetailActivity</string>
 </resources>

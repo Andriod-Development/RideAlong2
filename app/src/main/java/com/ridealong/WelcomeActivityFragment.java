@@ -58,7 +58,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
 
         driver.setOnClickListener(this);
         rider.setOnClickListener(this);
-        btn_logout.setOnClickListener(this);
+       // btn_logout.setOnClickListener(this);
         return view;
     }
 
