@@ -24,16 +24,16 @@
         android:textSize="30dp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/dfirstname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="First Name"
-        android:inputType="textPersonName"
-        android:editable="true" />
+    <!--<EditText-->
+        <!--android:id="@+id/dfirstname"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:ems="10"-->
+        <!--android:hint="First Name"-->
+        <!--android:inputType="textPersonName"-->
+        <!--android:editable="true" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"

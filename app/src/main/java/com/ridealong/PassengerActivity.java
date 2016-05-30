@@ -20,7 +20,7 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passenger);
 
-        pfirstname = (EditText) findViewById(R.id.pfirstname);
+//        pfirstname = (EditText) findViewById(R.id.pfirstname);
         pto = (EditText) findViewById(R.id.pto);
         pfrom = (EditText) findViewById(R.id.pfrom);
         pdate = (EditText) findViewById(R.id.pdate);
