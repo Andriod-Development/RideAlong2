@@ -11,7 +11,7 @@ import retrofit2.http.POST;
  */
 public interface RequestInterface {
 
-    @POST("ridealong/")
+    @POST("http://www.ridealong.lewebev.com/")
     Call<ServerResponse> operation(@Body ServerRequest request);
 
 }

@@ -16,10 +16,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.ridealong.Constants;
-import com.ridealong.LoginFragment;
-import com.ridealong.R;
-import com.ridealong.RequestInterface;
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
 import com.ridealong.models.User;
@@ -29,70 +25,70 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * A placeholder fragment containing a simple view.
- */
-public class RegisterActivityFragment extends Fragment implements View.OnClickListener {
 
-    public RegisterActivityFragment() {
-    }
+public class LoginFragment extends Fragment implements View.OnClickListener {
 
-    private Button eregister;
-    private TextView elogin;
-    private EditText e_email,elastname,efirstname,epassword;
+    private SharedPreferences pref;
+    private EditText eusername,epassword,e_email;
+    private Button elogin;
+    private TextView registerlink;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_register, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_login,container,false);
         initViews(view);
         return view;
     }
 
+
+
     private void initViews(View view){
 
-        eregister = (Button)view.findViewById(R.id.eregister);
-        elogin = (TextView)view.findViewById(R.id.elogin);
-        efirstname = (EditText)view.findViewById(R.id.efirstname);
-        e_email = (EditText)view.findViewById(R.id.e_email);
+        pref = getActivity().getPreferences(0);
+
+        elogin = (Button)view.findViewById(R.id.elogin);
+       // tv_register = (TextView)view.findViewById(R.id.tv_register);
+        eusername = (EditText)view.findViewById(R.id.eusername);
+        //et_email = (EditText)view.findViewById(R.id.et_email);
         epassword = (EditText)view.findViewById(R.id.epassword);
-
-       // progress = (ProgressBar)view.findViewById(R.id.progress);
-
-        eregister.setOnClickListener(this);
+        e_email= (EditText)view.findViewById(R.id.eusername);
+        //progress = (ProgressBar)view.findViewById(R.id.progress);
+        registerlink = (TextView) view.findViewById(R.id.registerlink);
+        registerlink.setOnClickListener(this);
         elogin.setOnClickListener(this);
+        //tv_register.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()){
+
+
+
             case R.id.elogin:
-                goToLogin();
-                break;
-
-            case R.id.eregister:
-
-                String firstname = efirstname.getText().toString();
                 String email = e_email.getText().toString();
                 String password = epassword.getText().toString();
 
-                if(!firstname.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
+                if(!email.isEmpty() && !password.isEmpty()) {
 
-                   // progress.setVisibility(View.VISIBLE);
-                    registerProcess(firstname,email,password);
-                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    //progress.setVisibility(View.VISIBLE);
+                    loginProcess(email,password);
+
                 } else {
 
                     Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
                 }
                 break;
 
+            case R.id.registerlink:
+                startActivity(new Intent(getActivity(), RegisterActivity.class));
+                break;
+
         }
-
     }
-
-    private void registerProcess(String name, String email,String password){
+    private void loginProcess(String email,String password){
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -102,11 +98,10 @@ public class RegisterActivityFragment extends Fragment implements View.OnClickLi
         RequestInterface requestInterface = retrofit.create(RequestInterface.class);
 
         User user = new User();
-        user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
         ServerRequest request = new ServerRequest();
-        request.setOperation(Constants.REGISTER_OPERATION);
+        request.setOperation(Constants.LOGIN_OPERATION);
         request.setUser(user);
         Call<ServerResponse> response = requestInterface.operation(request);
 
@@ -116,26 +111,32 @@ public class RegisterActivityFragment extends Fragment implements View.OnClickLi
 
                 ServerResponse resp = response.body();
                 Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
+
+                if(resp.getResult().equals(Constants.SUCCESS)){
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putBoolean(Constants.IS_LOGGED_IN,true);
+                    editor.putString(Constants.EMAIL,resp.getUser().getEmail());
+                    editor.putString(Constants.NAME,resp.getUser().getName());
+                    editor.putString(Constants.UNIQUE_ID,resp.getUser().getUnique_id());
+                    editor.apply();
+                    //goToWelcome();
+                    Log.d(Constants.TAG,"success");
+
+                }
                 //progress.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
 
-                //progress.setVisibility(View.INVISIBLE);
+               // progress.setVisibility(View.INVISIBLE);
                 Log.d(Constants.TAG,"failed");
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
-
 
             }
         });
     }
 
-    private void goToLogin(){
 
-        Fragment login = new LoginFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_frame,login);
-        ft.commit();
-    }
+
 }
