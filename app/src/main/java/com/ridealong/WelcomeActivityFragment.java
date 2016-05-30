@@ -54,13 +54,15 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
         driver = (Button) view.findViewById(R.id.driver);
         rider = (Button) view.findViewById(R.id.rider);
-
+        btn_logout= (Button) view.findViewById(R.id.btn_logout);
 
         driver.setOnClickListener(this);
         rider.setOnClickListener(this);
+        btn_logout.setOnClickListener(this);
         return view;
     }
 
+    /*
     private void initViews(View view){
 
         u_name = (TextView)view.findViewById(R.id.u_name);
@@ -77,7 +79,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
         u_email.setText(pref.getString(Constants.EMAIL,""));
 
     }
-
+*/
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
