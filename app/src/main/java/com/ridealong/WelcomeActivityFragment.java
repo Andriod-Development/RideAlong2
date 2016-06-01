@@ -54,7 +54,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
         driver = (Button) view.findViewById(R.id.driver);
         rider = (Button) view.findViewById(R.id.rider);
-        btn_logout= (Button) view.findViewById(R.id.btn_logout);
+//        btn_logout= (Button) view.findViewById(R.id.btn_logout);
 
         driver.setOnClickListener(this);
         rider.setOnClickListener(this);
@@ -91,9 +91,9 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
                 startActivity(new Intent(getActivity(), PassengerActivity.class));
                 break;
 
-            case R.id.btn_logout:
-                logout();
-                break;
+//            case R.id.btn_logout:
+//                logout();
+//                break;
 
         }
     }
