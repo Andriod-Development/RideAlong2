@@ -119,12 +119,22 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     editor.putString(Constants.NAME,resp.getUser().getName());
                     editor.putString(Constants.UNIQUE_ID,resp.getUser().getUnique_id());
                     editor.apply();
-                    //goToWelcome();
+                    goToWelcome();
                     Log.d(Constants.TAG,"success");
 
                 }
                 //progress.setVisibility(View.INVISIBLE);
             }
+
+
+            private void goToWelcome(){
+
+                Fragment welcome = new WelcomeActivityFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_frame,welcome);
+                ft.commit();
+            }
+
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
