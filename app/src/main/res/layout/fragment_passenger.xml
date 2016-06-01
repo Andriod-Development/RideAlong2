@@ -22,24 +22,9 @@
         android:textSize="30dp"
         android:textStyle="bold" />
 
-    <!--<EditText-->
-        <!--android:id="@+id/pfirstname"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--android:editable="true"-->
-        <!--android:ems="10"-->
-        <!--android:hint="First Name"-->
-        <!--android:inputType="textPersonName" />-->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
-
         <EditText
             android:id="@+id/pfrom"
-            android:layout_width="155dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
@@ -50,7 +35,7 @@
 
         <EditText
             android:id="@+id/pto"
-            android:layout_width="155dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -58,15 +43,10 @@
             android:layout_gravity="center_horizontal"
             android:editable="true"
             android:hint="To" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/pdate"
-            android:layout_width="155dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal"
@@ -75,19 +55,17 @@
             android:hint="Date"
             android:inputType="date" />
 
-        <EditText
-            android:id="@+id/ptime"
-            android:layout_width="155dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:editable="true"
-            android:ems="10"
-            android:hint="Time"
-            android:inputType="time" />
-
-    </RelativeLayout>
+        <!--<EditText-->
+            <!--android:id="@+id/ptime"-->
+            <!--android:layout_width="155dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:editable="true"-->
+            <!--android:ems="10"-->
+            <!--android:hint="Time"-->
+            <!--android:inputType="time" />-->
 
     <Button
         android:id="@+id/pbutton"
