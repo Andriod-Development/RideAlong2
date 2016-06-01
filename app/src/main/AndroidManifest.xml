@@ -31,21 +31,6 @@
         </activity>
 
 
-        <!-- </application> -->
-
-
-        <!-- </manifest> -->
-
-
-        <!--<activity-->
-        <!--android:name=".LoginActivity"-->
-        <!--android:label="@string/title_activity_welcome"-->
-        <!---->
-        <!--android:theme="@style/AppTheme.NoActionBar">-->
-
-        <!--</activity>-->
-
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
