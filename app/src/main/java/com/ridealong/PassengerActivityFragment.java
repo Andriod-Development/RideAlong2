@@ -44,7 +44,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
         fromCity = (EditText) rootView.findViewById(R.id.pfrom);
         toCity = (EditText) rootView.findViewById(R.id.pto);
         leavingDate = (EditText) rootView.findViewById(R.id.pdate);
-        leavingTime = (EditText) rootView.findViewById(R.id.ptime);
+//        leavingTime = (EditText) rootView.findViewById(R.id.ptime);
         return rootView;
     }
 
@@ -59,7 +59,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
                 String fcity = fromCity.getText().toString();
                 String tcity = toCity.getText().toString();
                 String date = leavingDate.getText().toString();
-                String time = leavingTime.getText().toString();
+//                String time = leavingTime.getText().toString();
 
                 boolean invalid = false;
                 if(fname.equals("")){
@@ -78,13 +78,13 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
                     invalid = true;
                     Toast.makeText(getContext(),"Enter the date",Toast.LENGTH_SHORT).show();
                 }
-                else if(time.equals("")){
-                    invalid = true;
-                    Toast.makeText(getContext(),"Enter the time",Toast.LENGTH_SHORT).show();
-                }
-                else if(invalid == false){
-                    addPassengerTravelInfo(fname,fcity,tcity,date,time);
-                }
+//                else if(time.equals("")){
+//                    invalid = true;
+//                    Toast.makeText(getContext(),"Enter the time",Toast.LENGTH_SHORT).show();
+//                }
+//                else if(invalid == false){
+//                    addPassengerTravelInfo(fname,fcity,tcity,date,time);
+//                }
         }
 
     }

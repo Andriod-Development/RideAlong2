@@ -24,7 +24,7 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
         pto = (EditText) findViewById(R.id.pto);
         pfrom = (EditText) findViewById(R.id.pfrom);
         pdate = (EditText) findViewById(R.id.pdate);
-        ptime = (EditText) findViewById(R.id.ptime);
+//        ptime = (EditText) findViewById(R.id.ptime);
         pbutton = (Button) findViewById(R.id.pbutton);
 
         pbutton.setOnClickListener(this);

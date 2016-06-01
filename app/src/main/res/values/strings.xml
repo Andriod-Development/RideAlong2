@@ -3,9 +3,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
-    <string name="title_activity_car_details">CarDetailsActivity</string>
+    <string name="title_activity_car_details">DriverDetailsActivity</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_passenger">PassengerActivity</string>
+    <string name="title_activity_passenger">PassengerDetailsActivity</string>
     <string name="title_activity_driver_details">DriverDetailsActivity</string>
     <string name="title_activity_passenger_details">PassengerListActivity</string>
     <string name="title_activity_driver_list">DriverListActivity</string>

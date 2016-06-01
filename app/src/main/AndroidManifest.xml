@@ -31,30 +31,6 @@
         </activity>
 
 
-        <!-- </application> -->
-
-
-        <!-- </manifest> -->
-
-
-        <!-- <activity -->
-        <!-- android:name=".WelcomeActivity" -->
-        <!-- android:label="@string/title_activity_welcome" -->
-        <!-- android:parentActivityName=".LoginActivity" -->
-        <!-- android:theme="@style/AppTheme.NoActionBar"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.support.PARENT_ACTIVITY" -->
-        <!-- android:value="com.ridealong.LoginActivity" /> -->
-        <!-- </activity> -->
-
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
-        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -66,9 +42,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ridealong.WelcomeActivity" />
         </activity>
-    </application>
 
-</manifest><!--
 
         <activity
             android:name=".DriverActivity"
@@ -79,23 +53,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ridealong.WelcomeActivity" />
         </activity>
-        The API key for Google Maps-based APIs is defined as a string resource.
-        (See the file "res/values/google_maps_api.xml").
-        Note that the API key is linked to the encryption key used to sign the APK.
-        You need a different API key for each encryption key, including the release key that is used
-        to
-        sign the APK for publishing.
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ridealong.WelcomeActivity" />
-        </activity>
+        <!--<activity-->
+        <!--android:name=".MapsActivity"-->
+        <!--android:label="@string/title_activity_maps">-->
+        <!--<meta-data-->
+        <!--android:name="android.support.PARENT_ACTIVITY"-->
+        <!--android:value="com.ridealong.WelcomeActivity" />-->
+        <!--</activity>-->
         <activity
             android:name=".PassengerActivity"
             android:label="@string/title_activity_passenger"
@@ -105,7 +74,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ridealong.WelcomeActivity" />
         </activity>
-<<<<<<< HEAD
+
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -150,14 +119,4 @@
     </application>
 
 </manifest>
-=======
-        &lt;!&ndash;
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-<<<<<<< HEAD
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
---><!-- <meta-data --><!-- android:name="com.google.android.geo.API_KEY" --><!-- android:value="@string/google_maps_key" /> --><!-- <activity --><!-- android:name=".MapsActivity" --><!-- android:label="@string/title_activity_maps"> --><!-- <meta-data --><!-- android:name="android.support.PARENT_ACTIVITY" --><!-- android:value="com.ridealong.WelcomeActivity" /> --><!-- </activity> --><!-- <activity --><!-- android:name=".PassengerActivity" --><!-- android:label="@string/title_activity_passenger" --><!-- android:parentActivityName=".WelcomeActivity" --><!-- android:theme="@style/AppTheme.NoActionBar"> --><!-- <meta-data --><!-- android:name="android.support.PARENT_ACTIVITY" --><!-- android:value="com.ridealong.WelcomeActivity" /> --><!-- </activity> --><!--  --><!-- <meta-data --><!-- android:name="com.google.android.gms.version" --><!-- android:value="@integer/google_play_services_version" /> --><!--  --><!-- <activity --><!-- android:name=".PassengerListActivity" --><!-- android:label="@string/title_activity_passenger_details" --><!-- android:parentActivityName=".DriverActivity" --><!-- android:theme="@style/AppTheme.NoActionBar"> --><!-- <meta-data --><!-- android:name="android.support.PARENT_ACTIVITY" --><!-- android:value="com.ridealong.DriverActivity" /> --><!-- </activity> --><!-- <activity --><!-- android:name=".DriverListActivity" --><!-- android:label="@string/title_activity_driver_list" --><!-- android:parentActivityName=".PassengerActivity" --><!-- android:theme="@style/AppTheme.NoActionBar"> --><!-- <meta-data --><!-- android:name="android.support.PARENT_ACTIVITY" --><!-- android:value="com.ridealong.PassengerActivity" /> --><!-- </activity> --><!-- <activity --><!-- android:name=".DriverDetailActivity" --><!-- android:label="@string/title_activity_driver_detail" --><!-- android:parentActivityName=".DriverListActivity" --><!-- android:theme="@style/AppTheme.NoActionBar"> --><!-- <meta-data --><!-- android:name="android.support.PARENT_ACTIVITY" --><!-- android:value="com.ridealong.DriverListActivity" /> --><!-- </activity> --><!-- </application> --><!-- </manifest> -->
 

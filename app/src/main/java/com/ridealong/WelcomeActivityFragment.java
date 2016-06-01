@@ -49,12 +49,11 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        return inflater.inflate(R.layout.fragment_welcome, container, false);
+
 
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
         driver = (Button) view.findViewById(R.id.driver);
         rider = (Button) view.findViewById(R.id.rider);
-        btn_logout= (Button) view.findViewById(R.id.btn_logout);
 
         driver.setOnClickListener(this);
         rider.setOnClickListener(this);
@@ -62,24 +61,6 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
         return view;
     }
 
-    /*
-    private void initViews(View view){
-
-        u_name = (TextView)view.findViewById(R.id.u_name);
-        u_email = (TextView)view.findViewById(R.id.u_email);
-
-
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-
-        pref = getActivity().getPreferences(0);
-        u_name.setText("Welcome : "+pref.getString(Constants.NAME,""));
-        u_email.setText(pref.getString(Constants.EMAIL,""));
-
-    }
-*/
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -91,9 +72,9 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
                 startActivity(new Intent(getActivity(), PassengerActivity.class));
                 break;
 
-            case R.id.btn_logout:
-                logout();
-                break;
+//            case R.id.btn_logout:
+//                logout();
+//                break;
 
         }
     }

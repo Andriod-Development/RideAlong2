@@ -23,7 +23,7 @@ public class DriverActivity extends AppCompatActivity implements View.OnClickLis
         dto = (EditText) findViewById(R.id.dto);
         dfrom = (EditText) findViewById(R.id.dfrom);
         ddate = (EditText) findViewById(R.id.ddate);
-        dtime = (EditText) findViewById(R.id.dtime);
+//        dtime = (EditText) findViewById(R.id.dtime);
         dmodel = (EditText) findViewById(R.id.dmodel);
         dlicense = (EditText) findViewById(R.id.dlicense);
 
