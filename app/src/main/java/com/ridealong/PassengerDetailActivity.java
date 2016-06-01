@@ -15,6 +15,8 @@ public class PassengerDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_passenger_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
     }
 
 }

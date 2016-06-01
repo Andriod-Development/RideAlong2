@@ -37,15 +37,13 @@
         <!-- </manifest> -->
 
 
-        <!-- <activity -->
-        <!-- android:name=".WelcomeActivity" -->
-        <!-- android:label="@string/title_activity_welcome" -->
-        <!-- android:parentActivityName=".LoginActivity" -->
-        <!-- android:theme="@style/AppTheme.NoActionBar"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.support.PARENT_ACTIVITY" -->
-        <!-- android:value="com.ridealong.LoginActivity" /> -->
-        <!-- </activity> -->
+        <!--<activity-->
+        <!--android:name=".LoginActivity"-->
+        <!--android:label="@string/title_activity_welcome"-->
+        <!---->
+        <!--android:theme="@style/AppTheme.NoActionBar">-->
+
+        <!--</activity>-->
 
 
         <meta-data
@@ -76,11 +74,11 @@
             android:value="@string/google_maps_key" />
 
         <!--<activity-->
-            <!--android:name=".MapsActivity"-->
-            <!--android:label="@string/title_activity_maps">-->
-            <!--<meta-data-->
-                <!--android:name="android.support.PARENT_ACTIVITY"-->
-                <!--android:value="com.ridealong.WelcomeActivity" />-->
+        <!--android:name=".MapsActivity"-->
+        <!--android:label="@string/title_activity_maps">-->
+        <!--<meta-data-->
+        <!--android:name="android.support.PARENT_ACTIVITY"-->
+        <!--android:value="com.ridealong.WelcomeActivity" />-->
         <!--</activity>-->
         <activity
             android:name=".PassengerActivity"
