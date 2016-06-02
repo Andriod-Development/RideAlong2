@@ -26,6 +26,7 @@
         android:layout_width="226dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:drawableLeft="@mipmap/ic_drive_eta_black_24dp"
         android:text="Share My Car"
         android:textAlignment="center"
         android:visibility="visible" />
@@ -36,6 +37,7 @@
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:drawableLeft="@mipmap/ic_airline_seat_recline_normal_black_24dp"
         android:text="Get A Ride"
         android:textAlignment="center" />
 
