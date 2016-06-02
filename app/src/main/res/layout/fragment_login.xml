@@ -16,17 +16,19 @@
         android:id="@+id/eusername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
         android:layout_marginTop="40dp"
-        android:editable="true" />
+        android:drawableLeft="@mipmap/ic_person_outline_black_24dp"
+        android:editable="true"
+        android:hint="  Username" />
 
     <EditText
         android:id="@+id/epassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint="Password"
-        android:editable="true" />
+        android:drawableLeft="@mipmap/ic_vpn_key_black_24dp"
+        android:editable="true"
+        android:hint=" Password"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/elogin"

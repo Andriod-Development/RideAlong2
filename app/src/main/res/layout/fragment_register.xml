@@ -14,51 +14,55 @@
 
     <TextView
         android:id="@+id/elogin"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/colorAccent"
-        android:text="Already Registered ? Login Now !"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Already Registered ? Login Now !"
+        android:textColor="@color/colorAccent" />
 
     <EditText
         android:id="@+id/efirstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="First Name"
-        android:editable="true" />
+        android:drawableLeft="@mipmap/ic_person_outline_black_24dp"
+        android:editable="true"
+        android:hint="First Name" />
 
     <EditText
         android:id="@+id/elastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Last Name"
-        android:editable="true" />
+        android:drawableLeft="@mipmap/ic_person_outline_black_24dp"
+        android:editable="true"
+        android:hint="Last Name" />
 
     <EditText
         android:id="@+id/e_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:editable="true" />
+        android:drawableLeft="@mipmap/ic_email_black_24dp"
+        android:editable="true"
+        android:hint=" Email" />
 
     <EditText
+        android:id="@+id/epassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/epassword"
         android:layout_gravity="center_horizontal"
+        android:drawableLeft="@mipmap/ic_vpn_key_black_24dp"
+        android:editable="true"
+        android:ems="10"
         android:hint="Password"
-        android:editable="true" />
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/eregister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:gravity="center_vertical"
-        android:textAlignment="center"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:text="Register"
+        android:textAlignment="center" />
 
 </LinearLayout>
