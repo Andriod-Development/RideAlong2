@@ -47,7 +47,7 @@ public class DriverListActivityFragment extends Fragment {
     String driverFrom = "Los Angeles";
     String driverDest = "San Jose";
     String passengerFrom = "Los Angeles";
-    String passengerTo = "Las Vegas";
+    String passengerTo = "Fresno";
 
 
 

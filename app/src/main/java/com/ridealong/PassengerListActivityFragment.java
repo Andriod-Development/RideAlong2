@@ -1,6 +1,9 @@
 package com.ridealong;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -13,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +35,8 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 public class PassengerListActivityFragment extends Fragment {
+
+    private static final String LOG_TAG = PassengerListActivityFragment.class.getSimpleName();
 
     public PassengerListActivityFragment() {
     }
@@ -62,72 +70,76 @@ public class PassengerListActivityFragment extends Fragment {
         });
 
 //        display the passengers list for the driver selected destination
+        LatLng driverFromLatLong = getLocationFromAddress(getActivity(),driverFrom);
+        LatLng driverToLatLong = getLocationFromAddress(getActivity(),driverDest);
+        LatLng passengerFromLatLong = getLocationFromAddress(getActivity(),passengerFrom);
+        LatLng passengerToLatLong = getLocationFromAddress(getActivity(),passengerTo);
 
-        String driverFromJsonStr = getLocationFromAddress(driverFrom);
-        String driverToJsonStr = getLocationFromAddress(driverDest);
-        String passengerFromJsonStr = getLocationFromAddress(passengerFrom);
-        String passengerToJsonStr = getLocationFromAddress(passengerTo);
 
-        Log.v("Driver From Address",driverFromJsonStr);
-        Log.v("Driver To Address",driverToJsonStr);
-        Log.v("Passgr From Address",passengerFromJsonStr);
-        Log.v("Passgr To Address",passengerToJsonStr);
 
+        double driverTotalDist = calculationByDistance(driverFromLatLong,driverToLatLong);
+        double passengrDistToDriverDest = calculationByDistance(passengerToLatLong,driverToLatLong);
+        double driverFromToPassgrDestDist = calculationByDistance(driverFromLatLong,passengerToLatLong);
+
+        Log.v("driver total", String.valueOf(driverTotalDist));
+        Log.v("passgr total", String.valueOf(passengrDistToDriverDest));
+
+        if ((passengrDistToDriverDest <= driverTotalDist) && (driverTotalDist <= driverFromToPassgrDestDist)){
+            Log.v(LOG_TAG,"display the chosen drivers cheers!");
+        }
 
         return view;
     }
 
-    private String getLocationFromAddress(String address){
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
 
-        String jsonStr = null;
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
 
-        BufferedReader reader = null;
-
-        final String latlongUrl = "https://maps.googleapis.com/maps/api/geocode/json";
-        final String paramAddress = "address";
-        final String apiKeyParam = "key";
-
-        Uri buildLatLongForDriverToUri = Uri.parse(latlongUrl).buildUpon()
-                .appendQueryParameter(paramAddress,address)
-                .appendQueryParameter(apiKeyParam,"AIzaSyBumwldQrWor7bifatqi79qH1o224TYhAQ").build();
-
-        URL url = null;
-        HttpURLConnection urlConnection = null;
         try {
-            url = new URL(buildLatLongForDriverToUri.toString());
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                // Nothing to do.
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
                 return null;
             }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line + "\n");
-            }
-            if (buffer.length() == 0) {
-                return null;
-            }
-            jsonStr = buffer.toString();
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
         }
 
-        return jsonStr;
+        return p1;
+    }
 
+    //  got this method from stackoverflow
+    public double calculationByDistance(LatLng StartP, LatLng EndP) {
+        int Radius = 6371;// radius of earth in Km
+        double lat1 = StartP.latitude;
+        double lat2 = EndP.latitude;
+        double lon1 = StartP.longitude;
+        double lon2 = EndP.longitude;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+                * Math.sin(dLon / 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double valueResult = Radius * c;
+        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("####");
+        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double meter = valueResult % 1000;
+        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+                + " Meter   " + meterInDec);
 
+        return Radius * c;
     }
 
 }
