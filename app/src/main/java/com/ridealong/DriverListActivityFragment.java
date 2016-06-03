@@ -36,6 +36,8 @@ import java.util.List;
  */
 public class DriverListActivityFragment extends Fragment {
 
+    private static final String LOG_TAG = DriverListActivityFragment.class.getSimpleName();
+
     public DriverListActivityFragment() {
     }
 
@@ -75,11 +77,16 @@ public class DriverListActivityFragment extends Fragment {
 
 
 
-        double driverTotalDist = CalculationByDistance(driverFromLatLong,driverToLatLong);
-        double passengrTotalDist = CalculationByDistance(passengerToLatLong,driverToLatLong);
+        double driverTotalDist = calculationByDistance(driverFromLatLong,driverToLatLong);
+        double passengrDistToDriverDest = calculationByDistance(passengerToLatLong,driverToLatLong);
+        double driverFromToPassgrDestDist = calculationByDistance(driverFromLatLong,passengerToLatLong);
 
         Log.v("driver total", String.valueOf(driverTotalDist));
-        Log.v("passgr total", String.valueOf(passengrTotalDist));
+        Log.v("passgr total", String.valueOf(passengrDistToDriverDest));
+
+        if ((passengrDistToDriverDest <= driverTotalDist) && (driverTotalDist <= driverFromToPassgrDestDist)){
+            Log.v(LOG_TAG,"display the chosen drivers cheers!");
+        }
 
 
 
@@ -115,8 +122,8 @@ public class DriverListActivityFragment extends Fragment {
         return p1;
     }
 
-
-    public double CalculationByDistance(LatLng StartP, LatLng EndP) {
+//  got this method from stackoverflow
+    public double calculationByDistance(LatLng StartP, LatLng EndP) {
         int Radius = 6371;// radius of earth in Km
         double lat1 = StartP.latitude;
         double lat2 = EndP.latitude;
