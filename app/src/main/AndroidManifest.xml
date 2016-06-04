@@ -3,6 +3,7 @@
     package="com.ridealong">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -30,7 +31,6 @@
                 android:value=".LoginActivity" />
         </activity>
 
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -42,8 +42,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ridealong.WelcomeActivity" />
         </activity>
-
-
         <activity
             android:name=".DriverActivity"
             android:label="@string/title_activity_car_details"
@@ -58,13 +56,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <!--<activity-->
-        <!--android:name=".MapsActivity"-->
-        <!--android:label="@string/title_activity_maps">-->
-        <!--<meta-data-->
-        <!--android:name="android.support.PARENT_ACTIVITY"-->
-        <!--android:value="com.ridealong.WelcomeActivity" />-->
-        <!--</activity>-->
         <activity
             android:name=".PassengerActivity"
             android:label="@string/title_activity_passenger"
@@ -74,7 +65,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ridealong.WelcomeActivity" />
         </activity>
-
 
         <meta-data
             android:name="com.google.android.gms.version"
