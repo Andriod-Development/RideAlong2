@@ -11,4 +11,8 @@
     <string name="title_activity_driver_list">DriverListActivity</string>
     <string name="title_activity_driver_detail">DriverDetailActivity</string>
     <string name="title_activity_passenger_detail">PassengerDetailActivity</string>
+    <string name="title_activity_auto_complete">AutoCompleteActivity</string>
+    <string name="map_list_header_txt">Description</string>
+    <string name="map_geo_search_input_hint">Search</string>
 </resources>
+
