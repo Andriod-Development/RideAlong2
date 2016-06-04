@@ -106,7 +106,7 @@
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
-            android:src="@drawable/ic_distance" />
+            android:src="@drawable/way" />
 
         <TextView
             android:id="@+id/tvDistance"
@@ -121,7 +121,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:padding="5dp"
-            android:src="@drawable/ic_clock" />
+            android:src="@drawable/clock" />
 
         <TextView
             android:id="@+id/tvDuration"
