@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,6 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
 
         }
     }
-
 
     private void logout() {
         SharedPreferences.Editor editor = pref.edit();
