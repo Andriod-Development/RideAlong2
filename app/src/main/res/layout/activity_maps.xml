@@ -36,7 +36,7 @@
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
-            android:src="@drawable/wayit" />
+            android:src="@drawable/way" />
 
         <TextView
             android:id="@+id/tvDistance"
