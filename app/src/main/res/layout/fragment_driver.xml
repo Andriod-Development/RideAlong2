@@ -73,6 +73,7 @@
         android:inputType="date" />
 
 
+
     <EditText
         android:id="@+id/dmodel"
         android:layout_width="match_parent"

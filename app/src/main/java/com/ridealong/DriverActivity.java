@@ -19,17 +19,6 @@ public class DriverActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver);
 
-//        dfirstname = (EditText) findViewById(R.id.dfirstname);
-        dto = (EditText) findViewById(R.id.dto);
-        dfrom = (EditText) findViewById(R.id.dfrom);
-        ddate = (EditText) findViewById(R.id.ddate);
-//        dtime = (EditText) findViewById(R.id.dtime);
-        dmodel = (EditText) findViewById(R.id.dmodel);
-        dlicense = (EditText) findViewById(R.id.dlicense);
-
-        dbutton = (Button) findViewById(R.id.dbutton);
-
-        dbutton.setOnClickListener(this);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
