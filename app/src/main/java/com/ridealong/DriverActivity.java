@@ -11,16 +11,11 @@ import android.widget.EditText;
 //car details for passenger
 public class DriverActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText dfirstname, dto, dfrom, ddate, dtime, dmodel, dlicense;
-    Button dbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver);
-
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }

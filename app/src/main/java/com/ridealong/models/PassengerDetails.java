@@ -13,13 +13,6 @@ public class PassengerDetails {
     private Date leavingDate;
     private int userId;
 
-    public PassengerDetails(int id, String from, String destination, Date leavingDate, int userId) {
-        this.id = id;
-        this.from = from;
-        this.destination = destination;
-        this.leavingDate = leavingDate;
-        this.userId = userId;
-    }
 
     public int getId() {
         return id;

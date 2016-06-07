@@ -1,5 +1,8 @@
 package com.ridealong;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -45,20 +48,26 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
         submitBtn.setOnClickListener(this);
 
+
+
         return view;
     }
 
     @Override
     public void onClick(View v) {
-        String driverStartPlc = driverFrom.getText().toString();
-        String driverDestPlc = driverTo.getText().toString();
-        String driverCarModel = carModel.getText().toString();
-        String driverLicense = license.getText().toString();
+        switch (v.getId()){
+            case R.id.dbutton:
+                String driverStartPlc = driverFrom.getText().toString();
+                String driverDestPlc = driverTo.getText().toString();
+                String driverCarModel = carModel.getText().toString();
+                String driverLicense = license.getText().toString();
 
-        if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
-            insertDriverInfo(driverStartPlc,driverDestPlc,driverCarModel,driverLicense);
-        }else{
-            Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
+                if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
+                    insertDriverInfo(driverStartPlc,driverDestPlc,driverCarModel,driverLicense);
+                    startActivity(new Intent(getActivity(), PassengerListActivity.class));
+                }else{
+                    Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
+                }
         }
     }
 

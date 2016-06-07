@@ -8,6 +8,7 @@ public class Constants {
     public static final String LOGIN_OPERATION = "login";
     public static final String CHANGE_PASSWORD_OPERATION = "chgPass";
     public static final String DRIVER_TRAVEL_DETAILS_OPERATION = "driver travel info";
+    public static final String PASSENGER_TRAVEL_DETAILS_OPERATION = "passenger travel info";
 
     public static final String SUCCESS = "success";
     public static final String FAILURE = "failure";

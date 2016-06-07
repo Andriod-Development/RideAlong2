@@ -1,8 +1,10 @@
 package com.ridealong;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,20 +17,26 @@ import android.widget.Toast;
 
 import com.ridealong.data.Contract;
 import com.ridealong.data.RideAlongDbHelper;
+import com.ridealong.models.DriverDetails;
+import com.ridealong.models.PassengerDetails;
+import com.ridealong.models.ServerRequest;
+import com.ridealong.models.ServerResponse;
 
 import java.util.Map;
 import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class PassengerActivityFragment extends Fragment implements View.OnClickListener{
 
-    private EditText firstName;
-    private EditText fromCity;
-    private EditText toCity;
-    private EditText leavingDate;
-    private EditText leavingTime;
+    private EditText fromCity,toCity,leavingDate;
     private Button submitBtn;
 
     public PassengerActivityFragment() {
@@ -40,11 +48,9 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
         View rootView = inflater.inflate(R.layout.fragment_passenger, container, false);
         submitBtn = (Button) rootView.findViewById(R.id.pbutton);
         submitBtn.setOnClickListener(this);
-//        firstName = (EditText) rootView.findViewById(R.id.pfirstname);
         fromCity = (EditText) rootView.findViewById(R.id.pfrom);
         toCity = (EditText) rootView.findViewById(R.id.pto);
         leavingDate = (EditText) rootView.findViewById(R.id.pdate);
-//        leavingTime = (EditText) rootView.findViewById(R.id.ptime);
         return rootView;
     }
 
@@ -55,73 +61,55 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
         switch (v.getId()){
             case R.id.pbutton:
 
-                String fname = firstName.getText().toString();
                 String fcity = fromCity.getText().toString();
                 String tcity = toCity.getText().toString();
                 String date = leavingDate.getText().toString();
-//                String time = leavingTime.getText().toString();
 
-                boolean invalid = false;
-                if(fname.equals("")){
-                    invalid = true;
-                    Toast.makeText(getContext(),"Enter your first name",Toast.LENGTH_SHORT).show();
+                if(!fcity.isEmpty() && !tcity.isEmpty() && !date.isEmpty()){
+                    insertPassgrTravelInfo(fcity,tcity,date);
+                    startActivity(new Intent(getActivity(), DriverListActivity.class));
+                }else{
+                    Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
                 }
-                else if(fcity.equals("")){
-                    invalid = true;
-                    Toast.makeText(getContext(),"Enter the city",Toast.LENGTH_SHORT).show();
-                }
-                else if(tcity.equals("")){
-                    invalid = true;
-                    Toast.makeText(getContext(),"Enter the destination",Toast.LENGTH_SHORT).show();
-                }
-                else if(date.equals("")){
-                    invalid = true;
-                    Toast.makeText(getContext(),"Enter the date",Toast.LENGTH_SHORT).show();
-                }
-//                else if(time.equals("")){
-//                    invalid = true;
-//                    Toast.makeText(getContext(),"Enter the time",Toast.LENGTH_SHORT).show();
-//                }
-//                else if(invalid == false){
-//                    addPassengerTravelInfo(fname,fcity,tcity,date,time);
-//                }
+
         }
 
     }
 
-    private void addPassengerTravelInfo(String fname,String city,String destCity,String date,String time) {
+    private void insertPassgrTravelInfo(String startCity,String destination,String leavingDate){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        RideAlongDbHelper rideAlongDbHelper = new RideAlongDbHelper(getContext());
-        SQLiteDatabase sqLiteDatabase = rideAlongDbHelper.getWritableDatabase();
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Contract.PassgrTravelInfoEntry.COLUMN_FIRST_NAME, fname);
-        contentValues.put(Contract.PassgrTravelInfoEntry.COLUMN_FROM_CITY, city);
-        contentValues.put(Contract.PassgrTravelInfoEntry.COLUMN_TO_CITY, destCity);
-        contentValues.put(Contract.PassgrTravelInfoEntry.COLUMN_DATE, date);
-        contentValues.put(Contract.PassgrTravelInfoEntry.COLUMN_TIME, time);
+        PassengerDetails passengerDetails = new PassengerDetails();
+        passengerDetails.setFrom(startCity);
+        passengerDetails.setDestination(destination);
 
-        Cursor cursor = null;
-        try {
-            validateCurrentRecordEntry(cursor, contentValues);
-            sqLiteDatabase.insert(Contract.PassgrTravelInfoEntry.TABLE_NAME, null, contentValues);
-        } catch (Exception e) {
-            Log.e("data insert psgr travel",e.getMessage());
-        }
+        ServerRequest serverRequest = new ServerRequest();
+        serverRequest.setOperation(Constants.PASSENGER_TRAVEL_DETAILS_OPERATION);
+        serverRequest.setPassengerDetails(passengerDetails);
+
+        Call<ServerResponse> responseCall = requestInterface.operation(serverRequest);
+        responseCall.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                ServerResponse resp = response.body();
+                Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                Log.d(Constants.TAG,"failed");
+                Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+
     }
 
-    static boolean validateCurrentRecordEntry(Cursor valCursor, ContentValues expectedValues){
-        Set<Map.Entry<String, Object>> valueSet = expectedValues.valueSet();
-        for(Map.Entry<String, Object> entry : valueSet){
-            String colName = entry.getKey();
-            int index = valCursor.getColumnIndex(colName);
-            if(index == -1) return false;
-            String expectedVal = entry.getValue().toString();
-            String retrievedVal = valCursor.getString(index);
-            if(!retrievedVal.equals(expectedVal)) return false;
-        }
-        return true;
-    }
 
 
 
