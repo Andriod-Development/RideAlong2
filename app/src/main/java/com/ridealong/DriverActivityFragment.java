@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +17,8 @@ import com.ridealong.models.DriverDetails;
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
 import com.ridealong.models.User;
+
+import java.sql.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,20 +57,22 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.dbutton:
+
+          //  if(R.id.dbutton == submitBtn.getId()){
+
                 String driverStartPlc = driverFrom.getText().toString();
+                Log.v("start place",driverStartPlc);
                 String driverDestPlc = driverTo.getText().toString();
                 String driverCarModel = carModel.getText().toString();
                 String driverLicense = license.getText().toString();
 
-                if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
+                ///if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
                     insertDriverInfo(driverStartPlc,driverDestPlc,driverCarModel,driverLicense);
                     startActivity(new Intent(getActivity(), PassengerListActivity.class));
-                }else{
-                    Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
-                }
-        }
+               // }else{
+                    //Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
+                //}
+      //  }
     }
 
     private void insertDriverInfo(String startPlc, String destPlc, String carModel, String license){
@@ -80,21 +84,25 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
         RequestInterface requestInterface = retrofit.create(RequestInterface.class);
 
         DriverDetails driverDetails = new DriverDetails();
+        driverDetails.setUserId(111);
+        driverDetails.setcar_no(license);
         driverDetails.setCarModel(carModel);
-        driverDetails.setLicense(license);
-        driverDetails.setFrom(startPlc);
-        driverDetails.setDestination(destPlc);
 
+        driverDetails.setfrom_place(startPlc);
+        driverDetails.setDestination(destPlc);
+        driverDetails.setLeavingDate(new java.util.Date());
+  Log.v("driver details--",driverDetails.getDestination());
         ServerRequest serverRequest = new ServerRequest();
         serverRequest.setOperation(Constants.DRIVER_TRAVEL_DETAILS_OPERATION);
         serverRequest.setDriverDetails(driverDetails);
-
+        Log.v("server==",serverRequest.toString());
         Call<ServerResponse> responseCall = requestInterface.operation(serverRequest);
+        Log.v("responseCall==",responseCall.toString());
         responseCall.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
                 ServerResponse resp = response.body();
-                Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
+                //Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
             }
 
             @Override

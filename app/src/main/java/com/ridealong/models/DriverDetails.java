@@ -8,12 +8,13 @@ import java.util.Date;
 public class DriverDetails {
 
     private int id;
-    private String license;
+    private int userId;
+    private String car_no;
     private String carModel;
-    private String from;
+    private String from_place;
     private String destination;
     private Date leavingDate;
-    private int userId;
+
 
 
     public int getId() {
@@ -24,12 +25,12 @@ public class DriverDetails {
         this.id = id;
     }
 
-    public String getLicense() {
-        return license;
+    public String getcar_no() {
+        return car_no;
     }
 
-    public void setLicense(String license) {
-        this.license = license;
+    public void setcar_no(String car_no) {
+        this.car_no = car_no;
     }
 
     public String getCarModel() {
@@ -40,12 +41,12 @@ public class DriverDetails {
         this.carModel = carModel;
     }
 
-    public String getFrom() {
-        return from;
+    public String getfrom_place() {
+        return from_place;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setfrom_place(String from_place) {
+        this.from_place = from_place;
     }
 
     public String getDestination() {
