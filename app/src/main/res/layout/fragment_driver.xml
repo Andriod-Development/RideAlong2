@@ -85,12 +85,14 @@
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <TextView
+    <EditText
         android:id="@+id/ddate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
+        android:focusable="false"
+        android:hint="Date"
         android:drawableLeft="@mipmap/ic_date_range_black_24dp"
         android:editable="true"
         android:ems="44" />
