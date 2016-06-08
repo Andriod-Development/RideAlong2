@@ -1,6 +1,13 @@
 package com.ridealong;
 
+<<<<<<< HEAD
 import android.app.DatePickerDialog;
+=======
+
+import android.app.DatePickerDialog;
+
+import android.content.Context;
+>>>>>>> d55ddd72ca269e8529d64ad3ceb96aa78536e41a
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -44,13 +51,25 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
     private SimpleDateFormat dateFormatter;
     private DatePicker datePicker;
 
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat dateFormatter;
+
+    private SharedPreferences sharedPreferences;
+
+
+
     public DriverActivityFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         View view = inflater.inflate(R.layout.fragment_driver, container, false);
+        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+
         driverFrom = (EditText) view.findViewById(R.id.dfrom);
         driverTo = (EditText) view.findViewById(R.id.dto);
         carModel = (EditText) view.findViewById(R.id.dmodel);
@@ -59,11 +78,14 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
         datePicker = (DatePicker) view.findViewById(R.id.datepicker1);
 
         submitBtn = (Button) view.findViewById(R.id.dbutton);
-
+        dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
         submitBtn.setOnClickListener(this);
 
+<<<<<<< HEAD
         dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
 
+=======
+>>>>>>> d55ddd72ca269e8529d64ad3ceb96aa78536e41a
         leavingDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,10 +102,25 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
                 newDate.set(year, monthOfYear, dayOfMonth);
                 leavingDate.setText(dateFormatter.format(newDate.getTime()));
 
+<<<<<<< HEAD
             }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+=======
 
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+>>>>>>> d55ddd72ca269e8529d64ad3ceb96aa78536e41a
+
+
+
+        String userEmail = sharedPreferences.getString(Constants.EMAIL, "");
+        Log.v("user email in driver",userEmail);
+        String username = sharedPreferences.getString(Constants.NAME,"");
+        Log.v("user name",username);
+        String uniqueId = sharedPreferences.getString(Constants.UNIQUE_ID,"");
+        Log.v("user unique id",uniqueId);
 
         return view;
     }
@@ -93,11 +130,25 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
         // when dialog box is closed, below method will be called.
         public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
 
+<<<<<<< HEAD
             Log.d("MainActivity", "onDateSet called");
 
         }
     };
 
+=======
+
+            Log.d("MainActivity","onDateSet called");
+//            String year1 = String.valueOf(selectedYear);
+//            String month1 = String.valueOf(selectedMonth + 1);
+//            String day1 = String.valueOf(selectedDay);
+//            TextView tvDt = (TextView) findViewById(R.id.tvDate);
+//            tvDt.setText(day1 + "/" + month1 + "/" + year1);
+        }
+    };
+
+
+>>>>>>> d55ddd72ca269e8529d64ad3ceb96aa78536e41a
     @Override
     public void onClick(View v) {
 

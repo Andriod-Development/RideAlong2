@@ -96,11 +96,25 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
         // when dialog box is closed, below method will be called.
         public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
 
+<<<<<<< HEAD
             Log.d("MainActivity", "onDateSet called");
 
         }
     };
 
+=======
+
+            Log.d("MainActivity","onDateSet called");
+//            String year1 = String.valueOf(selectedYear);
+//            String month1 = String.valueOf(selectedMonth + 1);
+//            String day1 = String.valueOf(selectedDay);
+//            TextView tvDt = (TextView) findViewById(R.id.tvDate);
+//            tvDt.setText(day1 + "/" + month1 + "/" + year1);
+        }
+    };
+
+
+>>>>>>> d55ddd72ca269e8529d64ad3ceb96aa78536e41a
 
     @Override
     public void onClick(View v) {
