@@ -47,6 +47,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
     private DatePicker datePicker;
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
+    private int userId;
 
     public PassengerActivityFragment() {
     }
@@ -85,9 +86,11 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
+        userId = getActivity().getIntent().getExtras().getInt("userId");
 
 
-    return rootView;
+
+        return rootView;
     }
 
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
@@ -110,22 +113,16 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
     @Override
     public void onClick(View v) {
 
-       // switch (v.getId()){
-           // case R.id.pbutton:
+        String fcity = fromCity.getText().toString();
+        String tcity = toCity.getText().toString();
+        String date = leavingDate.getText().toString();
 
-                String fcity = fromCity.getText().toString();
-                String tcity = toCity.getText().toString();
-                String date = leavingDate.getText().toString();
-        Log.v("fcity",fcity);
-
-                if(!fcity.isEmpty() && !tcity.isEmpty() && !date.isEmpty()){
-                    insertPassgrTravelInfo(fcity,tcity,date);
-//                    startActivity(new Intent(getActivity(), DriverListActivity.class));
-                }else{
-                    Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
-                }
-
-
+        if(!fcity.isEmpty() && !tcity.isEmpty() && !date.isEmpty()){
+            insertPassgrTravelInfo(fcity,tcity,date);
+            startActivity(new Intent(getActivity(), DriverListActivity.class));
+        }else{
+            Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
+        }
 
     }
 
@@ -140,7 +137,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
 
         PassengerDetails passengerDetails = new PassengerDetails();
         passengerDetails.setFrom(startCity);
-        passengerDetails.setUserId(1111);
+        passengerDetails.setUserId(userId);
         passengerDetails.setDestination(destination);
         passengerDetails.setLeavingDate(new java.util.Date());
         Log.v("driver details--",passengerDetails.getDestination());

@@ -14,10 +14,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.ridealong.models.DriverDetails;
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
 import com.ridealong.models.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Date;
 
@@ -34,7 +39,7 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
     private Button submitBtn;
     private EditText driverFrom,driverTo,carModel,license,leavingDate;
-    private SharedPreferences sharedPreferences;
+    private int userId;
 
 
     public DriverActivityFragment() {
@@ -46,9 +51,6 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
 
         View view = inflater.inflate(R.layout.fragment_driver, container, false);
-        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
-
-
         driverFrom = (EditText) view.findViewById(R.id.dfrom);
         driverTo = (EditText) view.findViewById(R.id.dto);
         carModel = (EditText) view.findViewById(R.id.dmodel);
@@ -58,38 +60,33 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
         submitBtn.setOnClickListener(this);
 
-
-        String userEmail = sharedPreferences.getString(Constants.EMAIL, "");
-        Log.v("user email in driver",userEmail);
-        String username = sharedPreferences.getString(Constants.NAME,"");
-        Log.v("user name",username);
-        String uniqueId = sharedPreferences.getString(Constants.UNIQUE_ID,"");
-        Log.v("user unique id",uniqueId);
-
+        userId = getActivity().getIntent().getExtras().getInt("userId");
+        Log.v("user Id in driver",String.valueOf(userId));
         return view;
     }
 
     @Override
     public void onClick(View v) {
 
-          //  if(R.id.dbutton == submitBtn.getId()){
+       String driverStartPlc = driverFrom.getText().toString();
+       String driverDestPlc = driverTo.getText().toString();
+       String driverCarModel = carModel.getText().toString();
+       String driverLicense = license.getText().toString();
 
-                String driverStartPlc = driverFrom.getText().toString();
-                Log.v("start place",driverStartPlc);
-                String driverDestPlc = driverTo.getText().toString();
-                String driverCarModel = carModel.getText().toString();
-                String driverLicense = license.getText().toString();
-
-                ///if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
-                    insertDriverInfo(driverStartPlc,driverDestPlc,driverCarModel,driverLicense);
-                    startActivity(new Intent(getActivity(), PassengerListActivity.class));
-               // }else{
-                    //Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
-                //}
-      //  }
+       if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
+           String driverJsonData = insertDriverInfo(driverStartPlc,driverDestPlc,driverCarModel,driverLicense);
+           Log.v("driver json str",driverJsonData.toString());
+           startActivity(new Intent(getActivity(), PassengerListActivity.class));
+       }else{
+           Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
+       }
     }
 
-    private void insertDriverInfo(String startPlc, String destPlc, String carModel, String license){
+    private String insertDriverInfo(String startPlc, String destPlc, String carModel, String license){
+
+        String driverJsonStr;
+        final JSONObject driverJsonObject = new JSONObject();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -98,25 +95,33 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
         RequestInterface requestInterface = retrofit.create(RequestInterface.class);
 
         DriverDetails driverDetails = new DriverDetails();
-        driverDetails.setUserId(111);
+        driverDetails.setUserId(userId);
         driverDetails.setcar_no(license);
         driverDetails.setCarModel(carModel);
 
         driverDetails.setfrom_place(startPlc);
         driverDetails.setDestination(destPlc);
         driverDetails.setLeavingDate(new java.util.Date());
-  Log.v("driver details--",driverDetails.getDestination());
         ServerRequest serverRequest = new ServerRequest();
         serverRequest.setOperation(Constants.DRIVER_TRAVEL_DETAILS_OPERATION);
         serverRequest.setDriverDetails(driverDetails);
-        Log.v("server==",serverRequest.toString());
         Call<ServerResponse> responseCall = requestInterface.operation(serverRequest);
-        Log.v("responseCall==",responseCall.toString());
+
         responseCall.enqueue(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
                 ServerResponse resp = response.body();
-                //Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
+
+                try {
+                    driverJsonObject.put("driverId",resp.getDriverDetails().getId());
+                    Log.v("driver id",String.valueOf(resp.getDriverDetails().getId()));
+                    driverJsonObject.put("driverFrom",resp.getDriverDetails().getfrom_place());
+                    driverJsonObject.put("driverDest",resp.getDriverDetails().getDestination());
+                    driverJsonObject.put("leaveDate",resp.getDriverDetails().getLeavingDate());
+                    driverJsonObject.put("userId",resp.getDriverDetails().getUserId());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -125,6 +130,11 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
+
+        Gson gson = new Gson();
+        driverJsonStr = gson.toJson(driverJsonObject);
+        return driverJsonStr;
+
 
     }
 }

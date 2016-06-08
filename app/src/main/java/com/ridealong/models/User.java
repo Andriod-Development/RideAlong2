@@ -4,6 +4,7 @@ package com.ridealong.models;
  * Created by HP on 5/20/2016.
  */
 public class User {
+    private int id;
     private String name;
     private String email;
     private String unique_id;
@@ -45,4 +46,11 @@ public class User {
         this.new_password = new_password;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
