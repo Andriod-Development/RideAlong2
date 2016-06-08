@@ -90,6 +90,22 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
     return rootView;
     }
 
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+
+
+            Log.d("MainActivity","onDateSet called");
+//            String year1 = String.valueOf(selectedYear);
+//            String month1 = String.valueOf(selectedMonth + 1);
+//            String day1 = String.valueOf(selectedDay);
+//            TextView tvDt = (TextView) findViewById(R.id.tvDate);
+//            tvDt.setText(day1 + "/" + month1 + "/" + year1);
+        }
+    };
+
+
 
     @Override
     public void onClick(View v) {
