@@ -1,5 +1,6 @@
 package com.ridealong;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.ridealong.models.DriverDetails;
@@ -19,6 +21,9 @@ import com.ridealong.models.ServerResponse;
 import com.ridealong.models.User;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +38,8 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
     private Button submitBtn;
     private EditText driverFrom,driverTo,carModel,license,leavingDate;
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat dateFormatter;
 
     public DriverActivityFragment() {
     }
@@ -47,13 +54,51 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
         license = (EditText) view.findViewById(R.id.dlicense);
         leavingDate = (EditText) view.findViewById(R.id.ddate);
         submitBtn = (Button) view.findViewById(R.id.dbutton);
-
+        dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
         submitBtn.setOnClickListener(this);
+
+        leavingDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialog.show();
+            }
+        });
+
+        Calendar newCalendar = Calendar.getInstance();
+
+        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                leavingDate.setText(dateFormatter.format(newDate.getTime()));
+
+
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
 
 
 
         return view;
     }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+
+
+            Log.d("MainActivity","onDateSet called");
+//            String year1 = String.valueOf(selectedYear);
+//            String month1 = String.valueOf(selectedMonth + 1);
+//            String day1 = String.valueOf(selectedDay);
+//            TextView tvDt = (TextView) findViewById(R.id.tvDate);
+//            tvDt.setText(day1 + "/" + month1 + "/" + year1);
+        }
+    };
+
 
     @Override
     public void onClick(View v) {
