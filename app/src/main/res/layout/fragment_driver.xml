@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background2"
     android:orientation="vertical"
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
@@ -24,18 +25,6 @@
         android:textSize="30dp"
         android:textStyle="bold" />
 
-    <!--<EditText-->
-    <!--android:id="@+id/dfirstname"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center_horizontal"-->
-    <!--android:layout_marginTop="20dp"-->
-    <!--android:ems="10"-->
-    <!--android:hint="First Name"-->
-    <!--android:inputType="textPersonName"-->
-    <!--android:editable="true" />-->
-
-
     <EditText
         android:id="@+id/dfrom"
         android:layout_width="match_parent"
@@ -44,9 +33,13 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="center_horizontal"
-        android:drawableLeft="@mipmap/ic_location_on_black_24dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@mipmap/ic_my_location_white_24dp"
         android:editable="true"
-        android:hint="From" />
+        android:hint=" From"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/dto"
@@ -56,9 +49,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
-        android:drawableLeft="@mipmap/ic_location_on_black_24dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@mipmap/ic_place_white_24dp"
         android:editable="true"
-        android:hint="To" />
+        android:hint="To"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/dmodel"
@@ -66,18 +64,27 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:drawableLeft="@mipmap/ic_drive_eta_black_24dp"
+        android:drawableLeft="@mipmap/ic_drive_eta_white_24dp"
         android:editable="true"
-        android:hint=" Car Model" />
+        android:hint=" Car Model"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/dlicense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:drawableLeft="@mipmap/ic_credit_card_black_24dp"
+        android:drawableLeft="@mipmap/ic_credit_card_white_24dp"
         android:editable="true"
-        android:hint=" License ID" />
+        android:hint=" License ID"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textColorLink="@color/white"
+        android:textSize="20dp" />
 
     <DatePicker
         android:id="@+id/datepicker1"
@@ -91,11 +98,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
-        android:focusable="false"
-        android:hint="Date"
-        android:drawableLeft="@mipmap/ic_date_range_black_24dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@mipmap/ic_date_range_white_24dp"
         android:editable="true"
-        android:ems="44" />
+        android:ems="44"
+        android:focusable="false"
+        android:hint=" Date"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20dp" />
 
 
     <Button
@@ -105,8 +116,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
         android:clickable="true"
         android:text="Submit"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 </LinearLayout>
 

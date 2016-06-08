@@ -3,20 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background2"
     android:orientation="vertical"
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="20dp"
+    android:weightSum="1"
     tools:context="com.ridealong.PassengerActivityFragment"
-    tools:showIn="@layout/activity_passenger"
-    android:weightSum="1">
+    tools:showIn="@layout/activity_passenger">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         android:text="Passenger Details"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -31,9 +33,14 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="center_horizontal"
-        android:drawableLeft="@mipmap/ic_location_on_black_24dp"
+        android:layout_marginTop="40dp"
+        android:drawableLeft="@mipmap/ic_my_location_white_24dp"
         android:editable="true"
-        android:hint="From" />
+        android:hint=" From"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/pto"
@@ -43,9 +50,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
-        android:drawableLeft="@mipmap/ic_location_on_black_24dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@mipmap/ic_place_white_24dp"
         android:editable="true"
-        android:hint="To" />
+        android:hint="To"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20dp" />
 
     <DatePicker
         android:id="@+id/datepicker"
@@ -53,30 +65,23 @@
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <!--<EditText-->
-    <!--android:id="@+id/ptime"-->
-    <!--android:layout_width="155dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentEnd="true"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:editable="true"-->
-    <!--android:ems="10"-->
-    <!--android:hint="Time"-->
-    <!--android:inputType="time" />-->
-
     <EditText
         android:id="@+id/pdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:drawableLeft="@mipmap/ic_date_range_black_24dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.04"
+        android:drawableLeft="@mipmap/ic_date_range_white_24dp"
         android:editable="true"
         android:ems="44"
         android:focusable="false"
-        android:hint="Date"
+        android:hint=" Date"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:textSize="20dp"
-        android:layout_weight="0.04" />
+        android:visibility="visible" />
 
     <Button
         android:id="@+id/pbutton"
@@ -85,9 +90,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
         android:clickable="true"
         android:text="Submit"
-        android:textStyle="bold" />
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:visibility="visible" />
 
 </LinearLayout>
 

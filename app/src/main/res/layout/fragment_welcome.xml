@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background2"
     android:orientation="vertical"
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
@@ -17,11 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
+        android:singleLine="true"
         android:text="Welcome!!"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/Crimson"
-        android:textSize="35dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="40dp"
         android:textStyle="bold|italic" />
 
     <Button
@@ -30,6 +31,7 @@
         android:layout_width="226dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
         android:drawableLeft="@mipmap/ic_drive_eta_black_24dp"
         android:text="Share My Car"
         android:textAlignment="center"
@@ -41,6 +43,7 @@
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         android:drawableLeft="@mipmap/ic_airline_seat_recline_normal_black_24dp"
         android:text="Get A Ride"
         android:textAlignment="center" />
@@ -60,16 +63,9 @@
         android:layout_marginTop="20dp"
         android:textSize="18sp" />
 
-    <!--<TextView-->
-    <!--android:id="@+id/u_logout"-->
-    <!--android:textSize="18sp"-->
-    <!--android:layout_marginTop="20dp"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content" />-->
-
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="206dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
