@@ -1,6 +1,9 @@
 package com.ridealong;
 
+
 import android.app.DatePickerDialog;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -38,8 +41,13 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
     private Button submitBtn;
     private EditText driverFrom,driverTo,carModel,license,leavingDate;
+
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
+
+    private SharedPreferences sharedPreferences;
+
+
 
     public DriverActivityFragment() {
     }
@@ -47,7 +55,12 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         View view = inflater.inflate(R.layout.fragment_driver, container, false);
+        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+
         driverFrom = (EditText) view.findViewById(R.id.dfrom);
         driverTo = (EditText) view.findViewById(R.id.dto);
         carModel = (EditText) view.findViewById(R.id.dmodel);
@@ -80,6 +93,12 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
 
 
+        String userEmail = sharedPreferences.getString(Constants.EMAIL, "");
+        Log.v("user email in driver",userEmail);
+        String username = sharedPreferences.getString(Constants.NAME,"");
+        Log.v("user name",username);
+        String uniqueId = sharedPreferences.getString(Constants.UNIQUE_ID,"");
+        Log.v("user unique id",uniqueId);
 
         return view;
     }

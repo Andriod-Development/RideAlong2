@@ -2,6 +2,7 @@ package com.ridealong;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -48,6 +49,8 @@ public class PassengerListActivityFragment extends Fragment {
     String driverDest = "San Jose";
     String passengerFrom = "Los Angeles";
     String passengerTo = "Fresno";
+    private SharedPreferences sharedPreferences;
+
 
 
     @Override
@@ -68,6 +71,16 @@ public class PassengerListActivityFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String userEmail = sharedPreferences.getString(Constants.EMAIL, "");
+        Log.v("user email in passenger",userEmail);
+        String username = sharedPreferences.getString(Constants.NAME,"");
+        Log.v("user name",username);
+        String uniqueId = sharedPreferences.getString(Constants.UNIQUE_ID,"");
+        Log.v("user unique id",uniqueId);
+
+
 
 //        display the passengers list for the driver selected destination
         LatLng driverFromLatLong = getLocationFromAddress(getActivity(),driverFrom);
