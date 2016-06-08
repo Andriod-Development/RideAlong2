@@ -2,9 +2,11 @@ package com.ridealong;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
@@ -45,7 +47,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private void initViews(View view){
 
-        pref = getActivity().getPreferences(0);
+        pref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         elogin = (Button)view.findViewById(R.id.elogin);
        // tv_register = (TextView)view.findViewById(R.id.tv_register);
@@ -115,12 +117,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 if(resp.getResult().equals(Constants.SUCCESS)){
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putBoolean(Constants.IS_LOGGED_IN,true);
+                    Log.v("In Login",resp.getUser().getEmail());
                     editor.putString(Constants.EMAIL,resp.getUser().getEmail());
                     editor.putString(Constants.NAME,resp.getUser().getName());
                     editor.putString(Constants.UNIQUE_ID,resp.getUser().getUnique_id());
-                    Log.d(Constants.EMAIL,resp.getUser().getEmail());
+      Log.d(Constants.EMAIL,resp.getUser().getEmail());
                     Log.d(Constants.NAME,resp.getUser().getName());
                     editor.apply();
+
+                    editor.commit();
+//                    editor.apply();
+
                     goToWelcome();
                     Log.d(Constants.TAG,"success");
 
