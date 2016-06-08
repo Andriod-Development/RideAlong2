@@ -1,5 +1,6 @@
 package com.ridealong;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -11,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ridealong.models.DriverDetails;
 import com.ridealong.models.ServerRequest;
@@ -19,6 +22,9 @@ import com.ridealong.models.ServerResponse;
 import com.ridealong.models.User;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,10 +35,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DriverActivityFragment extends Fragment implements View.OnClickListener{
+public class DriverActivityFragment extends Fragment implements View.OnClickListener {
 
     private Button submitBtn;
-    private EditText driverFrom,driverTo,carModel,license,leavingDate;
+    private EditText driverFrom, driverTo, carModel, license;
+    private TextView leavingDate;
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat dateFormatter;
+    private DatePicker datePicker;
 
     public DriverActivityFragment() {
     }
@@ -45,37 +55,70 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
         driverTo = (EditText) view.findViewById(R.id.dto);
         carModel = (EditText) view.findViewById(R.id.dmodel);
         license = (EditText) view.findViewById(R.id.dlicense);
-        leavingDate = (EditText) view.findViewById(R.id.ddate);
+        leavingDate = (TextView) view.findViewById(R.id.ddate);
+        datePicker = (DatePicker) view.findViewById(R.id.datepicker1);
+
         submitBtn = (Button) view.findViewById(R.id.dbutton);
 
         submitBtn.setOnClickListener(this);
 
+        dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
+
+        leavingDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialog.show();
+            }
+        });
+
+        Calendar newCalendar = Calendar.getInstance();
+
+        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                leavingDate.setText(dateFormatter.format(newDate.getTime()));
+
+            }
+
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
 
         return view;
     }
 
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+
+            Log.d("MainActivity", "onDateSet called");
+
+        }
+    };
+
     @Override
     public void onClick(View v) {
 
-          //  if(R.id.dbutton == submitBtn.getId()){
+        //  if(R.id.dbutton == submitBtn.getId()){
 
-                String driverStartPlc = driverFrom.getText().toString();
-                Log.v("start place",driverStartPlc);
-                String driverDestPlc = driverTo.getText().toString();
-                String driverCarModel = carModel.getText().toString();
-                String driverLicense = license.getText().toString();
+        String driverStartPlc = driverFrom.getText().toString();
+        Log.v("start place", driverStartPlc);
+        String driverDestPlc = driverTo.getText().toString();
+        String driverCarModel = carModel.getText().toString();
+        String driverLicense = license.getText().toString();
 
-                ///if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
-                    insertDriverInfo(driverStartPlc,driverDestPlc,driverCarModel,driverLicense);
-                    startActivity(new Intent(getActivity(), PassengerListActivity.class));
-               // }else{
-                    //Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
-                //}
-      //  }
+        ///if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
+        insertDriverInfo(driverStartPlc, driverDestPlc, driverCarModel, driverLicense);
+        startActivity(new Intent(getActivity(), PassengerListActivity.class));
+        // }else{
+        //Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
+        //}
+        //  }
     }
 
-    private void insertDriverInfo(String startPlc, String destPlc, String carModel, String license){
+    private void insertDriverInfo(String startPlc, String destPlc, String carModel, String license) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -91,13 +134,13 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
         driverDetails.setfrom_place(startPlc);
         driverDetails.setDestination(destPlc);
         driverDetails.setLeavingDate(new java.util.Date());
-  Log.v("driver details--",driverDetails.getDestination());
+        Log.v("driver details--", driverDetails.getDestination());
         ServerRequest serverRequest = new ServerRequest();
         serverRequest.setOperation(Constants.DRIVER_TRAVEL_DETAILS_OPERATION);
         serverRequest.setDriverDetails(driverDetails);
-        Log.v("server==",serverRequest.toString());
+        Log.v("server==", serverRequest.toString());
         Call<ServerResponse> responseCall = requestInterface.operation(serverRequest);
-        Log.v("responseCall==",responseCall.toString());
+        Log.v("responseCall==", responseCall.toString());
         responseCall.enqueue(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
@@ -107,7 +150,7 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.d(Constants.TAG,"failed");
+                Log.d(Constants.TAG, "failed");
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });

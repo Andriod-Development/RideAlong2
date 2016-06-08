@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ridealong.data.Contract;
@@ -40,9 +41,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PassengerActivityFragment extends Fragment implements View.OnClickListener{
+public class PassengerActivityFragment extends Fragment implements View.OnClickListener {
 
-    private EditText fromCity,toCity,leavingDate;
+    private TextView leavingDate;
+    private EditText fromCity, toCity;
     private Button submitBtn;
     private DatePicker datePicker;
     private DatePickerDialog datePickerDialog;
@@ -56,10 +58,11 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_passenger, container, false);
         submitBtn = (Button) rootView.findViewById(R.id.pbutton);
-        datePicker=(DatePicker) rootView.findViewById(R.id.datepicker);
+        datePicker = (DatePicker) rootView.findViewById(R.id.datepicker);
         fromCity = (EditText) rootView.findViewById(R.id.pfrom);
         toCity = (EditText) rootView.findViewById(R.id.pto);
-        leavingDate = (EditText) rootView.findViewById(R.id.pdate);
+        leavingDate = (TextView) rootView.findViewById(R.id.pdate);
+
         submitBtn.setOnClickListener(this);
 
         dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
@@ -80,41 +83,45 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
                 newDate.set(year, monthOfYear, dayOfMonth);
                 leavingDate.setText(dateFormatter.format(newDate.getTime()));
 
-
             }
 
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
 
-
-    return rootView;
+        return rootView;
     }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+
+            Log.d("MainActivity", "onDateSet called");
+
+        }
+    };
 
 
     @Override
     public void onClick(View v) {
 
-       // switch (v.getId()){
-           // case R.id.pbutton:
+        String fcity = fromCity.getText().toString();
+        String tcity = toCity.getText().toString();
+        String date = leavingDate.getText().toString();
+        Log.v("fcity", fcity);
 
-                String fcity = fromCity.getText().toString();
-                String tcity = toCity.getText().toString();
-                String date = leavingDate.getText().toString();
-        Log.v("fcity",fcity);
-
-                if(!fcity.isEmpty() && !tcity.isEmpty() && !date.isEmpty()){
-                    insertPassgrTravelInfo(fcity,tcity,date);
+        if (!fcity.isEmpty() && !tcity.isEmpty() && !date.isEmpty()) {
+            insertPassgrTravelInfo(fcity, tcity, date);
 //                    startActivity(new Intent(getActivity(), DriverListActivity.class));
-                }else{
-                    Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
-                }
-
+        } else {
+            Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
+        }
 
 
     }
 
-    private void insertPassgrTravelInfo(String startCity,String destination,String leavingDate){
-        Log.v("start",startCity);
+    private void insertPassgrTravelInfo(String startCity, String destination, String leavingDate) {
+        Log.v("start", startCity);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -127,33 +134,30 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
         passengerDetails.setUserId(1111);
         passengerDetails.setDestination(destination);
         passengerDetails.setLeavingDate(new java.util.Date());
-        Log.v("driver details--",passengerDetails.getDestination());
+        Log.v("driver details--", passengerDetails.getDestination());
         ServerRequest serverRequest = new ServerRequest();
         serverRequest.setOperation(Constants.PASSENGER_TRAVEL_DETAILS_OPERATION);
         serverRequest.setPassengerDetails(passengerDetails);
-        Log.v("server==",serverRequest.toString());
+        Log.v("server==", serverRequest.toString());
         Call<ServerResponse> responseCall = requestInterface.operation(serverRequest);
-        Log.v("responseCall==",responseCall.toString());
+        Log.v("responseCall==", responseCall.toString());
         responseCall.enqueue(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
                 ServerResponse resp = response.body();
-                Log.d(Constants.TAG,"psuccess");
+                Log.d(Constants.TAG, "psuccess");
                 //Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.d(Constants.TAG,"pfailed");
+                Log.d(Constants.TAG, "pfailed");
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
 
 
     }
-
-
-
 
 
 }

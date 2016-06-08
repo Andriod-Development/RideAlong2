@@ -61,20 +61,6 @@
         android:hint="To" />
 
     <EditText
-        android:id="@+id/ddate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="center_horizontal"
-        android:drawableLeft="@mipmap/ic_date_range_black_24dp"
-        android:editable="true"
-        android:ems="10"
-        android:hint=" Date"
-        android:inputType="date" />
-
-
-
-    <EditText
         android:id="@+id/dmodel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,6 +78,23 @@
         android:drawableLeft="@mipmap/ic_credit_card_black_24dp"
         android:editable="true"
         android:hint=" License ID" />
+
+    <DatePicker
+        android:id="@+id/datepicker1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/ddate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal"
+        android:drawableLeft="@mipmap/ic_date_range_black_24dp"
+        android:editable="true"
+        android:ems="44" />
+
 
     <Button
         android:id="@+id/dbutton"
