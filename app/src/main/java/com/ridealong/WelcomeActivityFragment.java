@@ -2,9 +2,11 @@ package com.ridealong;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
@@ -37,7 +39,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
 
 
 
-    private SharedPreferences pref;
+    private SharedPreferences sharedPreferences;
     private TextView u_name , u_email ,u_logout;
     private Button btn_logout;
 
@@ -50,6 +52,8 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+
 
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
         driver = (Button) view.findViewById(R.id.driver);
@@ -58,6 +62,9 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
         driver.setOnClickListener(this);
         rider.setOnClickListener(this);
        // btn_logout.setOnClickListener(this);
+        String userEmail = sharedPreferences.getString(Constants.EMAIL, "");
+        Log.v("user email",userEmail);
+
         return view;
     }
 
@@ -81,12 +88,13 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
 
 
     private void logout() {
-        SharedPreferences.Editor editor = pref.edit();
+        SharedPreferences.Editor editor = sharedPreferences .edit();
         editor.putBoolean(Constants.IS_LOGGED_IN,false);
         editor.putString(Constants.EMAIL,"");
         editor.putString(Constants.NAME,"");
         editor.putString(Constants.UNIQUE_ID,"");
         editor.apply();
+        editor.commit();
         goToLogin();
     }
 
