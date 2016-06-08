@@ -43,6 +43,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
     private SharedPreferences sharedPreferences;
     private TextView u_name , u_email ,u_logout;
     private Button btn_logout;
+    private int userId;
 
 
 
@@ -67,6 +68,9 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
 
         btn_logout.setOnClickListener(this);
 
+        userId = sharedPreferences.getInt(Constants.USER_ID,0);
+        Log.v("user id is",String.valueOf(userId));
+
 
 
 
@@ -87,11 +91,15 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.driver:
-
-                startActivity(new Intent(getActivity(), DriverActivity.class));
+                Intent driverIntent = new Intent(getActivity(), DriverActivity.class);
+                driverIntent.putExtra("userId",userId);
+                startActivity(driverIntent);
                 break;
+
             case R.id.rider:
-                startActivity(new Intent(getActivity(), PassengerActivity.class));
+                Intent passgrIntent = new Intent(getActivity(), PassengerActivity.class);
+                passgrIntent.putExtra("userId",userId);
+                startActivity(passgrIntent);
                 break;
 
          case R.id.btn_logout:

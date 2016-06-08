@@ -22,10 +22,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.ridealong.models.DriverDetails;
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
 import com.ridealong.models.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -44,6 +49,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DriverActivityFragment extends Fragment implements View.OnClickListener {
 
     private Button submitBtn;
+    private int userId;
 
     private EditText driverFrom, driverTo, carModel, license, leavingDate;
 
@@ -53,7 +59,6 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
 
-    private SharedPreferences sharedPreferences;
 
 
 
@@ -66,9 +71,6 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
 
         View view = inflater.inflate(R.layout.fragment_driver, container, false);
-        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
-
-
         driverFrom = (EditText) view.findViewById(R.id.dfrom);
         driverTo = (EditText) view.findViewById(R.id.dto);
         carModel = (EditText) view.findViewById(R.id.dmodel);
@@ -80,6 +82,8 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
         dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
         submitBtn.setOnClickListener(this);
 
+        userId = getActivity().getIntent().getExtras().getInt("userId");
+        Log.v("user Id in driver",String.valueOf(userId));
         dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
 
 
@@ -105,16 +109,6 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
-
-
-
-        String userEmail = sharedPreferences.getString(Constants.EMAIL, "");
-        Log.v("user email in driver",userEmail);
-        String username = sharedPreferences.getString(Constants.NAME,"");
-        Log.v("user name",username);
-        String uniqueId = sharedPreferences.getString(Constants.UNIQUE_ID,"");
-        Log.v("user unique id",uniqueId);
-
         return view;
     }
 
@@ -138,22 +132,20 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        //  if(R.id.dbutton == submitBtn.getId()){
+       String driverStartPlc = driverFrom.getText().toString();
+       String driverDestPlc = driverTo.getText().toString();
+       String driverCarModel = carModel.getText().toString();
+       String driverLicense = license.getText().toString();
 
-        String driverStartPlc = driverFrom.getText().toString();
-        Log.v("start place", driverStartPlc);
-        String driverDestPlc = driverTo.getText().toString();
-        String driverCarModel = carModel.getText().toString();
-        String driverLicense = license.getText().toString();
+       if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
+           insertDriverInfo(driverStartPlc,driverDestPlc,driverCarModel,driverLicense);
 
-        ///if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
-        insertDriverInfo(driverStartPlc, driverDestPlc, driverCarModel, driverLicense);
-        startActivity(new Intent(getActivity(), PassengerListActivity.class));
-        // }else{
-        //Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
-        //}
-        //  }
+           startActivity(new Intent(getActivity(), PassengerListActivity.class));
+       }else{
+           Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
+       }
     }
+
 
     private void insertDriverInfo(String startPlc, String destPlc, String carModel, String license) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -162,16 +154,17 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
                 .build();
 
         RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+        String driverJsonStr= "";
+        final JSONObject driverJsonObject = new JSONObject();
 
         DriverDetails driverDetails = new DriverDetails();
-        driverDetails.setUserId(111);
+        driverDetails.setUserId(userId);
         driverDetails.setcar_no(license);
         driverDetails.setCarModel(carModel);
 
         driverDetails.setfrom_place(startPlc);
         driverDetails.setDestination(destPlc);
         driverDetails.setLeavingDate(new java.util.Date());
-        Log.v("driver details--", driverDetails.getDestination());
         ServerRequest serverRequest = new ServerRequest();
         serverRequest.setOperation(Constants.DRIVER_TRAVEL_DETAILS_OPERATION);
         serverRequest.setDriverDetails(driverDetails);
@@ -182,7 +175,17 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
             @Override
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
                 ServerResponse resp = response.body();
-                //Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
+
+                try {
+                    driverJsonObject.put("driverId",resp.getDriverDetails().getId());
+                    Log.v("driver id",String.valueOf(resp.getDriverDetails().getId()));
+                    driverJsonObject.put("driverFrom",resp.getDriverDetails().getfrom_place());
+                    driverJsonObject.put("driverDest",resp.getDriverDetails().getDestination());
+                    driverJsonObject.put("leaveDate",resp.getDriverDetails().getLeavingDate());
+                    driverJsonObject.put("userId",resp.getDriverDetails().getUserId());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -191,6 +194,11 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
+
+        Gson gson = new Gson();
+        driverJsonStr = gson.toJson(driverJsonObject);
+        Log.v("driver json str",driverJsonStr);
+
 
     }
 }

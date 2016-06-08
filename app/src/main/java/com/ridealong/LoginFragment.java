@@ -117,23 +117,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 if(resp.getResult().equals(Constants.SUCCESS)){
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putBoolean(Constants.IS_LOGGED_IN,true);
-                    Log.v("In Login",resp.getUser().getEmail());
                     editor.putString(Constants.EMAIL,resp.getUser().getEmail());
+                    editor.putInt(Constants.USER_ID,resp.getUser().getId());
+                    Log.v("user id resp",String.valueOf(resp.getUser().getId()));
+                    Log.v("unique id",resp.getUser().getUnique_id());
                     editor.putString(Constants.NAME,resp.getUser().getName());
                     editor.putString(Constants.UNIQUE_ID,resp.getUser().getUnique_id());
-      Log.d(Constants.EMAIL,resp.getUser().getEmail());
+                    Log.d(Constants.EMAIL,resp.getUser().getEmail());
                     Log.d(Constants.NAME,resp.getUser().getName());
-                    editor.apply();
-
                     editor.commit();
-//                    editor.apply();
-
                     goToWelcome();
                     Log.d(Constants.TAG,"success");
 
-
                 }
-                //progress.setVisibility(View.INVISIBLE);
             }
 
 
