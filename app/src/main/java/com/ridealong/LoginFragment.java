@@ -118,9 +118,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     editor.putString(Constants.EMAIL,resp.getUser().getEmail());
                     editor.putString(Constants.NAME,resp.getUser().getName());
                     editor.putString(Constants.UNIQUE_ID,resp.getUser().getUnique_id());
+                    Log.d(Constants.EMAIL,resp.getUser().getEmail());
+                    Log.d(Constants.NAME,resp.getUser().getName());
                     editor.apply();
                     goToWelcome();
                     Log.d(Constants.TAG,"success");
+
 
                 }
                 //progress.setVisibility(View.INVISIBLE);
