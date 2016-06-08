@@ -1,17 +1,19 @@
 package com.ridealong;
 
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,6 +24,10 @@ import com.ridealong.models.PassengerDetails;
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,6 +44,9 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
 
     private EditText fromCity,toCity,leavingDate;
     private Button submitBtn;
+    private DatePicker datePicker;
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat dateFormatter;
 
     public PassengerActivityFragment() {
     }
@@ -47,36 +56,81 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_passenger, container, false);
         submitBtn = (Button) rootView.findViewById(R.id.pbutton);
-        submitBtn.setOnClickListener(this);
+        datePicker=(DatePicker) rootView.findViewById(R.id.datepicker);
         fromCity = (EditText) rootView.findViewById(R.id.pfrom);
         toCity = (EditText) rootView.findViewById(R.id.pto);
         leavingDate = (EditText) rootView.findViewById(R.id.pdate);
-        return rootView;
+        submitBtn.setOnClickListener(this);
+
+        dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
+
+        leavingDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialog.show();
+            }
+        });
+
+        Calendar newCalendar = Calendar.getInstance();
+
+        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                leavingDate.setText(dateFormatter.format(newDate.getTime()));
+
+
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+
+
+    return rootView;
     }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+
+
+            Log.d("MainActivity","onDateSet called");
+//            String year1 = String.valueOf(selectedYear);
+//            String month1 = String.valueOf(selectedMonth + 1);
+//            String day1 = String.valueOf(selectedDay);
+//            TextView tvDt = (TextView) findViewById(R.id.tvDate);
+//            tvDt.setText(day1 + "/" + month1 + "/" + year1);
+        }
+    };
+
 
 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
-            case R.id.pbutton:
+       // switch (v.getId()){
+           // case R.id.pbutton:
 
                 String fcity = fromCity.getText().toString();
                 String tcity = toCity.getText().toString();
                 String date = leavingDate.getText().toString();
+        Log.v("fcity",fcity);
 
                 if(!fcity.isEmpty() && !tcity.isEmpty() && !date.isEmpty()){
                     insertPassgrTravelInfo(fcity,tcity,date);
-                    startActivity(new Intent(getActivity(), DriverListActivity.class));
+//                    startActivity(new Intent(getActivity(), DriverListActivity.class));
                 }else{
                     Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
                 }
 
-        }
+
 
     }
 
     private void insertPassgrTravelInfo(String startCity,String destination,String leavingDate){
+        Log.v("start",startCity);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -86,23 +140,27 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
 
         PassengerDetails passengerDetails = new PassengerDetails();
         passengerDetails.setFrom(startCity);
+        passengerDetails.setUserId(1111);
         passengerDetails.setDestination(destination);
-
+        passengerDetails.setLeavingDate(new java.util.Date());
+        Log.v("driver details--",passengerDetails.getDestination());
         ServerRequest serverRequest = new ServerRequest();
         serverRequest.setOperation(Constants.PASSENGER_TRAVEL_DETAILS_OPERATION);
         serverRequest.setPassengerDetails(passengerDetails);
-
+        Log.v("server==",serverRequest.toString());
         Call<ServerResponse> responseCall = requestInterface.operation(serverRequest);
+        Log.v("responseCall==",responseCall.toString());
         responseCall.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
                 ServerResponse resp = response.body();
-                Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
+                Log.d(Constants.TAG,"psuccess");
+                //Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.d(Constants.TAG,"failed");
+                Log.d(Constants.TAG,"pfailed");
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
