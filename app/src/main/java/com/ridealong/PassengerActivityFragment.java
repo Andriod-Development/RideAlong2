@@ -43,8 +43,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class PassengerActivityFragment extends Fragment implements View.OnClickListener {
 
-    private EditText leavingDate;
-    private EditText fromCity, toCity;
+
+    private EditText fromCity, toCity, leavingDate;
+
     private Button submitBtn;
     private DatePicker datePicker;
     private DatePickerDialog datePickerDialog;
@@ -96,6 +97,8 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
         // when dialog box is closed, below method will be called.
         public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
 
+
+
             Log.d("MainActivity","onDateSet called");
 //            String year1 = String.valueOf(selectedYear);
 //            String month1 = String.valueOf(selectedMonth + 1);
@@ -104,10 +107,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
 //            tvDt.setText(day1 + "/" + month1 + "/" + year1);
         }
     };
-
-
-
-
+    
     @Override
     public void onClick(View v) {
 

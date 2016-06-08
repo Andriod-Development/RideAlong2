@@ -1,5 +1,8 @@
 package com.ridealong;
 
+
+
+
 import android.app.DatePickerDialog;
 
 import android.content.Context;
@@ -41,8 +44,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DriverActivityFragment extends Fragment implements View.OnClickListener {
 
     private Button submitBtn;
-    private EditText driverFrom, driverTo, carModel, license;
-    private EditText leavingDate;
+
+    private EditText driverFrom, driverTo, carModel, license, leavingDate;
+
 
     private DatePicker datePicker;
 
@@ -76,6 +80,10 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
         dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
         submitBtn.setOnClickListener(this);
 
+        dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
+
+
+
         leavingDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,10 +101,9 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
                 leavingDate.setText(dateFormatter.format(newDate.getTime()));
 
 
-
             }
 
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
 
 
@@ -126,7 +133,6 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 //            tvDt.setText(day1 + "/" + month1 + "/" + year1);
         }
     };
-
 
 
     @Override
