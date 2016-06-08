@@ -9,6 +9,7 @@ public class ServerResponse {
     private String message;
     private User user;
     private DriverDetails driverDetails;
+    private String passengerDetails;
 
     public String getResult() {
         return result;
@@ -24,5 +25,9 @@ public class ServerResponse {
 
     public DriverDetails getDriverDetails() {
         return driverDetails;
+    }
+
+    public String getPassengerDetails() {
+        return passengerDetails;
     }
 }
