@@ -155,13 +155,13 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
             @Override
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
                 ServerResponse resp = response.body();
-                Log.d(Constants.TAG, "psuccess");
+                Log.d(Constants.TAG, "passgractfragsuccess");
                 //Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.d(Constants.TAG, "pfailed");
+                Log.d(Constants.TAG, "passgractfragfailed");
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });

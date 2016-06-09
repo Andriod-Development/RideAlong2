@@ -56,7 +56,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         epassword = (EditText)view.findViewById(R.id.epassword);
         e_email= (EditText)view.findViewById(R.id.eusername);
         //progress = (ProgressBar)view.findViewById(R.id.progress);
-        registerlink = (TextView) view.findViewById(R.id.registerlink);
+        registerlink = (Button) view.findViewById(R.id.registerlink);
         registerlink.setOnClickListener(this);
         elogin.setOnClickListener(this);
         //tv_register.setOnClickListener(this);
