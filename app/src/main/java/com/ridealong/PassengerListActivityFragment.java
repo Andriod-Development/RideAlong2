@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.ridealong.models.PassengerDetails;
+import com.ridealong.models.ServerRequest;
+import com.ridealong.models.ServerResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,6 +35,11 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -47,8 +56,8 @@ public class PassengerListActivityFragment extends Fragment {
     String driverId = "123@gmail.com";
     String driverFrom = "Los Angeles";
     String driverDest = "San Jose";
-    String passengerFrom = "Los Angeles";
-    String passengerTo = "Fresno";
+    String passengerFrom;
+    String passengerTo;
     private SharedPreferences sharedPreferences;
 
 
@@ -83,6 +92,48 @@ public class PassengerListActivityFragment extends Fragment {
 
 
 //        display the passengers list for the driver selected destination
+
+        passengerFrom = getActivity().getIntent().getExtras().getString("startPt");
+        passengerTo = getActivity().getIntent().getExtras().getString("destPt");
+        Log.v("passgr from",passengerFrom);
+        Log.v("passgr to",passengerTo);
+
+        PassengerDetails passengerDetails = new PassengerDetails();
+        passengerDetails.setFrom(passengerFrom);
+        passengerDetails.setDestination(passengerTo);
+
+        ServerRequest serverRequest = new ServerRequest();
+        serverRequest.setPassengerDetails(passengerDetails);
+        serverRequest.setOperation(Constants.DRIVERS_LIST);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+
+        Call<ServerResponse> responseCall = requestInterface.operation(serverRequest);
+        Log.v("responseCall==", responseCall.toString());
+        responseCall.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+                ServerResponse resp = response.body();
+                String driverList = resp.getPassengerDetails();
+                Log.v("driver list",driverList);
+                Log.d(Constants.TAG, "success driver List");
+                //Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                Log.d(Constants.TAG, "pfailed");
+                Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+
         LatLng driverFromLatLong = getLocationFromAddress(getActivity(),driverFrom);
         LatLng driverToLatLong = getLocationFromAddress(getActivity(),driverDest);
         LatLng passengerFromLatLong = getLocationFromAddress(getActivity(),passengerFrom);

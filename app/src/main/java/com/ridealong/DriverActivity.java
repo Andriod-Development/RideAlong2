@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 //car details for passenger
-public class DriverActivity extends AppCompatActivity implements View.OnClickListener {
+public class DriverActivity extends AppCompatActivity {
 
 
     @Override
@@ -20,11 +20,4 @@ public class DriverActivity extends AppCompatActivity implements View.OnClickLis
         setSupportActionBar(toolbar);
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.dbutton) {
-            startActivity(new Intent(this, PassengerListActivity.class));
-        }
-
-    }
 }

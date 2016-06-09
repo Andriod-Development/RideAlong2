@@ -59,16 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 else if($operation == 'driver_travel_info'){
 
-  			/*
-			if(isset($data -> driverDetails ) && !empty($data -> driverDetails) && isset($data -> driverDetails -> userid) 
-  				&& isset($data -> driverDetails -> car_no) && isset($data -> driverDetails -> car_model)
-			&& isset($data -> driverDetails -> from_place) && isset($data -> driverDetails -> destination)
-			&& isset($data -> driverDetails -> LeavingDate)){
-*/
-  				$driverDetails = $data -> driverDetails;
+				$driverDetails = $data -> driverDetails;
 				
   				$userid = $driverDetails -> userId;
-				
+				echo "dd---".$driverDetails -> car_no;
   				$car_no = $driverDetails -> car_no;
   				$car_model = $driverDetails -> carModel;
 				$from_place = $driverDetails -> from_place;
@@ -81,7 +75,76 @@ else if($operation == 'driver_travel_info'){
 
           
 
-  			//} 
+  			
+
+  		}
+		
+		
+		else if($operation == 'drivers_list'){
+
+  				$passengerDetails = $data -> passengerDetails;
+
+				$from= $passengerDetails -> from;
+				echo "from---".$passengerDetails -> from;
+  				$destination = $passengerDetails -> destination;
+error_log("request==".$passengerDetails);
+echo $fun -> driversList($from,$destination);
+          
+
+
+  		}
+		
+else if($operation == 'drivers_list_From'){
+
+   $passengerDetails = $data -> passengerDetails;
+
+    $from= $passengerDetails -> from;
+     echo "from---".$passengerDetails -> from;
+
+     echo $fun -> driversList_From($from);
+
+  		}
+		
+		
+ else if($operation == 'passenger_list'){
+
+  				$driverDetails = $data -> passengerDetails;
+
+				$from= $driverDetails -> from;
+				echo "from---".$driverDetails -> from;
+  				$destination = $driverDetails -> destination;
+
+echo $fun -> passengersList($from,$destination);
+          
+
+
+  		}
+		
+else if($operation == 'passenger_From'){
+
+   $passengerDetails = $data -> driverDetails;
+
+    $from= $driverDetails -> from;
+     echo "from---".$driverDetails -> from;
+
+     echo $fun -> passengersList_From($from);
+
+  		}
+		
+		
+		else if($operation == 'passenger_travel_info'){
+
+  				$passengerDetails = $data -> passengerDetails;
+				
+  				$userid = $passengerDetails -> userId;
+				
+				$from= $passengerDetails -> from;
+				echo "from---".$passengerDetails -> from;
+  				$destination = $passengerDetails -> destination;
+  				$leavingDate = $passengerDetails -> leavingDate;
+
+            echo $fun -> registerPassenger($userid,$from,$destination,$leavingDate);
+
 
   		}
 

@@ -86,6 +86,42 @@ public function registerUser($name, $email, $password) {
 	
 }
 
+
+ public function registerPassenger($userid,$from,$destination,$leavingDate) {
+
+	$db = $this -> db;
+
+	//if (!empty($userid) && !empty($car_no) && !empty($car_model)) {
+
+  		
+
+  			$result = $db -> insertPassengerData($userid,$from,$destination,$leavingDate);
+
+  			if ($result) {
+
+				  $response["result"] = "Psuccess";
+  				$response["message"] = "Passenger Registered Successfully !";
+  				return json_encode($response);
+  						
+  			} else {
+
+  				$response["result"] = "Pfailure";
+  				$response["message"] = "Passenger Register Failure";
+  				return json_encode($response);
+
+  			}
+  							
+  	/*} 
+	
+	else {
+
+  		return $this -> getMsgParamNotEmpty();
+
+  	}
+	*/
+	
+}
+
 public function loginUser($email, $password) {
 
   $db = $this -> db;
@@ -126,6 +162,106 @@ public function loginUser($email, $password) {
 
 }
 
+public function driversList($from_place,$destination) {
+
+  $db = $this -> db;
+
+
+  			$result = $db -> driversList($from_place,$destination);
+
+  			if ($result) {
+
+				  $response["result"] = "DLsucces list Successfully !";
+
+				  $response["user"] = $result;
+				  
+  				return json_encode($response);
+  						
+  			} else {
+
+  				$response["result"] = "DLfailure";
+  				$response["message"] = "Driver listRetrival Failure";
+  				return json_encode($response);
+
+  			}
+
+}
+
+public function driversList_From($from_place) {
+
+  $db = $this -> db;
+
+
+  			$result = $db -> driversList_From($from_place);
+
+  			if ($result) {
+
+				  $response["result"] = "DLsucces list Successfully !";
+
+				  $response["user"] = $result;
+				  
+  				return json_encode($response);
+  						
+  			} else {
+
+  				$response["result"] = "DLfailure";
+  				$response["message"] = "Driver listRetrival Failure";
+  				return json_encode($response);
+
+  			}
+
+}
+
+
+public function passengersList($from_place,$destination) {
+
+  $db = $this -> db;
+
+
+  			$result = $db -> passengersList($from_place,$destination);
+
+  			if ($result) {
+
+				  $response["result"] = "DLsucces list Successfully !";
+
+				  $response["user"] = $result;
+				  
+  				return json_encode($response);
+  						
+  			} else {
+
+  				$response["result"] = "DLfailure";
+  				$response["message"] = "Driver listRetrival Failure";
+  				return json_encode($response);
+
+  			}
+
+}
+
+public function passengersList_From($from_place) {
+
+  $db = $this -> db;
+
+
+  			$result = $db -> passengersList_From($from_place);
+
+  			if ($result) {
+
+				  $response["result"] = "DLsucces list Successfully !";
+
+				  $response["user"] = $result;
+				  
+  				return json_encode($response);
+  						
+  			} else {
+
+  				$response["result"] = "DLfailure";
+  				$response["message"] = "Driver listRetrival Failure";
+  				return json_encode($response);
+
+  			}
+
+}
 
 public function changePassword($email, $old_password, $new_password) {
 

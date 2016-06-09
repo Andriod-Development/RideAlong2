@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:background="@drawable/background"
+    android:background="@drawable/background1"
+    android:focusable="false"
     android:orientation="vertical"
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
@@ -12,31 +13,70 @@
     tools:context="com.ridealong.LoginFragment"
     tools:showIn="@layout/activity_login">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:text="Ride Along"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="107dp"
+        android:layout_height="114dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/logo1" />
+
     <EditText
         android:id="@+id/eusername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:drawableLeft="@mipmap/ic_person_outline_black_24dp"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@mipmap/ic_person_outline_white_24dp"
         android:editable="true"
-        android:hint="  Username" />
+        android:hint="  Username"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/epassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_vpn_key_black_24dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@mipmap/ic_vpn_key_white_24dp"
         android:editable="true"
         android:hint=" Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/elogin"
-        android:layout_width="match_parent"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="147dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_margin="16dp"
-        android:text="Login" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@color/Crimson"
+        android:ellipsize="middle"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/registerlink"
@@ -44,6 +84,9 @@
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
         android:textStyle="bold" />
 
 </LinearLayout>
+
