@@ -71,10 +71,6 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
         userId = sharedPreferences.getInt(Constants.USER_ID,0);
         Log.v("user id is",String.valueOf(userId));
 
-
-
-
-
         return view;
     }
 
@@ -86,6 +82,8 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
         //tv_email.setText(pref.getString(Constants.EMAIL,""));
 
     }
+
+
 
     @Override
     public void onClick(View v) {
