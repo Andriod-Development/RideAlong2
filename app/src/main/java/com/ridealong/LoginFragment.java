@@ -47,7 +47,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private void initViews(View view){
 
-        pref = getActivity().getPreferences(Context.MODE_PRIVATE);
+       pref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         elogin = (Button)view.findViewById(R.id.elogin);
        // tv_register = (TextView)view.findViewById(R.id.tv_register);
