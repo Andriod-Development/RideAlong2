@@ -70,18 +70,9 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
 
         userId = sharedPreferences.getInt(Constants.USER_ID,0);
         Log.v("user id is",String.valueOf(userId));
-
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-
-
-       // tv_name.setText("Welcome : "+pref.getString(Constants.NAME,""));
-        //tv_email.setText(pref.getString(Constants.EMAIL,""));
-
-    }
 
 
 
@@ -108,7 +99,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
     }
 
     private void logout() {
-        SharedPreferences.Editor editor = sharedPreferences .edit();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(Constants.IS_LOGGED_IN,false);
         editor.putString(Constants.EMAIL,"");
         editor.putString(Constants.NAME,"");

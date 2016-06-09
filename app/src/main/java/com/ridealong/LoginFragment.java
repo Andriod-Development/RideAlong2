@@ -31,32 +31,30 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private SharedPreferences pref;
-    private EditText eusername,epassword,e_email;
+    private EditText eusername, epassword, e_email;
     private Button elogin;
-    private TextView registerlink;
+    private Button registerlink;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_login,container,false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
         initViews(view);
         return view;
     }
 
+    private void initViews(View view) {
 
+        pref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-    private void initViews(View view){
-
-       pref = getActivity().getPreferences(Context.MODE_PRIVATE);
-
-        elogin = (Button)view.findViewById(R.id.elogin);
-       // tv_register = (TextView)view.findViewById(R.id.tv_register);
-        eusername = (EditText)view.findViewById(R.id.eusername);
+        elogin = (Button) view.findViewById(R.id.elogin);
+        // tv_register = (TextView)view.findViewById(R.id.tv_register);
+        eusername = (EditText) view.findViewById(R.id.eusername);
         //et_email = (EditText)view.findViewById(R.id.et_email);
-        epassword = (EditText)view.findViewById(R.id.epassword);
-        e_email= (EditText)view.findViewById(R.id.eusername);
+        epassword = (EditText) view.findViewById(R.id.epassword);
+        e_email = (EditText) view.findViewById(R.id.eusername);
         //progress = (ProgressBar)view.findViewById(R.id.progress);
-        registerlink = (TextView) view.findViewById(R.id.registerlink);
+        registerlink = (Button) view.findViewById(R.id.registerlink);
         registerlink.setOnClickListener(this);
         elogin.setOnClickListener(this);
         //tv_register.setOnClickListener(this);
@@ -65,18 +63,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
-
+        switch (v.getId()) {
 
 
             case R.id.elogin:
                 String email = e_email.getText().toString();
                 String password = epassword.getText().toString();
 
-                if(!email.isEmpty() && !password.isEmpty()) {
+                if (!email.isEmpty() && !password.isEmpty()) {
 
                     //progress.setVisibility(View.VISIBLE);
-                    loginProcess(email,password);
+                    loginProcess(email, password);
 
                 } else {
 
@@ -90,7 +87,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         }
     }
-    private void loginProcess(String email,String password){
+
+    private void loginProcess(String email, String password) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -114,30 +112,30 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 ServerResponse resp = response.body();
                 Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
 
-                if(resp.getResult().equals(Constants.SUCCESS)){
+                if (resp.getResult().equals(Constants.SUCCESS)) {
                     SharedPreferences.Editor editor = pref.edit();
-                    editor.putBoolean(Constants.IS_LOGGED_IN,true);
-                    editor.putString(Constants.EMAIL,resp.getUser().getEmail());
-                    editor.putInt(Constants.USER_ID,resp.getUser().getId());
-                    Log.v("user id resp",String.valueOf(resp.getUser().getId()));
-                    Log.v("unique id",resp.getUser().getUnique_id());
-                    editor.putString(Constants.NAME,resp.getUser().getName());
-                    editor.putString(Constants.UNIQUE_ID,resp.getUser().getUnique_id());
-                    Log.d(Constants.EMAIL,resp.getUser().getEmail());
-                    Log.d(Constants.NAME,resp.getUser().getName());
+                    editor.putBoolean(Constants.IS_LOGGED_IN, true);
+                    editor.putString(Constants.EMAIL, resp.getUser().getEmail());
+                    editor.putInt(Constants.USER_ID, resp.getUser().getId());
+                    Log.v("user id resp", String.valueOf(resp.getUser().getId()));
+                    Log.v("unique id", resp.getUser().getUnique_id());
+                    editor.putString(Constants.NAME, resp.getUser().getName());
+                    editor.putString(Constants.UNIQUE_ID, resp.getUser().getUnique_id());
+                    Log.d(Constants.EMAIL, resp.getUser().getEmail());
+                    Log.d(Constants.NAME, resp.getUser().getName());
                     editor.commit();
                     goToWelcome();
-                    Log.d(Constants.TAG,"success");
+                    Log.d(Constants.TAG, "success");
 
                 }
             }
 
 
-            private void goToWelcome(){
+            private void goToWelcome() {
 
                 Fragment welcome = new WelcomeActivityFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_frame,welcome);
+                ft.replace(R.id.fragment_frame, welcome);
                 ft.commit();
             }
 
@@ -145,14 +143,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
 
-               // progress.setVisibility(View.INVISIBLE);
-                Log.d(Constants.TAG,"failed");
+                // progress.setVisibility(View.INVISIBLE);
+                Log.d(Constants.TAG, "failed");
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
 
             }
         });
     }
-
-
-
 }

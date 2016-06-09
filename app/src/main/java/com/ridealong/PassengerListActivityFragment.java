@@ -93,45 +93,7 @@ public class PassengerListActivityFragment extends Fragment {
 
 //        display the passengers list for the driver selected destination
 
-        passengerFrom = getActivity().getIntent().getExtras().getString("startPt");
-        passengerTo = getActivity().getIntent().getExtras().getString("destPt");
-        Log.v("passgr from",passengerFrom);
-        Log.v("passgr to",passengerTo);
 
-        PassengerDetails passengerDetails = new PassengerDetails();
-        passengerDetails.setFrom(passengerFrom);
-        passengerDetails.setDestination(passengerTo);
-
-        ServerRequest serverRequest = new ServerRequest();
-        serverRequest.setPassengerDetails(passengerDetails);
-        serverRequest.setOperation(Constants.DRIVERS_LIST);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-
-        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
-
-        Call<ServerResponse> responseCall = requestInterface.operation(serverRequest);
-        Log.v("responseCall==", responseCall.toString());
-        responseCall.enqueue(new Callback<ServerResponse>() {
-            @Override
-            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
-                ServerResponse resp = response.body();
-                String driverList = resp.getPassengerDetails();
-                Log.v("driver list",driverList);
-                Log.d(Constants.TAG, "success driver List");
-                //Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.d(Constants.TAG, "pfailed");
-                Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
-            }
-        });
 
 
         LatLng driverFromLatLong = getLocationFromAddress(getActivity(),driverFrom);

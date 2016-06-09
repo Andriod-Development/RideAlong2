@@ -51,7 +51,7 @@ public class RegisterActivityFragment extends Fragment implements View.OnClickLi
 
     private void initViews(View view){
 
-        eregister = (Button)view.findViewById(R.id.eregister);
+        eregister = (Button) view.findViewById(R.id.eregister);
         elogin = (TextView)view.findViewById(R.id.elogin);
         efirstname = (EditText)view.findViewById(R.id.efirstname);
         e_email = (EditText)view.findViewById(R.id.e_email);
