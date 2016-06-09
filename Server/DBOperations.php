@@ -64,6 +64,36 @@ echo "userid== ".$userid;
 
     }
  }
+ 
+  public function insertPassengerData($uid,$from_place,$destination,$leavingDate){
+
+ 	$sql = 'INSERT INTO passenger SET uid =:uid,from_place =:from_place,
+    destination =:destination,date =:date';
+
+echo "userid== ".$userid;
+ 	$query = $this ->conn ->prepare($sql);
+	echo "userid-".$userid;
+	echo "from-".$from;
+	echo "destination=".$destination;
+	echo "leavingDate=".$leavingDate;
+ 	$query->execute(array('uid' =>$uid,
+    ':from_place' => $from_place,':destination' => $destination,':date' => $leavingDate)) or die("ps_error");
+	 
+//mysql_query("INSERT  INTO passenger(uid,from_place,destination,date) VALUES('$userid','$from','$destination','$leavingDate')") or die("error pass");
+
+//$query->execute(array('userid' =>11,
+     // ':from_place' => "sss",':destination' =>"fff",':date' =>"22")) or die("ps_error");	 
+
+    if ($query) {
+        echo "passenger query successful";
+        return true;
+
+    } else {
+echo "passenger query UNsuccessful";
+        return false;
+
+    }
+ }
 
  public function checkLogin($email, $password) {
 
@@ -77,7 +107,8 @@ echo "userid== ".$userid;
     if ($this -> verifyHash($password.$salt,$db_encrypted_password) ) {
 
 
-        $user["name"] = $data -> name;
+        $user["id"] = $data -> sno;
+		$user["name"] = $data -> name;
         $user["email"] = $data -> email;
         $user["unique_id"] = $data -> unique_id;
         return $user;
@@ -88,8 +119,134 @@ echo "userid== ".$userid;
     }
 
  }
+ 
+  public function driversList($from_place,$destination) {
+ $userTable =array();
+    $sql = 'select * from driver where from_place = :from_place and destination = :destination';
+    $query = $this -> conn -> prepare($sql);
+	echo '==from_place==' . $from_place;
+    $query -> execute(array(':from_place' => $from_place,':destination' => $destination)) ;
+	
+$data = $query -> fetchAll();
+  
+print_r($data);
+	//echo "data==".  $data;
+   
+	
+foreach($data as $row) {
+    $id = $row['userid'];
+    echo "id>==>>".$id;
+	
+	
+	 $sql3= 'select * from users where sno=:id';
+    $query3 = $this -> conn -> prepare($sql3);
+	
+    $query3-> execute(array(':id' => $id)) ;
+	$data2= $query3 -> fetchAll(PDO::FETCH_ASSOC);
+	
+	echo " data2==";
+	print_r($data2);
+	foreach($data2 as $row12){
+			array_push($userTable,$row12);
+		
+	}
+	
+
+	
+	
+	
+}
+ echo "userTable";
+   print_r($userTable);
 
 
+       // $driverDetails["uid"] = $data -> userid;
+		//echo "uid=="
+		error_log("respose".$userTable);
+        return $userTable;
+
+ }
+ 
+  public function driversList_From($from_place){
+	  $sql = 'select * from driver where from_place = :from_place';
+    $query = $this -> conn -> prepare($sql);
+	echo '==from_place==' . $from_place;
+    $query -> execute(array(':from_place' => $from_place)) ;
+	
+$data = $query -> fetchAll();
+
+return $data ;
+	 
+ }
+ 
+ //===================================List of passengers starts here ================
+ 
+  public function passengersList($from_place,$destination) {
+$userTable =array();
+    $sql = 'select * from passenger where from_place = :from_place and destination = :destination';
+    $query = $this -> conn -> prepare($sql);
+	echo '==from_place==' . $from_place;
+    $query -> execute(array(':from_place' => $from_place,':destination' => $destination)) ;
+	
+$data = $query -> fetchAll();
+
+
+
+    
+print_r($data);
+	echo "data==".  $data;
+   
+	
+	
+foreach($data as $row) {
+    $id = $row['userid'];
+    echo "id>==>>".$id;
+	
+	
+	 $sql3= 'select * from users where sno=:id';
+    $query3 = $this -> conn -> prepare($sql3);
+	
+    $query3-> execute(array(':id' => $id)) ;
+	$data2= $query3 -> fetchAll(PDO::FETCH_ASSOC);
+	
+	echo " data2==";
+	print_r($data2);
+	
+	foreach($data2 as $row12){
+			array_push($userTable,$row12);
+		
+	}
+	
+	
+	
+}
+ echo "userTable";
+   print_r($userTable);
+
+
+        $driverDetails["uid"] = $data -> userid;
+		echo "uid==".$driverDetails -> uid;
+
+        return $userTable;
+
+ }
+ 
+
+ 
+  public function passengersList_From($from_place){
+	  $sql = 'select * from passenger where from_place = :from_place';
+    $query = $this -> conn -> prepare($sql);
+	echo '==from_place==' . $from_place;
+    $query -> execute(array(':from_place' => $from_place)) ;
+	
+$data = $query -> fetchAll();
+
+return $data ;
+	 
+ }
+
+
+//===================================List of passengers ends here ================
  public function changePassword($email, $password){
 
 
