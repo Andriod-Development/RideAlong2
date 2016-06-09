@@ -12,6 +12,8 @@ import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -111,10 +113,12 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
 
     private void goToLogin(){
 
-        Fragment login = new LoginFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_frame,login);
-        ft.commit();
+//        Fragment login = new LoginFragment();
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.replace(R.id.fragment_frame,login);
+//        ft.commit();
+        startActivity(new Intent(getActivity(), LoginActivity.class));
+
     }
 
 }
