@@ -17,4 +17,6 @@
 
     <include layout="@layout/content_welcome" />
 
+
+
 </android.support.design.widget.CoordinatorLayout>

@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".WelcomeActivity" />
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"

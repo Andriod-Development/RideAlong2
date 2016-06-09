@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,23 +24,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFragment(){
-        Fragment fragment;
+
         //fragment=null;
         if(pref.getBoolean(Constants.IS_LOGGED_IN,false)){
             System.out.println("logged in");
-            fragment = new WelcomeActivityFragment();
+            //fragment = new WelcomeActivityFragment();
             Intent intent = new Intent(context,(WelcomeActivity.class));
             startActivity(intent);
+            finish();
+
         }else {
+
+            startActivity(new Intent(context,LoginActivity.class));
+            finish();
+           // setContentView(R.layout.activity_login);
+
             //Intent intent = new Intent(this, com.ridealong.LoginFragment.class);
-            fragment = new LoginFragment();
-            System.out.println("Not logged in");
-            //startActivity(intent);
+//            Fragment fragment = new LoginFragment();
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            ft.replace(R.id.fragment_frame,fragment);
+//            ft.commit();
+//            System.out.println("Not logged in");
+//            //startActivity(intent);
         }
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_frame,fragment);
-        ft.commit();
+
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

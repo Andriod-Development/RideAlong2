@@ -133,9 +133,11 @@ public class RegisterActivityFragment extends Fragment implements View.OnClickLi
 
     private void goToLogin(){
 
-        Fragment login = new LoginFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_frame,login);
-        ft.commit();
-    }
+//        Fragment login = new LoginFragment();
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.replace(R.id.fragment_frame,login);
+//        ft.commit();
+//
+        startActivity(new Intent(getActivity(), LoginFragment.class));
+}
 }
