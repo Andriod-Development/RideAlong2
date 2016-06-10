@@ -122,7 +122,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     Log.v("user id resp",String.valueOf(resp.getUser().getId()));
                     Log.v("unique id",resp.getUser().getUnique_id());
                     editor.putString(Constants.NAME,resp.getUser().getName());
-                    editor.putString(Constants.UNIQUE_ID,resp.getUser().getUnique_id());
                     Log.d(Constants.EMAIL,resp.getUser().getEmail());
                     Log.d(Constants.NAME,resp.getUser().getName());
                     editor.commit();

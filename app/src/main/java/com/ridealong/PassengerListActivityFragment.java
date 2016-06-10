@@ -64,8 +64,6 @@ public class PassengerListActivityFragment extends Fragment {
     }
 
     ArrayList<User> users=new ArrayList<User>();
-    ArrayAdapter adapter;
-    List<String> passgrListView = new ArrayList<String>();
     String driverFrm;
     String driverTo;
     RecyclerView recyclerView;
@@ -86,18 +84,6 @@ public class PassengerListActivityFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
 
         addPsgrLists();
-        /*listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
-                Toast.makeText(getActivity(), adapter.getItem(i).toString(),Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(getActivity(), PassengerDetailActivity.class);
-                intent.putExtra("passenger", adapter.getItem(i).toString());
-                startActivity(intent);
-            }
-        });
-*/
         return view;
     }
 

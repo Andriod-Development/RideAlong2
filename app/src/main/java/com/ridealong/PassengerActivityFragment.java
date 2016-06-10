@@ -18,9 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ridealong.data.Contract;
-import com.ridealong.data.RideAlongDbHelper;
-import com.ridealong.models.DriverDetails;
 import com.ridealong.models.PassengerDetails;
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
