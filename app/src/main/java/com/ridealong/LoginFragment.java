@@ -114,16 +114,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                 if (resp.getResult().equals(Constants.SUCCESS)) {
                     SharedPreferences.Editor editor = pref.edit();
-<<<<<<< HEAD
-                    editor.putBoolean(Constants.IS_LOGGED_IN,true);
-                    editor.putString(Constants.EMAIL,resp.getUser().getEmail());
-                    editor.putInt(Constants.USER_ID,resp.getUser().getId());
-                    Log.v("user id resp",String.valueOf(resp.getUser().getId()));
-                    Log.v("unique id",resp.getUser().getUnique_id());
-                    editor.putString(Constants.NAME,resp.getUser().getName());
-                    Log.d(Constants.EMAIL,resp.getUser().getEmail());
-                    Log.d(Constants.NAME,resp.getUser().getName());
-=======
+
                     editor.putBoolean(Constants.IS_LOGGED_IN, true);
                     editor.putString(Constants.EMAIL, resp.getUser().getEmail());
                     editor.putInt(Constants.USER_ID, resp.getUser().getId());
@@ -133,21 +124,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     editor.putString(Constants.UNIQUE_ID, resp.getUser().getUnique_id());
                     Log.d(Constants.EMAIL, resp.getUser().getEmail());
                     Log.d(Constants.NAME, resp.getUser().getName());
->>>>>>> 808c2bc0044f2076e46c4dda36b5d5a7fe20bc98
                     editor.commit();
-<<<<<<< HEAD
+
                     Log.d(Constants.TAG,"success");
-                    Intent i = new Intent(getActivity().getApplicationContext(), WelcomeActivity.class);
-                    i.putExtra("userid",resp.getUser().getId());
+                    Intent i = new Intent(getActivity(), WelcomeActivity.class);
+                    i.putExtra("userid1",resp.getUser().getId());
                     startActivity(i);
-
-
-                   // goToWelcome();
-
-=======
-                    goToWelcome();
+//                    goToWelcome();
                     Log.d(Constants.TAG, "success");
->>>>>>> origin/master
+
 
                 }
             }
