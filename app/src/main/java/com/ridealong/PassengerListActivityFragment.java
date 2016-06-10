@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +23,11 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.ridealong.Modules.PassengerListAdapter;
 import com.ridealong.models.PassengerDetails;
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
+import com.ridealong.models.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,10 +63,13 @@ public class PassengerListActivityFragment extends Fragment {
     public PassengerListActivityFragment() {
     }
 
+    ArrayList<User> users=new ArrayList<User>();
     ArrayAdapter adapter;
     List<String> passgrListView = new ArrayList<String>();
     String driverFrm;
     String driverTo;
+    RecyclerView recyclerView;
+    private PassengerListAdapter mAdapter;
 
 
 
@@ -71,10 +78,15 @@ public class PassengerListActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_passenger_list, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.passengerList);
-        adapter = new ArrayAdapter<String >(getActivity(),R.layout.passenger_list_items, R.id.passenger_list_item, passgrListView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mAdapter = new PassengerListAdapter(users,getActivity());
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+
         addPsgrLists();
-        listView.setAdapter(adapter);
+        /*listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
@@ -85,10 +97,7 @@ public class PassengerListActivityFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-
-
-
+*/
         return view;
     }
 
@@ -140,11 +149,14 @@ public class PassengerListActivityFragment extends Fragment {
                         Log.v("jsonArr len",String.valueOf(jsonArray.length()));
                         for(int i= 0;i<jsonArray.length();i++){
                             JSONObject dataObject = (JSONObject) jsonArray.get(i);
+                            User user = new User();
+                            user.setId(dataObject.getInt("sno"));
                             String name = dataObject.getString("name");
-                            passgrListView.add(name);
+                            user.setName(name);
+                            users.add(user);
 
                         }
-                        adapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {
