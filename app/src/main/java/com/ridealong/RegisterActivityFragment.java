@@ -106,6 +106,7 @@ public class RegisterActivityFragment extends Fragment implements View.OnClickLi
         User user = new User();
         user.setName(fName+" "+lName);
         user.setEmail(email);
+        user.setPhone(phoneNum);
         user.setPassword(password);
         ServerRequest request = new ServerRequest();
         request.setOperation(Constants.REGISTER_OPERATION);
