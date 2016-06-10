@@ -23,22 +23,22 @@ function ven($from,$destination,$con){
 	error_log("from=",0);
 
 	
-	echo "dest".$destination;
-	echo "from>>".$from;
-	$sql="select * from driver where from_place='".$from."' and destination='".$destination."'";
-	echo $sql;
+	//echo "dest".$destination;
+	//echo "from>>".$from;
+	$sql="select * from passenger where from_place='".$from."' and destination='".$destination."'";
+	//echo $sql;
 
 	$query=mysqli_query($con,$sql);
 	while($row=mysqli_fetch_assoc($query)){
 		//echo $row['userid'];
-		$sql2="select * from users where sno='".$row['userid']."'";
+		$sql2="select * from users where sno='".$row['uid']."'";
 		//echo $sql2;
 		$query1=mysqli_query($con,$sql2);
 		while($row1=mysqli_fetch_assoc($query1)){
 			//echo $row1;
 		array_push($userData1,$row1);	
 		}
-		error_log($row['userid'],0);
+		//error_log($row['userid'],0);
 		
 		//echo $row['userid'];
 		//echo $row['name'];

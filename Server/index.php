@@ -23,11 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   				$user = $data -> user;
   				$name = $user -> name;
   				$email = $user -> email;
+				$phone = $user -> phone;
   				$password = $user -> password;
 
           if ($fun -> isEmailValid($email)) {
             
-            echo $fun -> registerUser($name, $email, $password);
+            echo $fun -> registerUser($name, $email, $password,$phone);
 
           } else {
 
@@ -132,7 +133,7 @@ else if($operation == 'passenger_From'){
   		}
 		
 		
-		else if($operation == 'passenger_travel_info'){
+else if($operation == 'passenger_travel_info'){
 
   				$passengerDetails = $data -> passengerDetails;
 				

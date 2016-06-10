@@ -73,7 +73,14 @@
     <EditText
         android:id="@+id/ephone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawableLeft="@mipmap/ic_phone_white_24dp"
+        android:ems="10"
+        android:hint=" Phone"
+        android:textColorHint="@color/white"
+        android:inputType="phone"
+        android:textColor="@color/abc_primary_text_disable_only_material_dark"/>
 
     <Button
         android:id="@+id/eregister"
