@@ -43,9 +43,6 @@ public class PassengerDetailActivityFragment extends Fragment implements View.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_passenger_detail, container, false);
-        TextView passengerText = (TextView) rootView.findViewById(R.id.passengerListDetail);
-
-
 
         Intent intent = getActivity().getIntent();
         userId = intent.getExtras().getInt("userId");
