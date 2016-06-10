@@ -97,7 +97,7 @@ public class PassengerDetailActivityFragment extends Fragment implements View.On
                         String jsonStr = new String(responseString,"UTF-8");
                         Log.v("json str",jsonStr);
                         JSONObject jsonObject = new JSONObject(jsonStr);
-                        String driverDetailsStr = jsonObject.getString("driverDetails");
+                        String driverDetailsStr = jsonObject.getString("passengerDetails");
                         JSONArray jsonArray = new JSONArray(driverDetailsStr);
                         Log.v("jsonArr len",String.valueOf(jsonArray.length()));
                         for(int i=0;i<jsonArray.length();i++){
