@@ -12,8 +12,8 @@ $data = json_decode(file_get_contents("php://input"));
 
 
 
-$from= $data ->passgrFrom;
-	$destination= $data ->passgrTo;
+$from= $data ->driverFrom;
+	$destination= $data ->driverTo;
 
 
 ven($from,$destination,$con);

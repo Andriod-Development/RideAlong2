@@ -46,7 +46,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
     private TextView u_name , u_email ,u_logout;
     private Button btn_logout;
     private int userId;
-
+    private int userId1;
 
 
     Button driver, rider;
@@ -71,8 +71,18 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
       //  btn_logout.setOnClickListener(this);
 
         userId = sharedPreferences.getInt(Constants.USER_ID,0);
+<<<<<<< HEAD
+
+        userId1 = getActivity().getIntent().getExtras().getInt("userid");
+
+
+        Log.v("user id is",String.valueOf(userId));
+        Log.v("user1 id is",String.valueOf(userId1));
+       return view;
+=======
         Log.v("user id is",String.valueOf(userId));
         return view;
+>>>>>>> origin/master
     }
 
 
@@ -83,13 +93,13 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
         switch (v.getId()) {
             case R.id.driver:
                 Intent driverIntent = new Intent(getActivity(), DriverActivity.class);
-                driverIntent.putExtra("userId",userId);
+                driverIntent.putExtra("userId",userId1);
                 startActivity(driverIntent);
                 break;
 
             case R.id.rider:
                 Intent passgrIntent = new Intent(getActivity(), PassengerActivity.class);
-                passgrIntent.putExtra("userId",userId);
+                passgrIntent.putExtra("userId",userId1);
                 startActivity(passgrIntent);
                 break;
 

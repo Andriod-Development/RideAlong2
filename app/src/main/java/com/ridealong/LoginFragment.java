@@ -126,8 +126,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     Log.d(Constants.NAME, resp.getUser().getName());
 
                     editor.commit();
+<<<<<<< HEAD
+                    Log.d(Constants.TAG,"success");
+                    Intent i = new Intent(getActivity().getApplicationContext(), WelcomeActivity.class);
+                    i.putExtra("userid",resp.getUser().getId());
+                    startActivity(i);
+
+
+                   // goToWelcome();
+
+=======
                     goToWelcome();
                     Log.d(Constants.TAG, "success");
+>>>>>>> origin/master
 
                 }
             }
@@ -140,6 +151,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 //                FragmentTransaction ft = getFragmentManager().beginTransaction();
 //                ft.replace(R.id.fragment_frame,welcome);
 //                ft.commit();
+
                 startActivity(new Intent(getActivity(), WelcomeActivity.class));
                 getActivity().finish();
 
