@@ -15,7 +15,7 @@ public function __construct() {
 }
 
 
- public function insertData($name,$email,$password){
+ public function insertData($name,$email,$password,$phone){
 
  	$unique_id = uniqid('', true);
     $hash = $this->getHash($password);
@@ -23,11 +23,11 @@ public function __construct() {
 	$salt = $hash["salt"];
 
  	$sql = 'INSERT INTO users SET unique_id =:unique_id,name =:name,
-    email =:email,encrypted_password =:encrypted_password,salt =:salt,created_at = NOW()';
+    email =:email,encrypted_password =:encrypted_password,salt =:salt,created_at = NOW(),phone=:phone';
 
  	$query = $this ->conn ->prepare($sql);
  	$query->execute(array('unique_id' => $unique_id, ':name' => $name, ':email' => $email,
-     ':encrypted_password' => $encrypted_password, ':salt' => $salt));
+     ':encrypted_password' => $encrypted_password, ':salt' => $salt,':phone'=>$phone));
 
     if ($query) {
         
@@ -108,8 +108,6 @@ echo "passenger query UNsuccessful";
 
 
         $user["id"] = $data -> sno;
-		echo "ID";
-		error_log($data -> sno);
 		$user["name"] = $data -> name;
         $user["email"] = $data -> email;
         $user["unique_id"] = $data -> unique_id;
@@ -297,56 +295,6 @@ return $data ;
     }
  }
 
- 
-  public function checkPassExist($uid){
-
-    $sql = 'SELECT COUNT(*) from passenger WHERE uid =:uid';
-    $query = $this -> conn -> prepare($sql);
-    $query -> execute(array('email' => $uid));
-
-    if($query){
-
-        $row_count = $query -> fetchColumn();
-
-        if ($row_count == 0){
-
-            return false;
-
-        } else {
-
-            return true;
-
-        }
-    } else {
-
-        return false;
-    }
- }
- 
-  public function checkDriverExist($uid){
-
-    $sql = 'SELECT COUNT(*) from driver WHERE userid =:uid';
-    $query = $this -> conn -> prepare($sql);
-    $query -> execute(array('uid' => $uid));
-
-    if($query){
-
-        $row_count = $query -> fetchColumn();
-
-        if ($row_count == 0){
-
-            return false;
-
-        } else {
-
-            return true;
-
-        }
-    } else {
-
-        return false;
-    }
- }
  public function getHash($password) {
 
      $salt = sha1(rand());

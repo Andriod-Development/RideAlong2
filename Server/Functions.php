@@ -13,7 +13,7 @@ public function __construct() {
 }
 
 
-public function registerUser($name, $email, $password) {
+public function registerUser($name, $email, $password,$phone) {
 
 	$db = $this -> db;
 
@@ -27,7 +27,7 @@ public function registerUser($name, $email, $password) {
 
   		} else {
 
-  			$result = $db -> insertData($name, $email, $password);
+  			$result = $db -> insertData($name, $email, $password,$phone);
 
   			if ($result) {
 
@@ -56,9 +56,16 @@ public function registerUser($name, $email, $password) {
 	$db = $this -> db;
 
 	//if (!empty($userid) && !empty($car_no) && !empty($car_model)) {
+		/*
+if ($db -> checkDriverExist($userid)) {
 
+  			$response["result"] = "failure";
+  			$response["message"] = "Passenger Already Registered !";
+  			return json_encode($response);
+
+  		} else {
   		
-
+*/
   			$result = $db -> insertDriverData($userid,$car_no,$car_model,$from_place,$destination,$date);
 
   			if ($result) {
@@ -74,7 +81,7 @@ public function registerUser($name, $email, $password) {
   				return json_encode($response);
 
   			}
-  							
+		//}				
   	/*} 
 	
 	else {
