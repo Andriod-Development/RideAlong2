@@ -22,6 +22,7 @@ import com.ridealong.models.PassengerDetails;
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -117,7 +118,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
         String date = leavingDate.getText().toString();
 
         if(!fcity.isEmpty() && !tcity.isEmpty() && !date.isEmpty()){
-            insertPassgrTravelInfo(fcity,tcity,date);
+            insertPassgrTravelInfo(fcity,tcity);
             Intent passgrIntent = new Intent(getActivity(),DriverListActivity.class);
             passgrIntent.putExtra("startPt",fcity);
             passgrIntent.putExtra("destPt",tcity);
@@ -128,7 +129,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
 
     }
 
-    private void insertPassgrTravelInfo(String startCity, String destination, String leavingDate) {
+    private void insertPassgrTravelInfo(String startCity, String destination) {
         Log.v("start", startCity);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -137,11 +138,21 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
 
         RequestInterface requestInterface = retrofit.create(RequestInterface.class);
 
+        Date lDate = new Date();
+        try {
+            lDate = dateFormatter.parse(leavingDate.getText().toString());
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Log.v(LOG_TAG,lDate.toString());
+
+
         PassengerDetails passengerDetails = new PassengerDetails();
         passengerDetails.setFrom(startCity);
         passengerDetails.setUserId(userId);
         passengerDetails.setDestination(destination);
-        passengerDetails.setLeavingDate(new java.util.Date());
+        passengerDetails.setLeavingDate(lDate);
 
         Log.v("driver details--", passengerDetails.getDestination());
         ServerRequest serverRequest = new ServerRequest();

@@ -32,7 +32,8 @@ import com.ridealong.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -80,14 +81,11 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
         datePicker = (DatePicker) view.findViewById(R.id.datepicker1);
 
         submitBtn = (Button) view.findViewById(R.id.dbutton);
-        dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
         submitBtn.setOnClickListener(this);
 
         userId = getActivity().getIntent().getExtras().getInt("userId");
         Log.v("user Id in driver",String.valueOf(userId));
         dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
-
-
 
         leavingDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +159,16 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
         String driverJsonStr= "";
         final JSONObject driverJsonObject = new JSONObject();
 
+        Date lDate = new Date();
+        try {
+            lDate = dateFormatter.parse(leavingDate.getText().toString());
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Log.v(LOG_TAG,lDate.toString());
+
+
         DriverDetails driverDetails = new DriverDetails();
         driverDetails.setUserId(userId);
         driverDetails.setcar_no(license);
@@ -168,7 +176,7 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
         driverDetails.setfrom_place(startPlc);
         driverDetails.setDestination(destPlc);
-        driverDetails.setLeavingDate(new java.util.Date());
+        driverDetails.setLeavingDate(lDate);
         ServerRequest serverRequest = new ServerRequest();
         serverRequest.setOperation(Constants.DRIVER_TRAVEL_DETAILS_OPERATION);
         serverRequest.setDriverDetails(driverDetails);
@@ -189,8 +197,6 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
-
-
 
     }
 }

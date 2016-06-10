@@ -129,7 +129,6 @@ public class RegisterActivityFragment extends Fragment implements View.OnClickLi
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
 
-                //progress.setVisibility(View.INVISIBLE);
                 Log.d(Constants.TAG,"failed");
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
 
