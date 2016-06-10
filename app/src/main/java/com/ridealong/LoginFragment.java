@@ -124,6 +124,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     editor.putString(Constants.UNIQUE_ID, resp.getUser().getUnique_id());
                     Log.d(Constants.EMAIL, resp.getUser().getEmail());
                     Log.d(Constants.NAME, resp.getUser().getName());
+
                     editor.commit();
 
                     Log.d(Constants.TAG,"success");
@@ -131,6 +132,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     i.putExtra("userid1",resp.getUser().getId());
                     startActivity(i);
 //                    goToWelcome();
+
                     Log.d(Constants.TAG, "success");
 
 

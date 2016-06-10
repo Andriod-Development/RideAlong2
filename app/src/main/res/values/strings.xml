@@ -5,6 +5,7 @@
     <string name="action_logout">Logout</string>
     <string name="action_profile">Profile</string>
     <string name="action_name">Ride Along</string>
+    <string name="action_accept">Accept</string>
     <string name="action_notification">Notification</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_welcome">WelcomeActivity</string>

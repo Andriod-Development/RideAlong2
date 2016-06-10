@@ -70,6 +70,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
 
       //  btn_logout.setOnClickListener(this);
 
+
         //userId = sharedPreferences.getInt(Constants.USER_ID,0);
 
         //Log.v("user id is",String.valueOf(userId));
@@ -78,6 +79,7 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
         return view;
 
 }
+
 
 
 
