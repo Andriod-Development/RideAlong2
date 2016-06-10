@@ -135,10 +135,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
             private void goToWelcome(){
 
-                Fragment welcome = new WelcomeActivityFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_frame,welcome);
-                ft.commit();
+//                Fragment welcome = new WelcomeActivityFragment();
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.replace(R.id.fragment_frame,welcome);
+//                ft.commit();
+                startActivity(new Intent(getActivity(), WelcomeActivity.class));
             }
 
 
