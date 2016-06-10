@@ -136,14 +136,15 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
        String driverDestPlc = driverTo.getText().toString();
        String driverCarModel = carModel.getText().toString();
        String driverLicense = license.getText().toString();
+       String date =  leavingDate.getText().toString();
 
-       if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
-           insertDriverInfo(driverStartPlc,driverDestPlc,driverCarModel,driverLicense);
+       if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty() && !date.isEmpty()){
+           insertDriverInfo(driverStartPlc,driverDestPlc,driverCarModel,driverLicense,date);
 
            Intent driverIntent = new Intent(getActivity(),PassengerListActivity.class);
            driverIntent.putExtra("drStartPt",driverStartPlc);
            driverIntent.putExtra("drDestPt",driverDestPlc);
-           driverIntent.putExtra("drDate",lDate);
+           driverIntent.putExtra("drDate",date);
            startActivity(driverIntent);
        }else{
            Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
@@ -151,7 +152,7 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
     }
 
 
-    private void insertDriverInfo(String startPlc, String destPlc, String carModel, String license) {
+    private void insertDriverInfo(String startPlc, String destPlc, String carModel, String license, String ldate) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -159,13 +160,6 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
         RequestInterface requestInterface = retrofit.create(RequestInterface.class);
 
-        try {
-            lDate = dateFormatter.parse(leavingDate.getText().toString());
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        Log.v(LOG_TAG,lDate.toString());
 
 
         DriverDetails driverDetails = new DriverDetails();
@@ -175,7 +169,7 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
         driverDetails.setfrom_place(startPlc);
         driverDetails.setDestination(destPlc);
-        driverDetails.setLeavingDate(lDate);
+        driverDetails.setLeavingDate(ldate);
         ServerRequest serverRequest = new ServerRequest();
         serverRequest.setOperation(Constants.DRIVER_TRAVEL_DETAILS_OPERATION);
         serverRequest.setDriverDetails(driverDetails);

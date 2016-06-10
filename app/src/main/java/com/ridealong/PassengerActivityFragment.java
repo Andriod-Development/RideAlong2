@@ -117,21 +117,14 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
         String tcity = toCity.getText().toString();
         String date = leavingDate.getText().toString();
 
-        try {
-            lDate = dateFormatter.parse(leavingDate.getText().toString());
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        Log.v(LOG_TAG,lDate.toString());
 
 
         if(!fcity.isEmpty() && !tcity.isEmpty() && !date.isEmpty()){
-            insertPassgrTravelInfo(fcity,tcity);
+            insertPassgrTravelInfo(fcity,tcity,date);
             Intent passgrIntent = new Intent(getActivity(),DriverListActivity.class);
             passgrIntent.putExtra("startPt",fcity);
             passgrIntent.putExtra("destPt",tcity);
-            passgrIntent.putExtra("date",lDate);
+            passgrIntent.putExtra("date",date);
             startActivity(passgrIntent);
         }else{
             Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
@@ -139,7 +132,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
 
     }
 
-    private void insertPassgrTravelInfo(String startCity, String destination) {
+    private void insertPassgrTravelInfo(String startCity, String destination,String ldate) {
         Log.v("start", startCity);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -154,7 +147,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
         passengerDetails.setFrom(startCity);
         passengerDetails.setUserId(userId);
         passengerDetails.setDestination(destination);
-        passengerDetails.setLeavingDate(lDate);
+        passengerDetails.setLeavingDate(ldate);
 
         Log.v("driver details--", passengerDetails.getDestination());
         ServerRequest serverRequest = new ServerRequest();

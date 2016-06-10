@@ -10,7 +10,7 @@ public class PassengerDetails {
     private int id;
     private String from;
     private String destination;
-    private Date leavingDate;
+    private String leavingDate;
     private int userId;
 
 
@@ -38,11 +38,11 @@ public class PassengerDetails {
         this.destination = destination;
     }
 
-    public Date getLeavingDate() {
+    public String getLeavingDate() {
         return leavingDate;
     }
 
-    public void setLeavingDate(Date leavingDate) {
+    public void setLeavingDate(String leavingDate) {
         this.leavingDate = leavingDate;
     }
 

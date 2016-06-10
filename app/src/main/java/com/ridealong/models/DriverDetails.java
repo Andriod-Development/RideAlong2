@@ -13,7 +13,7 @@ public class DriverDetails {
     private String carModel;
     private String from_place;
     private String destination;
-    private Date leavingDate;
+    private String leavingDate;
 
 
 
@@ -57,11 +57,11 @@ public class DriverDetails {
         this.destination = destination;
     }
 
-    public Date getLeavingDate() {
+    public String getLeavingDate() {
         return leavingDate;
     }
 
-    public void setLeavingDate(Date leavingDate) {
+    public void setLeavingDate(String leavingDate) {
         this.leavingDate = leavingDate;
     }
 

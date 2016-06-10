@@ -102,7 +102,7 @@ public class DriverListActivityFragment extends Fragment {
 
         getDriverListUsingFrmAndTo();
 
-        getDriverListUsingFrm();
+//        getDriverListUsingFrm();
 
     }
 
@@ -168,10 +168,11 @@ public class DriverListActivityFragment extends Fragment {
 
 
     List<DriverDetails> chosenDriversList = new ArrayList<DriverDetails>();
+    List<DriverDetails> driverServerDetails;
 
     public void getDriverListUsingFrm(){
 
-        List<DriverDetails> driverServerDetails = new ArrayList<DriverDetails>();
+
 
 
         try{
@@ -200,6 +201,7 @@ public class DriverListActivityFragment extends Fragment {
                         String driverListStr = jsonObject.getString("driverListFrom");
                         JSONArray jsonArray = new JSONArray(driverListStr);
                         Log.v("jsonArr from len", String.valueOf(jsonArray.length()));
+                        driverServerDetails = new ArrayList<DriverDetails>();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject dataObject = (JSONObject) jsonArray.get(i);
                             int id = dataObject.getInt("id");
@@ -208,10 +210,11 @@ public class DriverListActivityFragment extends Fragment {
                             driverDetails.setfrom_place(dataObject.getString("from_place").toUpperCase());
                             driverDetails.setDestination(dataObject.getString("destination").toUpperCase());
                             driverDetails.setUserId(dataObject.getInt("userid"));
-                            getCalculatedChosenDriversList(driverDetails);
 
-//                            driverServerDetails.add(driverDetails);
+                            driverServerDetails.add(driverDetails);
                         }
+
+
 
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
@@ -221,6 +224,7 @@ public class DriverListActivityFragment extends Fragment {
 
                 }
             });
+            getCalculatedChosenDriversList();
 
         }catch (Exception e){
             e.printStackTrace();
@@ -228,30 +232,33 @@ public class DriverListActivityFragment extends Fragment {
 
     }
 
-    public void getCalculatedChosenDriversList(DriverDetails driverDetails){
+    public void getCalculatedChosenDriversList(){
 
-        LatLng driverFromLatLong = getLocationFromAddress(getActivity(),driverDetails.getfrom_place().toUpperCase());
-        LatLng driverToLatLong = getLocationFromAddress(getActivity(),driverDetails.getDestination().toUpperCase());
-        LatLng passengerFromLatLong = getLocationFromAddress(getActivity(),passengerFrom.toUpperCase());
-        LatLng passengerToLatLong = getLocationFromAddress(getActivity(),passengerTo.toUpperCase());
+        Log.v("drserverlst",String.valueOf(driverServerDetails.size()));
 
+        for(DriverDetails driverDetails : driverServerDetails){
+            LatLng driverFromLatLong = getLocationFromAddress(getActivity(),driverDetails.getfrom_place().toUpperCase());
+            LatLng driverToLatLong = getLocationFromAddress(getActivity(),driverDetails.getDestination().toUpperCase());
+            LatLng passengerFromLatLong = getLocationFromAddress(getActivity(),passengerFrom.toUpperCase());
+            LatLng passengerToLatLong = getLocationFromAddress(getActivity(),passengerTo.toUpperCase());
 
+            double driverTotalDist = calculationByDistance(driverFromLatLong,driverToLatLong);
+            double passgrTotalDist = calculationByDistance(passengerFromLatLong,passengerToLatLong);
+            double passengrDistToDriverDest = calculationByDistance(passengerToLatLong,driverToLatLong);
+            double driverFromToPassgrDestDist = calculationByDistance(driverFromLatLong,passengerToLatLong);
 
-        double driverTotalDist = calculationByDistance(driverFromLatLong,driverToLatLong);
-        double passgrTotalDist = calculationByDistance(passengerFromLatLong,passengerToLatLong);
-        double passengrDistToDriverDest = calculationByDistance(passengerToLatLong,driverToLatLong);
-        double driverFromToPassgrDestDist = calculationByDistance(driverFromLatLong,passengerToLatLong);
+            Log.v("driver total", String.valueOf(driverTotalDist));
+            Log.v("passgr total", String.valueOf(passengrDistToDriverDest));
+            Log.v("passgr dist to dr dest",String.valueOf(passengrDistToDriverDest));
 
-        Log.v("driver total", String.valueOf(driverTotalDist));
-        Log.v("passgr total", String.valueOf(passengrDistToDriverDest));
-        Log.v("passgr dist to dr dest",String.valueOf(passengrDistToDriverDest));
-
-        if ((passgrTotalDist <= driverTotalDist) && (driverTotalDist >= passengrDistToDriverDest)){
-            chosenDriversList.add(driverDetails);
+            if ((passgrTotalDist <= driverTotalDist) && (driverTotalDist >= passengrDistToDriverDest)){
+                chosenDriversList.add(driverDetails);
+            }
         }
 
 
-
+        Log.v("chosenDriverLst",String.valueOf(chosenDriversList.size()));
+        getChosenDriverList(chosenDriversList);
 
     }
 
@@ -259,56 +266,66 @@ public class DriverListActivityFragment extends Fragment {
 
     public void getChosenDriverList(List<DriverDetails> driverList){
         Log.d("in calc fn",String.valueOf(driverList.size()));
-        JSONObject jsonObject = new JSONObject();
 
-        JSONArray jsonArray = new JSONArray(driverList);
-        Log.d("in calc json arr",String.valueOf(jsonArray.length()));
+        for(DriverDetails details : driverList){
 
-        String jsonString = jsonArray.toString();
-        StringEntity stringEntity = null;
-        try {
-            stringEntity = new StringEntity(jsonString);
-            Log.d("array data",stringEntity.toString());
-        } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
-        }
-        stringEntity.setContentType("application/json");
-        stringEntity.setContentEncoding("UTF-8");
+            try {
+                JSONObject jsonObjectFrom = new JSONObject();
+                JSONObject obj = new JSONObject();
+                jsonObjectFrom.put("driverUserId",details.getUserId());
+                String jsonString = jsonObjectFrom.toString();
+                StringEntity stringEntity = new StringEntity(jsonString);
+                stringEntity.setContentType("application/json");
+                stringEntity.setContentEncoding("UTF-8");
 
-        AsyncHttpClient client = new AsyncHttpClient();
 
-        client.post(this.getActivity(), "http://www.ridealong.lewebev.com/userDetails.php", stringEntity, "application/json", new AsyncHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString, Throwable throwable) {
+                stringEntity.setContentType("application/json");
+                stringEntity.setContentEncoding("UTF-8");
 
-            }
+                AsyncHttpClient client = new AsyncHttpClient();
 
-            @Override
-            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString) {
-                Log.d("response Str",responseString.toString());
-                try {
-                    String jsonStr = new String(responseString,"UTF-8");
-                    Log.v("json str",jsonStr);
-                    JSONObject jsonObject = new JSONObject(jsonStr);
-                    String driverListStr = jsonObject.getString("driverList");
-                    JSONArray jsonArray = new JSONArray(driverListStr);
-                    Log.v("jsonArr len",String.valueOf(jsonArray.length()));
-                    for(int i= 0;i<jsonArray.length();i++){
-                        JSONObject dataObject = (JSONObject) jsonArray.get(i);
-                        User user = new User();
-                        user.setId(dataObject.getInt("sno"));
-                        user.setName(dataObject.getString("name"));
-                        users.add(user);
+                client.post(this.getActivity(), "http://www.ridealong.lewebev.com/userDetailsDriver.php", stringEntity, "application/json", new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString, Throwable throwable) {
 
                     }
-                    driverListAdapter.notifyDataSetChanged();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
+                    @Override
+                    public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString) {
+                        Log.d("response Str",responseString.toString());
+                        try {
+                            String jsonStr = new String(responseString,"UTF-8");
+                            Log.v("json str",jsonStr);
+                            JSONObject jsonObject = new JSONObject(jsonStr);
+                            String driverListStr = jsonObject.getString("driverDetails");
+                            JSONArray jsonArray = new JSONArray(driverListStr);
+                            Log.v("jsonArr len",String.valueOf(jsonArray.length()));
+                            for(int i= 0;i<jsonArray.length();i++){
+                                JSONObject dataObject = (JSONObject) jsonArray.get(i);
+                                User user = new User();
+                                user.setId(dataObject.getInt("sno"));
+                                user.setName(dataObject.getString("name"));
+                                users.add(user);
+
+                            }
+                            driverListAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
 
-        });
+
+        }
+
 
 }
 
@@ -358,8 +375,8 @@ public class DriverListActivityFragment extends Fragment {
         int kmInDec = Integer.valueOf(newFormat.format(km));
         double meter = valueResult % 1000;
         int meterInDec = Integer.valueOf(newFormat.format(meter));
-        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
-                + " Meter   " + meterInDec);
+//        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+//                + " Meter   " + meterInDec);
 
         return Radius * c;
     }
