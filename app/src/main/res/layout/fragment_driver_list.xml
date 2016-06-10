@@ -10,9 +10,15 @@
     tools:showIn="@layout/activity_driver_list">
 
 
-    <ListView
-        android:id="@+id/driverList"
+    <!--<ListView-->
+        <!--android:id="@+id/driverList"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal|top" />-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/driver_recycle_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top" />
+        android:layout_height="match_parent"/>
+
 </FrameLayout>

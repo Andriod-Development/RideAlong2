@@ -20,11 +20,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WelcomeActivity" />
+
+        <activity
+            android:name=".WelcomeActivity"
+            android:label="@string/app_name">
+
+
+        </activity>
+
+
         <activity android:name=".LoginActivity" />
+
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/title_activity_register"
+            android:label="@string/app_name"
             android:parentActivityName=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -74,7 +83,7 @@
 
         <activity
             android:name=".PassengerListActivity"
-            android:label="@string/title_activity_passenger_details"
+            android:label="@string/app_name"
             android:parentActivityName=".DriverActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -83,7 +92,7 @@
         </activity>
         <activity
             android:name=".DriverListActivity"
-            android:label="@string/title_activity_driver_list"
+            android:label="@string/app_name"
             android:parentActivityName=".PassengerActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -92,7 +101,7 @@
         </activity>
         <activity
             android:name=".DriverDetailActivity"
-            android:label="@string/title_activity_driver_detail"
+            android:label="@string/app_name"
             android:parentActivityName=".DriverListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -101,7 +110,7 @@
         </activity>
         <activity
             android:name=".PassengerDetailActivity"
-            android:label="@string/title_activity_passenger_detail"
+            android:label="@string/app_name"
             android:parentActivityName=".PassengerListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -110,7 +119,7 @@
         </activity>
         <activity
             android:name=".NotificationActivity"
-            android:label="@string/title_activity_notification"
+            android:label="@string/app_name"
             android:parentActivityName=".WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -119,7 +128,7 @@
         </activity>
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile"
+            android:label="@string/app_name"
             android:parentActivityName=".WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

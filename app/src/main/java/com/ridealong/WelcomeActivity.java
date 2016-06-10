@@ -1,6 +1,8 @@
 package com.ridealong;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,13 +29,34 @@ public class WelcomeActivity extends AppCompatActivity {
         return true;
     }
 
+    private SharedPreferences sharedPreferences;
+
+    private void logout() {
+        sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Constants.IS_LOGGED_IN,false);
+        editor.putString(Constants.EMAIL,"");
+        editor.putString(Constants.NAME,"");
+        editor.putString(Constants.UNIQUE_ID,"");
+        editor.apply();
+        editor.commit();
+        goToLogin();
+    }
+
+    private void goToLogin(){
+
+//        Fragment login = new LoginFragment();
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.replace(R.id.fragment_frame,login);
+//        ft.commit();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_refresh) {
-            return true;
-        }
 
         if(id == R.id.action_notification){
             Intent intent = new Intent(this, NotificationActivity.class);
@@ -43,6 +66,7 @@ public class WelcomeActivity extends AppCompatActivity {
         }
 
         if(id == R.id.action_logout){
+            logout();
             return true;
         }
 
