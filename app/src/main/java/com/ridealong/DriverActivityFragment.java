@@ -53,6 +53,7 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
     private int userId;
     private int userId1;
     private EditText driverFrom, driverTo, carModel, license, leavingDate;
+    Date lDate = new Date();
 
 
     private DatePicker datePicker;
@@ -142,6 +143,7 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
            Intent driverIntent = new Intent(getActivity(),PassengerListActivity.class);
            driverIntent.putExtra("drStartPt",driverStartPlc);
            driverIntent.putExtra("drDestPt",driverDestPlc);
+           driverIntent.putExtra("drDate",lDate);
            startActivity(driverIntent);
        }else{
            Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
@@ -156,10 +158,7 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
                 .build();
 
         RequestInterface requestInterface = retrofit.create(RequestInterface.class);
-        String driverJsonStr= "";
-        final JSONObject driverJsonObject = new JSONObject();
 
-        Date lDate = new Date();
         try {
             lDate = dateFormatter.parse(leavingDate.getText().toString());
         } catch (ParseException e) {
