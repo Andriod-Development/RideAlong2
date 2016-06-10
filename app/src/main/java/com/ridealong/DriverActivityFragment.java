@@ -58,6 +58,7 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
+    private static final String LOG_TAG = DriverActivityFragment.class.getSimpleName();
 
 
 
@@ -140,7 +141,10 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
        if(!driverStartPlc.isEmpty() && !driverDestPlc.isEmpty() && !driverCarModel.isEmpty() && !driverLicense.isEmpty()){
            insertDriverInfo(driverStartPlc,driverDestPlc,driverCarModel,driverLicense);
 
-           startActivity(new Intent(getActivity(), PassengerListActivity.class));
+           Intent driverIntent = new Intent(getActivity(),PassengerListActivity.class);
+           driverIntent.putExtra("drStartPt",driverStartPlc);
+           driverIntent.putExtra("drDestPt",driverDestPlc);
+           startActivity(driverIntent);
        }else{
            Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
        }
@@ -175,29 +179,17 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
             @Override
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
                 ServerResponse resp = response.body();
+                Log.v(LOG_TAG,"success");
 
-                try {
-                    driverJsonObject.put("driverId",resp.getDriverDetails().getId());
-                    Log.v("driver id",String.valueOf(resp.getDriverDetails().getId()));
-                    driverJsonObject.put("driverFrom",resp.getDriverDetails().getfrom_place());
-                    driverJsonObject.put("driverDest",resp.getDriverDetails().getDestination());
-                    driverJsonObject.put("leaveDate",resp.getDriverDetails().getLeavingDate());
-                    driverJsonObject.put("userId",resp.getDriverDetails().getUserId());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.d(Constants.TAG, "failed");
+                Log.d(LOG_TAG, "failed");
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
 
-        Gson gson = new Gson();
-        driverJsonStr = gson.toJson(driverJsonObject);
-        Log.v("driver json str",driverJsonStr);
 
 
     }

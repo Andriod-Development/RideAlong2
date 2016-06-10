@@ -1,10 +1,12 @@
 package com.ridealong;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceActivity;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -26,6 +28,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.ridealong.models.DriverDetails;
 import com.ridealong.models.PassengerDetails;
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
@@ -72,10 +75,7 @@ public class DriverListActivityFragment extends Fragment {
     }
 
     ArrayAdapter adapter;
-    List<String> y = new ArrayList<>(Arrays.asList("1", "2"));
-    String driverId = "123@gmail.com";
-    String driverFrom = "Los Angeles";
-    String driverDest = "San Jose";
+    List<String> driverListView = new ArrayList<String>();
     String passengerFrom;
     String passengerTo;
 
@@ -86,8 +86,10 @@ public class DriverListActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_driver_list, container, false);
         ListView listView = (ListView) view.findViewById(R.id.driverList);
-        adapter = new ArrayAdapter<String>(getActivity(), R.layout.driver_list_items, R.id.driver_list_item, y);
+        addDriverLists();
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.driver_list_items, R.id.driver_list_item, driverListView);
         listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -100,21 +102,26 @@ public class DriverListActivityFragment extends Fragment {
             }
         });
 
+
+        return view;
+    }
+
+    public void addDriverLists(){
+
+        Log.i(LOG_TAG,"in add add Driver fn");
+
         passengerFrom = getActivity().getIntent().getExtras().getString("startPt");
         passengerTo = getActivity().getIntent().getExtras().getString("destPt");
         Log.v("passgr from",passengerFrom);
         Log.v("passgr to",passengerTo);
 
+        getDriverListUsingFrmAndTo();
 
+//        getDriverListUsingFrm(passengerFrom);
 
+    }
 
-        PassengerDetails passengerDetails = new PassengerDetails();
-        passengerDetails.setFrom(passengerFrom);
-        passengerDetails.setDestination(passengerTo);
-        passengerDetails.setLeavingDate(null);
-        passengerDetails.setUserId(0);
-
-
+    public void getDriverListUsingFrmAndTo(){
 
         try {
             JSONObject obj = new JSONObject();
@@ -125,13 +132,7 @@ public class DriverListActivityFragment extends Fragment {
             stringEntity.setContentType("application/json");
             stringEntity.setContentEncoding("UTF-8");
 
-            Log.v("json str",jsonString);
-            Log.v("string entity",stringEntity.toString());
-
-
             AsyncHttpClient client = new AsyncHttpClient();
-
-
 
             client.post(this.getActivity(), "http://www.ridealong.lewebev.com/driver_list.php", stringEntity, "application/json", new AsyncHttpResponseHandler() {
                 @Override
@@ -139,78 +140,32 @@ public class DriverListActivityFragment extends Fragment {
 
                 }
 
+
                 @Override
                 public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString) {
                     Log.v("response Str",responseString.toString());
                     try {
                         String jsonStr = new String(responseString,"UTF-8");
                         Log.v("json str",jsonStr);
+                        JSONObject jsonObject = new JSONObject(jsonStr);
+                        String driverListStr = jsonObject.getString("driverList");
+                        JSONArray jsonArray = new JSONArray(driverListStr);
+                        Log.v("jsonArr len",String.valueOf(jsonArray.length()));
+                        for(int i= 0;i<jsonArray.length();i++){
+                            JSONObject dataObject = (JSONObject) jsonArray.get(i);
+                            String name = dataObject.getString("name");
+                            driverListView.add(name);
+
+                        }
+                        adapter.notifyDataSetChanged();
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-//                    try {
-//                        JSONArray jsonArray = new JSONArray(responseString);
-//                        for(int i=0;i<jsonArray.length();i++){
-//                            Log.v("index",String.valueOf(jsonArray.getInt(i)));
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-
 
                 }
             });
-
-
-
-//            URL url = new URL("http://www.ridealong.lewebev.com/driver_list.php");
-//            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-//            urlConnection.setRequestMethod("GET");
-//            urlConnection.connect();
-//            BufferedReader bufferedReader = null;
-//
-//            InputStream inputStream = urlConnection.getInputStream();
-//            StringBuffer buffer = new StringBuffer();
-//            if (inputStream == null) {
-//                return null;
-//            }
-//            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-//
-//            String line;
-//            while ((line = bufferedReader.readLine()) != null) {
-//                buffer.append(line + "\n");
-//            }
-//
-//            if (buffer.length() == 0) {
-//                return null;
-//            }
-//            String driverList = buffer.toString();
-//            Log.v("driver list",driverList);
-
-
-
-
-//
-//                @Override
-//                public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
-//
-//
-//
-////                    try {
-////                        String responseStr = new String(responseBody,"UTF-8");
-////                        Log.v("response Str",responseStr);
-////                    } catch (UnsupportedEncodingException e) {
-////                        e.printStackTrace();
-////                    }
-//                }
-//
-//                @Override
-//                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
-//                    Log.v("status code failure",String.valueOf(statusCode));
-//
-//                }
-//            });
-//
         }catch (JSONException e) {
             e.printStackTrace();
         }catch(UnsupportedEncodingException ee){
@@ -220,81 +175,208 @@ public class DriverListActivityFragment extends Fragment {
         }
 
 
-//        LatLng driverFromLatLong = getLocationFromAddress(getActivity(),driverFrom);
-//        LatLng driverToLatLong = getLocationFromAddress(getActivity(),driverDest);
-//        LatLng passengerFromLatLong = getLocationFromAddress(getActivity(),passengerFrom);
-//        LatLng passengerToLatLong = getLocationFromAddress(getActivity(),passengerTo);
+    }
+
+//    List<DriverDetails> chosenDriversList = new ArrayList<DriverDetails>();
+//
+//    public void getDriverListUsingFrm(String from){
+//
+//        List<DriverDetails> driverServerDetails = new ArrayList<DriverDetails>();
+//
+//
+//
+//        try{
+//            JSONObject jsonObjectFrom = new JSONObject();
+//            jsonObjectFrom.put("passgrOnlyFrm",passengerFrom);
+//            String jsonFrmStr = jsonObjectFrom.toString();
+//            StringEntity stringEntity = new StringEntity(jsonFrmStr);
+//            stringEntity.setContentType("application/json");
+//            stringEntity.setContentEncoding("UTF-8");
+//
+//            AsyncHttpClient client = new AsyncHttpClient();
+//
+//            client.post(this.getActivity(), "http://www.ridealong.lewebev.com/driver_list_from.php", stringEntity, "application/json", new AsyncHttpResponseHandler() {
+//                @Override
+//                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString, Throwable throwable) {
+//                    Log.v(LOG_TAG,"error in fn drlstusfrm");
+//                }
+//
+//                @Override
+//                public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString) {
+//                    Log.v("response Str",responseString.toString());
+//                    try {
+//                        String jsonStr = new String(responseString, "UTF-8");
+//                        Log.v("json str from", jsonStr);
+//                        JSONObject jsonObject = new JSONObject(jsonStr);
+//                        String driverListStr = jsonObject.getString("driverListFrom");
+//                        JSONArray jsonArray = new JSONArray(driverListStr);
+//                        Log.v("jsonArr from len", String.valueOf(jsonArray.length()));
+//                        for (int i = 0; i < jsonArray.length(); i++) {
+//                            JSONObject dataObject = (JSONObject) jsonArray.get(i);
+//                            int id = dataObject.getInt("id");
+//                            DriverDetails driverDetails = new DriverDetails();
+//                            driverDetails.setId(id);
+//                            driverDetails.setfrom_place(dataObject.getString("from_place").toUpperCase());
+//                            driverDetails.setDestination(dataObject.getString("destination").toUpperCase());
+//                            driverDetails.setUserId(dataObject.getInt("userid"));
+//                            getCalculatedChosenDriversList(driverDetails);
+//
+////                            driverServerDetails.add(driverDetails);
+//                        }
+//
+//                    } catch (UnsupportedEncodingException e) {
+//                        e.printStackTrace();
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            });
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//    }
+//
+//    public void getCalculatedChosenDriversList(DriverDetails driverDetails){
+//
+//        LatLng driverFromLatLong = getLocationFromAddress(getActivity(),driverDetails.getfrom_place().toUpperCase());
+//        LatLng driverToLatLong = getLocationFromAddress(getActivity(),driverDetails.getDestination().toUpperCase());
+//        LatLng passengerFromLatLong = getLocationFromAddress(getActivity(),passengerFrom.toUpperCase());
+//        LatLng passengerToLatLong = getLocationFromAddress(getActivity(),passengerTo.toUpperCase());
 //
 //
 //
 //        double driverTotalDist = calculationByDistance(driverFromLatLong,driverToLatLong);
+//        double passgrTotalDist = calculationByDistance(passengerFromLatLong,passengerToLatLong);
 //        double passengrDistToDriverDest = calculationByDistance(passengerToLatLong,driverToLatLong);
 //        double driverFromToPassgrDestDist = calculationByDistance(driverFromLatLong,passengerToLatLong);
 //
+//        Log.v("driver total", String.valueOf(driverTotalDist));
+//        Log.v("passgr total", String.valueOf(passengrDistToDriverDest));
+//        Log.v("passgr dist to dr dest",String.valueOf(passengrDistToDriverDest));
 //
-//        if ((passengrDistToDriverDest <= driverTotalDist) && (driverTotalDist <= driverFromToPassgrDestDist)){
-//            Log.v(LOG_TAG,"display the chosen drivers in driverlist cheers!");
+//        if ((passgrTotalDist <= driverTotalDist) && (driverTotalDist >= passengrDistToDriverDest)){
+//            chosenDriversList.add(driverDetails);
 //        }
-
-
-
-
-        return view;
-    }
-
-
-
-
-    public LatLng getLocationFromAddress(Context context, String strAddress) {
-
-        Geocoder coder = new Geocoder(context);
-        List<Address> address;
-        LatLng p1 = null;
-
-        try {
-            address = coder.getFromLocationName(strAddress, 5);
-            if (address == null) {
-                return null;
-            }
-            Address location = address.get(0);
-            location.getLatitude();
-            location.getLongitude();
-
-            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
-
-        } catch (Exception ex) {
-
-            ex.printStackTrace();
-        }
-
-        return p1;
-    }
-
+//
+//
+//
+//
+//    }
+//
+//
+//
+//    public void getChosenDriverList(List<DriverDetails> driverList){
+//        Log.d("in calc fn",String.valueOf(driverList.size()));
+//        JSONObject jsonObject = new JSONObject();
+//
+//        JSONArray jsonArray = new JSONArray(driverList);
+//        Log.d("in calc json arr",String.valueOf(jsonArray.length()));
+//
+//        String jsonString = jsonArray.toString();
+//        StringEntity stringEntity = null;
+//        try {
+//            stringEntity = new StringEntity(jsonString);
+//            Log.d("array data",stringEntity.toString());
+//        } catch (UnsupportedEncodingException e1) {
+//            e1.printStackTrace();
+//        }
+//        stringEntity.setContentType("application/json");
+//        stringEntity.setContentEncoding("UTF-8");
+//
+//        AsyncHttpClient client = new AsyncHttpClient();
+//
+//        client.post(this.getActivity(), "http://www.ridealong.lewebev.com/userDetails.php", stringEntity, "application/json", new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString, Throwable throwable) {
+//
+//            }
+//
+//
+//            @Override
+//            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString) {
+//                Log.d("response Str",responseString.toString());
+//                try {
+//                    String jsonStr = new String(responseString,"UTF-8");
+//                    Log.v("json str",jsonStr);
+//                    JSONObject jsonObject = new JSONObject(jsonStr);
+//                    String driverListStr = jsonObject.getString("driverList");
+//                    JSONArray jsonArray = new JSONArray(driverListStr);
+//                    Log.v("jsonArr len",String.valueOf(jsonArray.length()));
+//                    for(int i= 0;i<jsonArray.length();i++){
+//                        JSONObject dataObject = (JSONObject) jsonArray.get(i);
+//                        String name = dataObject.getString("name");
+//                        driverListView.add(name);
+//
+//                    }
+//                    adapter.notifyDataSetChanged();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//        });
+//
+//
+//
+//}
+//
+//
+//
+//
+//    public LatLng getLocationFromAddress(Context context, String strAddress) {
+//
+//        Geocoder coder = new Geocoder(context);
+//        List<Address> address;
+//        LatLng p1 = null;
+//
+//        try {
+//            address = coder.getFromLocationName(strAddress, 5);
+//            if (address == null) {
+//                return null;
+//            }
+//            Address location = address.get(0);
+//            location.getLatitude();
+//            location.getLongitude();
+//
+//            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+//
+//        } catch (Exception ex) {
+//
+//            ex.printStackTrace();
+//        }
+//
+//        return p1;
+//    }
+//
 //  got this method from stackoverflow
-    public double calculationByDistance(LatLng StartP, LatLng EndP) {
-        int Radius = 6371;// radius of earth in Km
-        double lat1 = StartP.latitude;
-        double lat2 = EndP.latitude;
-        double lon1 = StartP.longitude;
-        double lon2 = EndP.longitude;
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(Math.toRadians(lat1))
-                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
-                * Math.sin(dLon / 2);
-        double c = 2 * Math.asin(Math.sqrt(a));
-        double valueResult = Radius * c;
-        double km = valueResult / 1;
-        DecimalFormat newFormat = new DecimalFormat("####");
-        int kmInDec = Integer.valueOf(newFormat.format(km));
-        double meter = valueResult % 1000;
-        int meterInDec = Integer.valueOf(newFormat.format(meter));
-        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
-                + " Meter   " + meterInDec);
-
-        return Radius * c;
-    }
+//    public double calculationByDistance(LatLng StartP, LatLng EndP) {
+//        int Radius = 6371;// radius of earth in Km
+//        double lat1 = StartP.latitude;
+//        double lat2 = EndP.latitude;
+//        double lon1 = StartP.longitude;
+//        double lon2 = EndP.longitude;
+//        double dLat = Math.toRadians(lat2 - lat1);
+//        double dLon = Math.toRadians(lon2 - lon1);
+//        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+//                + Math.cos(Math.toRadians(lat1))
+//                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+//                * Math.sin(dLon / 2);
+//        double c = 2 * Math.asin(Math.sqrt(a));
+//        double valueResult = Radius * c;
+//        double km = valueResult / 1;
+//        DecimalFormat newFormat = new DecimalFormat("####");
+//        int kmInDec = Integer.valueOf(newFormat.format(km));
+//        double meter = valueResult % 1000;
+//        int meterInDec = Integer.valueOf(newFormat.format(meter));
+//        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+//                + " Meter   " + meterInDec);
+//
+//        return Radius * c;
+//    }
 
 
 

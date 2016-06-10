@@ -19,14 +19,21 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.ridealong.models.PassengerDetails;
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -36,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cz.msebera.android.httpclient.entity.StringEntity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -52,13 +60,9 @@ public class PassengerListActivityFragment extends Fragment {
     }
 
     ArrayAdapter adapter;
-    List<String> x = new ArrayList<>(Arrays.asList("1", "2"));
-    String driverId = "123@gmail.com";
-    String driverFrom = "Los Angeles";
-    String driverDest = "San Jose";
-    String passengerFrom;
-    String passengerTo;
-    private SharedPreferences sharedPreferences;
+    List<String> passgrListView = new ArrayList<String>();
+    String driverFrm;
+    String driverTo;
 
 
 
@@ -68,7 +72,8 @@ public class PassengerListActivityFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_passenger_list, container, false);
         ListView listView = (ListView) view.findViewById(R.id.passengerList);
-        adapter = new ArrayAdapter<String >(getActivity(),R.layout.passenger_list_items, R.id.passenger_list_item, x);
+        adapter = new ArrayAdapter<String >(getActivity(),R.layout.passenger_list_items, R.id.passenger_list_item, passgrListView);
+        addPsgrLists();
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,92 +86,154 @@ public class PassengerListActivityFragment extends Fragment {
             }
         });
 
-        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
-        String userEmail = sharedPreferences.getString(Constants.EMAIL, "");
-        Log.v("user email in passenger",userEmail);
-        String username = sharedPreferences.getString(Constants.NAME,"");
-        Log.v("user name",username);
-        String uniqueId = sharedPreferences.getString(Constants.UNIQUE_ID,"");
-        Log.v("user unique id",uniqueId);
 
 
-
-//        display the passengers list for the driver selected destination
-
-
-
-
-        LatLng driverFromLatLong = getLocationFromAddress(getActivity(),driverFrom);
-        LatLng driverToLatLong = getLocationFromAddress(getActivity(),driverDest);
-        LatLng passengerFromLatLong = getLocationFromAddress(getActivity(),passengerFrom);
-        LatLng passengerToLatLong = getLocationFromAddress(getActivity(),passengerTo);
-
-
-
-        double driverTotalDist = calculationByDistance(driverFromLatLong,driverToLatLong);
-        double passengrDistToDriverDest = calculationByDistance(passengerToLatLong,driverToLatLong);
-        double driverFromToPassgrDestDist = calculationByDistance(driverFromLatLong,passengerToLatLong);
-
-        Log.v("driver total", String.valueOf(driverTotalDist));
-        Log.v("passgr total", String.valueOf(passengrDistToDriverDest));
-
-        if ((passengrDistToDriverDest <= driverTotalDist) && (driverTotalDist <= driverFromToPassgrDestDist)){
-            Log.v(LOG_TAG,"display the chosen drivers cheers!");
-        }
 
         return view;
     }
 
-    public LatLng getLocationFromAddress(Context context, String strAddress) {
 
-        Geocoder coder = new Geocoder(context);
-        List<Address> address;
-        LatLng p1 = null;
+    public void addPsgrLists(){
+
+        Log.i(LOG_TAG,"in add psgr fn");
+
+        driverFrm = getActivity().getIntent().getExtras().getString("drStartPt");
+        driverTo = getActivity().getIntent().getExtras().getString("drDestPt");
+        Log.v("driver from",driverFrm);
+        Log.v("driver to",driverTo);
+
+        getPassgrListUsingFrmAndTo();
+
+//        getDriverListUsingFrm(passengerFrom);
+
+    }
+
+    public void getPassgrListUsingFrmAndTo(){
 
         try {
-            address = coder.getFromLocationName(strAddress, 5);
-            if (address == null) {
-                return null;
-            }
-            Address location = address.get(0);
-            location.getLatitude();
-            location.getLongitude();
+            JSONObject obj = new JSONObject();
+            obj.put("driverFrom", driverFrm);
+            obj.put("driverTo",driverTo);
+            String jsonString = obj.toString();
+            StringEntity stringEntity = new StringEntity(jsonString);
+            stringEntity.setContentType("application/json");
+            stringEntity.setContentEncoding("UTF-8");
 
-            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+            AsyncHttpClient client = new AsyncHttpClient();
 
-        } catch (Exception ex) {
+            client.post(this.getActivity(), "http://www.ridealong.lewebev.com/passenger_list.php", stringEntity, "application/json", new AsyncHttpResponseHandler() {
+                @Override
+                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString, Throwable throwable) {
 
-            ex.printStackTrace();
+                }
+
+
+                @Override
+                public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString) {
+                    Log.v("response Str",responseString.toString());
+                    try {
+                        String jsonStr = new String(responseString,"UTF-8");
+                        Log.v("json str",jsonStr);
+                        JSONObject jsonObject = new JSONObject(jsonStr);
+                        String driverListStr = jsonObject.getString("passengerList");
+                        JSONArray jsonArray = new JSONArray(driverListStr);
+                        Log.v("jsonArr len",String.valueOf(jsonArray.length()));
+                        for(int i= 0;i<jsonArray.length();i++){
+                            JSONObject dataObject = (JSONObject) jsonArray.get(i);
+                            String name = dataObject.getString("name");
+                            passgrListView.add(name);
+
+                        }
+                        adapter.notifyDataSetChanged();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }catch(UnsupportedEncodingException ee){
+            ee.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        return p1;
+
     }
 
-    //  got this method from stackoverflow
-    public double calculationByDistance(LatLng StartP, LatLng EndP) {
-        int Radius = 6371;// radius of earth in Km
-        double lat1 = StartP.latitude;
-        double lat2 = EndP.latitude;
-        double lon1 = StartP.longitude;
-        double lon2 = EndP.longitude;
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(Math.toRadians(lat1))
-                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
-                * Math.sin(dLon / 2);
-        double c = 2 * Math.asin(Math.sqrt(a));
-        double valueResult = Radius * c;
-        double km = valueResult / 1;
-        DecimalFormat newFormat = new DecimalFormat("####");
-        int kmInDec = Integer.valueOf(newFormat.format(km));
-        double meter = valueResult % 1000;
-        int meterInDec = Integer.valueOf(newFormat.format(meter));
-        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
-                + " Meter   " + meterInDec);
+//    LatLng driverFromLatLong = getLocationFromAddress(getActivity(),driverFrom);
+//    LatLng driverToLatLong = getLocationFromAddress(getActivity(),driverDest);
+//    LatLng passengerFromLatLong = getLocationFromAddress(getActivity(),passengerFrom);
+//    LatLng passengerToLatLong = getLocationFromAddress(getActivity(),passengerTo);
+//
+//
+//
+//    double driverTotalDist = calculationByDistance(driverFromLatLong,driverToLatLong);
+//    double passengrDistToDriverDest = calculationByDistance(passengerToLatLong,driverToLatLong);
+//    double driverFromToPassgrDestDist = calculationByDistance(driverFromLatLong,passengerToLatLong);
+//
+//    Log.v("driver total", String.valueOf(driverTotalDist));
+//    Log.v("passgr total", String.valueOf(passengrDistToDriverDest));
+//
+//    if ((passengrDistToDriverDest <= driverTotalDist) && (driverTotalDist <= driverFromToPassgrDestDist)){
+//        Log.v(LOG_TAG,"display the chosen drivers cheers!");
+//    }
 
-        return Radius * c;
-    }
+//    public LatLng getLocationFromAddress(Context context, String strAddress) {
+//
+//        Geocoder coder = new Geocoder(context);
+//        List<Address> address;
+//        LatLng p1 = null;
+//
+//        try {
+//            address = coder.getFromLocationName(strAddress, 5);
+//            if (address == null) {
+//                return null;
+//            }
+//            Address location = address.get(0);
+//            location.getLatitude();
+//            location.getLongitude();
+//
+//            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+//
+//        } catch (Exception ex) {
+//
+//            ex.printStackTrace();
+//        }
+//
+//        return p1;
+//    }
+//
+//    //  got this method from stackoverflow
+//    public double calculationByDistance(LatLng StartP, LatLng EndP) {
+//        int Radius = 6371;// radius of earth in Km
+//        double lat1 = StartP.latitude;
+//        double lat2 = EndP.latitude;
+//        double lon1 = StartP.longitude;
+//        double lon2 = EndP.longitude;
+//        double dLat = Math.toRadians(lat2 - lat1);
+//        double dLon = Math.toRadians(lon2 - lon1);
+//        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+//                + Math.cos(Math.toRadians(lat1))
+//                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+//                * Math.sin(dLon / 2);
+//        double c = 2 * Math.asin(Math.sqrt(a));
+//        double valueResult = Radius * c;
+//        double km = valueResult / 1;
+//        DecimalFormat newFormat = new DecimalFormat("####");
+//        int kmInDec = Integer.valueOf(newFormat.format(km));
+//        double meter = valueResult % 1000;
+//        int meterInDec = Integer.valueOf(newFormat.format(meter));
+//        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+//                + " Meter   " + meterInDec);
+//
+//        return Radius * c;
+//    }
+
+
 
 }
 
