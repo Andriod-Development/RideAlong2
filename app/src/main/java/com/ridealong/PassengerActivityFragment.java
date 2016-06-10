@@ -167,7 +167,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
                 Log.d(Constants.TAG, "passgractfragfailed");
-                Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+              //  Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
 

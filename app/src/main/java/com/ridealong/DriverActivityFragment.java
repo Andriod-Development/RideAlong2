@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
@@ -187,7 +188,8 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
                 Log.d(LOG_TAG, "failed");
-                Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+               // Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+
             }
         });
 
