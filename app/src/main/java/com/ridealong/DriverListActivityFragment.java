@@ -1,7 +1,5 @@
 package com.ridealong;
 
-import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,7 +9,8 @@ import android.preference.PreferenceActivity;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.JsonReader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,41 +27,26 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.ridealong.Modules.DriverListAdapter;
+import com.ridealong.Modules.PassengerListAdapter;
 import com.ridealong.models.DriverDetails;
 import com.ridealong.models.PassengerDetails;
 import com.ridealong.models.ServerRequest;
 import com.ridealong.models.ServerResponse;
-
-
+import com.ridealong.models.User;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
-import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
-import cz.msebera.android.httpclient.entity.mime.Header;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -78,6 +62,9 @@ public class DriverListActivityFragment extends Fragment {
     List<String> driverListView = new ArrayList<String>();
     String passengerFrom;
     String passengerTo;
+    private DriverListAdapter driverListAdapter;
+    private RecyclerView recyclerView;
+    ArrayList<User> users = new ArrayList<User>();
 
 
 
@@ -86,21 +73,14 @@ public class DriverListActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_driver_list, container, false);
         ListView listView = (ListView) view.findViewById(R.id.driverList);
+        recyclerView = (RecyclerView) view.findViewById(R.id.driver_recycle_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        driverListAdapter = new DriverListAdapter(users,getActivity());
+        recyclerView.setAdapter(driverListAdapter);
+        driverListAdapter.notifyDataSetChanged();
+
         addDriverLists();
-        adapter = new ArrayAdapter<String>(getActivity(), R.layout.driver_list_items, R.id.driver_list_item, driverListView);
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), adapter.getItem(i).toString(), Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(getActivity(), DriverDetailActivity.class);
-                intent.putExtra("driver", adapter.getItem(i).toString());
-                startActivity(intent);
-            }
-        });
 
 
         return view;
@@ -137,6 +117,7 @@ public class DriverListActivityFragment extends Fragment {
             client.post(this.getActivity(), "http://www.ridealong.lewebev.com/driver_list.php", stringEntity, "application/json", new AsyncHttpResponseHandler() {
                 @Override
                 public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseString, Throwable throwable) {
+                    Log.v(LOG_TAG,"response failure");
 
                 }
 
@@ -153,11 +134,13 @@ public class DriverListActivityFragment extends Fragment {
                         Log.v("jsonArr len",String.valueOf(jsonArray.length()));
                         for(int i= 0;i<jsonArray.length();i++){
                             JSONObject dataObject = (JSONObject) jsonArray.get(i);
-                            String name = dataObject.getString("name");
-                            driverListView.add(name);
+                            User user = new User();
+                            user.setId(dataObject.getInt("sno"));
+                            user.setName(dataObject.getString("name"));
+                            users.add(user);
 
                         }
-                        adapter.notifyDataSetChanged();
+                        driverListAdapter.notifyDataSetChanged();
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {
