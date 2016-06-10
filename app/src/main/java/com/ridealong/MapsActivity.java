@@ -32,9 +32,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ridealong.AutoComplete.DelayAutoCompleteTextView;
-import com.ridealong.AutoComplete.GeoAutoCompleteAdapter;
-import com.ridealong.AutoComplete.GeoSearchResult;
 import com.ridealong.Modules.DirectionFinder;
 import com.ridealong.Modules.DirectionFinderListener;
 import com.ridealong.Modules.Route;
@@ -50,12 +47,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
 
-    private Integer THRESHOLD = 1;
-    private DelayAutoCompleteTextView geo_autocomplete;
-    private DelayAutoCompleteTextView geo_autocomplete1;
-
-    private ImageView geo_autocomplete_clear;
-    private ImageView geo_autocomplete_clear1;
+//    private Integer THRESHOLD = 1;
+//    private DelayAutoCompleteTextView geo_autocomplete;
+//    private DelayAutoCompleteTextView geo_autocomplete1;
+//
+//    private ImageView geo_autocomplete_clear;
+//    private ImageView geo_autocomplete_clear1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,93 +64,93 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         btnFindPath = (Button) findViewById(R.id.btnFindPath);
-//        etOrigin = (EditText) findViewById(R.id.etOrigin);
-//        etDestination = (EditText) findViewById(R.id.etDestination);
-        geo_autocomplete_clear = (ImageView) findViewById(R.id.geo_autocomplete_clear);
-        geo_autocomplete = (DelayAutoCompleteTextView) findViewById(R.id.geo_autocomplete);
-
-        geo_autocomplete_clear1 = (ImageView) findViewById(R.id.geo_autocomplete_clear1);
-        geo_autocomplete1 = (DelayAutoCompleteTextView) findViewById(R.id.geo_autocomplete1);
-
-        geo_autocomplete.setThreshold(THRESHOLD);
-        geo_autocomplete.setAdapter(new GeoAutoCompleteAdapter(this)); // 'this' is Activity instance
-
-        geo_autocomplete1.setThreshold(THRESHOLD);
-        geo_autocomplete1.setAdapter(new GeoAutoCompleteAdapter(this)); // 'this' is Activity instance
-
-        geo_autocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
-                geo_autocomplete.setText(result.getAddress());
-            }
-        });
-
-        geo_autocomplete1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
-                geo_autocomplete1.setText(result.getAddress());
-            }
-        });
-
-        geo_autocomplete.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    geo_autocomplete_clear.setVisibility(View.VISIBLE);
-                } else {
-                    geo_autocomplete_clear.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        geo_autocomplete1.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    geo_autocomplete_clear1.setVisibility(View.VISIBLE);
-                } else {
-                    geo_autocomplete_clear1.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        geo_autocomplete_clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                geo_autocomplete.setText("");
-            }
-        });
-
-        geo_autocomplete_clear1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                geo_autocomplete1.setText("");
-            }
-        });
+        etOrigin = (EditText) findViewById(R.id.etOrigin);
+        etDestination = (EditText) findViewById(R.id.etDestination);
+//        geo_autocomplete_clear = (ImageView) findViewById(R.id.geo_autocomplete_clear);
+//        geo_autocomplete = (DelayAutoCompleteTextView) findViewById(R.id.geo_autocomplete);
+//
+//        geo_autocomplete_clear1 = (ImageView) findViewById(R.id.geo_autocomplete_clear1);
+//        geo_autocomplete1 = (DelayAutoCompleteTextView) findViewById(R.id.geo_autocomplete1);
+//
+//        geo_autocomplete.setThreshold(THRESHOLD);
+//        geo_autocomplete.setAdapter(new GeoAutoCompleteAdapter(this)); // 'this' is Activity instance
+//
+//        geo_autocomplete1.setThreshold(THRESHOLD);
+//        geo_autocomplete1.setAdapter(new GeoAutoCompleteAdapter(this)); // 'this' is Activity instance
+//
+//        geo_autocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+//                GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
+//                geo_autocomplete.setText(result.getAddress());
+//            }
+//        });
+//
+//        geo_autocomplete1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+//                GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
+//                geo_autocomplete1.setText(result.getAddress());
+//            }
+//        });
+//
+//        geo_autocomplete.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.length() > 0) {
+//                    geo_autocomplete_clear.setVisibility(View.VISIBLE);
+//                } else {
+//                    geo_autocomplete_clear.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//
+//        geo_autocomplete1.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.length() > 0) {
+//                    geo_autocomplete_clear1.setVisibility(View.VISIBLE);
+//                } else {
+//                    geo_autocomplete_clear1.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//
+//        geo_autocomplete_clear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                geo_autocomplete.setText("");
+//            }
+//        });
+//
+//        geo_autocomplete_clear1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                geo_autocomplete1.setText("");
+//            }
+//        });
 
         btnFindPath.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,8 +161,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void sendRequest() {
-        String origin = geo_autocomplete.getText().toString();
-        String destination = geo_autocomplete1.getText().toString();
+        String origin = etOrigin.getText().toString();
+        String destination = etDestination.getText().toString();
         if (origin.isEmpty()) {
             Toast.makeText(this, "Please enter origin address!", Toast.LENGTH_SHORT).show();
             return;

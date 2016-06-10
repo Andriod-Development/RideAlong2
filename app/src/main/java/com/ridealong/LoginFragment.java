@@ -139,6 +139,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 //                ft.replace(R.id.fragment_frame,welcome);
 //                ft.commit();
                 startActivity(new Intent(getActivity(), WelcomeActivity.class));
+                getActivity().finish();
 
             }
 
