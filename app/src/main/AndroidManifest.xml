@@ -20,8 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WelcomeActivity" />
+
+        <activity
+            android:name=".WelcomeActivity"
+            android:label="@string/title_activity_welcome">
+
+
+        </activity>
+
+
         <activity android:name=".LoginActivity" />
+
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
