@@ -17,6 +17,15 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/accept"
+        android:text="@string/action_accept"
+        android:layout_above="@+id/mapButton"
+        android:layout_toRightOf="@+id/passengerListDetail"
+        android:layout_toEndOf="@+id/passengerListDetail" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="View Map"
         android:id="@+id/mapButton"
         android:layout_alignParentBottom="true"
