@@ -113,7 +113,7 @@
     <Button
         android:id="@+id/dbutton"
         style="?android:attr/buttonStyle"
-        android:layout_width="192dp"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
@@ -122,6 +122,6 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:background="#009933" />
+        android:background="#4d7a1f" />
 </LinearLayout>
 

@@ -70,7 +70,7 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:background="@color/material_deep_teal_500"
+        android:background="@android:color/holo_blue_dark"
         android:ellipsize="middle"
         android:text="Login"
         android:textColor="@color/white"
