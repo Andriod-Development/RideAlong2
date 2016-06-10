@@ -1,5 +1,6 @@
 package com.ridealong;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,7 +30,9 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private SharedPreferences sharedPreferences;
+
     private void logout() {
+        sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(Constants.IS_LOGGED_IN,false);
         editor.putString(Constants.EMAIL,"");
