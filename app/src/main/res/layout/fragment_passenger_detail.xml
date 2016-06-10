@@ -35,14 +35,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/passgrDest"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/accept"
-        android:text="@string/action_accept"
-        android:layout_alignTop="@+id/mapButton"
-        android:layout_toRightOf="@+id/passgrLeavingDate"
-        android:layout_toEndOf="@+id/passgrLeavingDate" />
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/accept"-->
+        <!--android:text="@string/action_accept"-->
+        <!--android:layout_alignTop="@+id/mapButton"-->
+        <!--android:layout_toRightOf="@+id/passgrLeavingDate"-->
+        <!--android:layout_toEndOf="@+id/passgrLeavingDate" />-->
 
     <Button
         android:layout_width="wrap_content"
