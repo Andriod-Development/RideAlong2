@@ -127,16 +127,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                     editor.commit();
 
-//                    Log.d(Constants.TAG,"success");
-//                    Intent i = new Intent(getActivity().getApplicationContext(), WelcomeActivity.class);
-//                    i.putExtra("userid",resp.getUser().getId());
-//                    startActivity(i);
+                    Log.d(Constants.TAG,"success");
+                    Intent i = new Intent(getActivity(), WelcomeActivity.class);
+                    i.putExtra("userid1",resp.getUser().getId());
+                    startActivity(i);
+//                    goToWelcome();
 
-
-                   // goToWelcome();
-
-
-                    goToWelcome();
                     Log.d(Constants.TAG, "success");
 
 
