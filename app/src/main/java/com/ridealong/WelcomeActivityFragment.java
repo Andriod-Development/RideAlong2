@@ -12,6 +12,8 @@ import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -60,13 +62,13 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
         driver = (Button) view.findViewById(R.id.driver);
         rider = (Button) view.findViewById(R.id.rider);
-        btn_logout = (Button) view.findViewById(R.id.btn_logout);
+      //  btn_logout = (Button) view.findViewById(R.id.btn_logout);
 
 
         driver.setOnClickListener(this);
         rider.setOnClickListener(this);
 
-        btn_logout.setOnClickListener(this);
+      //  btn_logout.setOnClickListener(this);
 
         userId = sharedPreferences.getInt(Constants.USER_ID,0);
         Log.v("user id is",String.valueOf(userId));
@@ -90,9 +92,9 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
                 startActivity(passgrIntent);
                 break;
 
-         case R.id.btn_logout:
+         /*case R.id.btn_logout:
                logout();
-               break;
+               break;*/
 
         }
     }
@@ -110,10 +112,12 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
 
     private void goToLogin(){
 
-        Fragment login = new LoginFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_frame,login);
-        ft.commit();
+//        Fragment login = new LoginFragment();
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.replace(R.id.fragment_frame,login);
+//        ft.commit();
+        startActivity(new Intent(getActivity(), LoginActivity.class));
+
     }
 
 }

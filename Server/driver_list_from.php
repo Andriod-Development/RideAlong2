@@ -10,37 +10,49 @@
 	  $con = mysqli_connect($host,$user,$pass,$db);
 $data = json_decode(file_get_contents("php://input"));
 
+$from= $data ->passgrOnlyFrm;
+	//$destination= $data ->passgrTo;
 
 
-$passengerDetails = $data -> passengerDetails;
-	$from= $passengerDetails -> from;
-				echo "from---".$passengerDetails -> from;
-  				$destination = $passengerDetails -> destination;
+ven($from,$con);
 
-
-ven($from,$destination,$con);
-
-function ven($from,$destination,$con){
+function ven($from,$con){
 	$userData1=array();
+	$ud=array();
 	error_log("from=",0);
 
 	
-	echo "dest".$destination;
-	echo "from>>".$from;
-	$sql="select * from passenger where from_place='".$from."'";
-	echo $sql;
+	
+	//echo "from>>".$from;
+	$sql="select * from driver where from_place='".$from."'";
+	//echo $sql;
 
 	$query=mysqli_query($con,$sql);
-	print_r($query);
-	while($row=mysqli_fetch_assoc($query)){
-		echo $row['userid'];
-		array_push($userData1,$row);
-	}
+	//print_r($query);
+while($row=mysqli_fetch_assoc($query)){
+		//echo $row['userid'];
+		
+		array_push($ud,$row);
+//print_r($ud);		
+		}
+		
 	
-	$Juser=json_encode($userData1);
-	print_r($Juser);
-	return $Juser;
+	
+	//print_r($ud);
+	$Juser=json_encode($ud);
+	
+	$js=(string)$Juser;
+
+$jobj = json_encode(array('driverListFrom' => $Juser), JSON_FORCE_OBJECT);
+
+$jobj1=(string)$jobj;
+//error_log(implode(',',$userData1),0);
+
+echo $jobj1;
+	return $jobj1;
+	
 }
+
 
   				
 ?>
