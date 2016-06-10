@@ -71,18 +71,18 @@ public class WelcomeActivityFragment extends Fragment implements View.OnClickLis
       //  btn_logout.setOnClickListener(this);
 
         userId = sharedPreferences.getInt(Constants.USER_ID,0);
-<<<<<<< HEAD
-
-        userId1 = getActivity().getIntent().getExtras().getInt("userid");
-
-
-        Log.v("user id is",String.valueOf(userId));
-        Log.v("user1 id is",String.valueOf(userId1));
-       return view;
-=======
+//<<<<<<< HEAD
+//
+//        userId1 = getActivity().getIntent().getExtras().getInt("userid");
+//
+//
+//        Log.v("user id is",String.valueOf(userId));
+//        Log.v("user1 id is",String.valueOf(userId1));
+//       return view;
+//=======
         Log.v("user id is",String.valueOf(userId));
         return view;
->>>>>>> origin/master
+
     }
 
 
