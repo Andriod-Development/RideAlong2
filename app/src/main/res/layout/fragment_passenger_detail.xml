@@ -13,27 +13,43 @@
         android:id="@+id/passgrName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="40dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:fontFamily="cursive"
         />
     <TextView
         android:id="@+id/passgrEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/passgrName"/>
+        android:layout_below="@id/passgrName"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:gravity="center"/>
     <TextView
         android:id="@+id/passgrFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passgrEmail"/>
+        android:layout_below="@+id/passgrEmail"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:gravity="center"/>
     <TextView
         android:id="@+id/passgrDest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passgrFrom"/>
+        android:layout_below="@+id/passgrFrom"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:gravity="center"/>
     <TextView
         android:id="@+id/passgrLeavingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passgrDest"/>
+        android:layout_below="@+id/passgrDest"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:gravity="center"/>
 
     <!--<Button-->
         <!--android:layout_width="wrap_content"-->

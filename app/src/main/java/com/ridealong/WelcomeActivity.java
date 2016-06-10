@@ -57,35 +57,26 @@ public class WelcomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-
-        if(id == R.id.action_notification){
-            Intent intent = new Intent(this, NotificationActivity.class);
-            startActivity(intent);
-            return true;
-
-        }
+//
+//        if(id == R.id.action_notification){
+//            Intent intent = new Intent(this, NotificationActivity.class);
+//            startActivity(intent);
+//            return true;
+//
+//        }
 
         if(id == R.id.action_logout){
             logout();
             return true;
         }
 
-        if(id == R.id.action_profile){
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
-            return true;
-        }
+//        if(id == R.id.action_profile){
+//            Intent intent = new Intent(this, ProfileActivity.class);
+//            startActivity(intent);
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-//
-//        Intent intent = new Intent();
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
-
-
-    }
 }

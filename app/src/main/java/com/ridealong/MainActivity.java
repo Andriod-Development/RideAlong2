@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
 
         }else {
-
+            Log.v("Not Loggedin", "Not Logged in");
             startActivity(new Intent(context,LoginActivity.class));
             finish();
            // setContentView(R.layout.activity_login);
@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        finish();
+//    }
 }
