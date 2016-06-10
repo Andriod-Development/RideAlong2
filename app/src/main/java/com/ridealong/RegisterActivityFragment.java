@@ -39,7 +39,7 @@ public class RegisterActivityFragment extends Fragment implements View.OnClickLi
 
     private Button eregister;
     private TextView elogin;
-    private EditText e_email,elastname,efirstname,epassword;
+    private EditText e_email,elastname,efirstname,epassword,ephone;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,8 +56,8 @@ public class RegisterActivityFragment extends Fragment implements View.OnClickLi
         efirstname = (EditText)view.findViewById(R.id.efirstname);
         e_email = (EditText)view.findViewById(R.id.e_email);
         epassword = (EditText)view.findViewById(R.id.epassword);
-
-       // progress = (ProgressBar)view.findViewById(R.id.progress);
+        elastname = (EditText)view.findViewById(R.id.elastname);
+        ephone = (EditText)view.findViewById(R.id.ephone);
 
         eregister.setOnClickListener(this);
         elogin.setOnClickListener(this);
@@ -74,25 +74,27 @@ public class RegisterActivityFragment extends Fragment implements View.OnClickLi
             case R.id.eregister:
 
                 String firstname = efirstname.getText().toString();
+                String lastname = elastname.getText().toString();
                 String email = e_email.getText().toString();
                 String password = epassword.getText().toString();
+                String phone = ephone.getText().toString();
 
-                if(!firstname.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
+                if(!firstname.isEmpty() && !email.isEmpty() && !password.isEmpty() && !lastname.isEmpty() && !phone.isEmpty()) {
 
-                   // progress.setVisibility(View.VISIBLE);
-                    registerProcess(firstname,email,password);
-                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    registerProcess(firstname,lastname,email,password,phone);
+
                 } else {
 
                     Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
                 }
                 break;
 
+
         }
 
     }
 
-    private void registerProcess(String name, String email,String password){
+    private void registerProcess(String fName,String lName, String email,String password,String phoneNum){
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -102,7 +104,7 @@ public class RegisterActivityFragment extends Fragment implements View.OnClickLi
         RequestInterface requestInterface = retrofit.create(RequestInterface.class);
 
         User user = new User();
-        user.setName(name);
+        user.setName(fName+" "+lName);
         user.setEmail(email);
         user.setPassword(password);
         ServerRequest request = new ServerRequest();
@@ -115,8 +117,13 @@ public class RegisterActivityFragment extends Fragment implements View.OnClickLi
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
 
                 ServerResponse resp = response.body();
-                Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
-                //progress.setVisibility(View.INVISIBLE);
+                if(resp.getMessage() == "User Already Registered !"){
+                    Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
+
+                }else{
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                }
+
             }
 
             @Override

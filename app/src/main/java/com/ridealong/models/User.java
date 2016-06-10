@@ -11,6 +11,7 @@ public class User {
     private String password;
     private String old_password;
     private String new_password;
+    private String phone;
 
 
     public String getName() {
@@ -52,5 +53,13 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
