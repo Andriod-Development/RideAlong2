@@ -16,28 +16,41 @@
     <TextView
         android:id="@+id/driverEmail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/driverName"/>
     <TextView
         android:id="@+id/driverFrom"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/driverEmail"/>
     <TextView
         android:id="@+id/driverDest"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/driverFrom"/>
     <TextView
         android:id="@+id/driverCarModel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/driverDest"/>
     <TextView
         android:id="@+id/driverCarNum"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/driverCarModel"/>
     <TextView
         android:id="@+id/driverLeavingDate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/driverCarNum"/>
 
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/action_accept"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_toRightOf="@+id/driverLeavingDate"-->
+        <!--android:layout_toEndOf="@+id/driverLeavingDate" />-->
 
 
     <Button
