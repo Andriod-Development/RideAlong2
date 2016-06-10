@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundimage"
+    android:background="@drawable/road"
     android:focusable="false"
     android:orientation="vertical"
     android:paddingBottom="16dp"
@@ -24,7 +24,8 @@
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="40dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/abc_primary_text_disable_only_material_dark" />
 
     <ImageView
         android:layout_width="107dp"
@@ -64,12 +65,12 @@
     <Button
         android:id="@+id/elogin"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="147dp"
+        android:layout_width="186dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@color/Crimson"
+        android:layout_marginTop="20dp"
+        android:background="@color/material_deep_teal_500"
         android:ellipsize="middle"
         android:text="Login"
         android:textColor="@color/white"
@@ -79,12 +80,16 @@
 
     <Button
         android:id="@+id/registerlink"
-        android:layout_width="match_parent"
+        android:layout_width="186dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Sign Up"
+        android:ellipsize="middle"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20dp"
+
         android:textStyle="bold" />
+
 </LinearLayout>
 

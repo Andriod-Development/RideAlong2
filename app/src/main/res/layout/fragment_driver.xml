@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+
+    android:background="@drawable/road"
+
     android:orientation="vertical"
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
@@ -23,7 +25,8 @@
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="30dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/abc_primary_text_material_dark" />
 
     <EditText
         android:id="@+id/dfrom"
@@ -33,7 +36,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
         android:drawableLeft="@mipmap/ic_my_location_white_24dp"
         android:editable="true"
         android:hint=" From"
@@ -111,15 +114,16 @@
 
     <Button
         android:id="@+id/dbutton"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="114dp"
+        style="?android:attr/buttonStyle"
+        android:layout_width="192dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
+        android:layout_marginTop="25dp"
         android:clickable="true"
         android:text="Submit"
         android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:background="#009933" />
 </LinearLayout>
 

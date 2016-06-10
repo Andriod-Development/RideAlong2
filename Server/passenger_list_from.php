@@ -12,10 +12,8 @@ $data = json_decode(file_get_contents("php://input"));
 
 
 
-$driverDetails = $data -> driverDetails;
-	$from= $driverDetails -> from;
-				echo "from---".$driverDetails -> from;
-  				$destination = $driverDetails -> destination;
+$from= $data ->passgrFrom;
+	$destination= $data ->passgrTo;
 
 
 ven($from,$destination,$con);
@@ -31,16 +29,37 @@ function ven($from,$destination,$con){
 	echo $sql;
 
 	$query=mysqli_query($con,$sql);
-	print_r($query);
-	while($row=mysqli_fetch_assoc($query)){
-		echo $row['userid'];
-		array_push($userData1,$row);
+while($row=mysqli_fetch_assoc($query)){
+		//echo $row['userid'];
+		$sql2="select * from users where sno='".$row['userid']."'";
+		//echo $sql2;
+		$query1=mysqli_query($con,$sql2);
+		while($row1=mysqli_fetch_assoc($query1)){
+			//echo $row1;
+		array_push($userData1,$row1);	
+		}
+		error_log($row['userid'],0);
+		
+		//echo $row['userid'];
+		//echo $row['name'];
+		
 	}
 	
+	
 	$Juser=json_encode($userData1);
-	print_r($Juser);
-	return $Juser;
+	
+	$js=(string)$Juser;
+
+$jobj = json_encode(array('passengerList_from' => $Juser), JSON_FORCE_OBJECT);
+
+$jobj1=(string)$jobj;
+//error_log(implode(',',$userData1),0);
+
+echo $jobj1;
+	return $jobj1;
+	
 }
+
 
   				
 ?>
