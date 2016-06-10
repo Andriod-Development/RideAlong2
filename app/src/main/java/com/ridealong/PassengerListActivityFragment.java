@@ -137,6 +137,10 @@ public class PassengerListActivityFragment extends Fragment {
                         String driverListStr = jsonObject.getString("passengerList");
                         JSONArray jsonArray = new JSONArray(driverListStr);
                         Log.v("jsonArr len",String.valueOf(jsonArray.length()));
+                        if(jsonArray.length() == 0){
+                            Toast.makeText(getActivity(),"No Passengers availble", Toast.LENGTH_SHORT).show();
+
+                        }
                         for(int i= 0;i<jsonArray.length();i++){
                             JSONObject dataObject = (JSONObject) jsonArray.get(i);
                             User user = new User();

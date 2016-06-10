@@ -138,6 +138,10 @@ public class DriverListActivityFragment extends Fragment {
                         String driverListStr = jsonObject.getString("driverList");
                         JSONArray jsonArray = new JSONArray(driverListStr);
                         Log.v("jsonArr len",String.valueOf(jsonArray.length()));
+                        if(jsonArray.length() == 0){
+                            Toast.makeText(getActivity(),"No Drivers availble", Toast.LENGTH_SHORT).show();
+
+                        }
                         for(int i= 0;i<jsonArray.length();i++){
                             JSONObject dataObject = (JSONObject) jsonArray.get(i);
                             User user = new User();
