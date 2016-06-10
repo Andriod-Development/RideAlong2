@@ -43,7 +43,7 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
 
 
     private EditText fromCity, toCity, leavingDate;
-
+    Date lDate = new Date();
     private Button submitBtn;
     private DatePicker datePicker;
     private DatePickerDialog datePickerDialog;
@@ -117,11 +117,21 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
         String tcity = toCity.getText().toString();
         String date = leavingDate.getText().toString();
 
+        try {
+            lDate = dateFormatter.parse(leavingDate.getText().toString());
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Log.v(LOG_TAG,lDate.toString());
+
+
         if(!fcity.isEmpty() && !tcity.isEmpty() && !date.isEmpty()){
             insertPassgrTravelInfo(fcity,tcity);
             Intent passgrIntent = new Intent(getActivity(),DriverListActivity.class);
             passgrIntent.putExtra("startPt",fcity);
             passgrIntent.putExtra("destPt",tcity);
+            passgrIntent.putExtra("date",lDate);
             startActivity(passgrIntent);
         }else{
             Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
@@ -138,14 +148,6 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
 
         RequestInterface requestInterface = retrofit.create(RequestInterface.class);
 
-        Date lDate = new Date();
-        try {
-            lDate = dateFormatter.parse(leavingDate.getText().toString());
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        Log.v(LOG_TAG,lDate.toString());
 
 
         PassengerDetails passengerDetails = new PassengerDetails();

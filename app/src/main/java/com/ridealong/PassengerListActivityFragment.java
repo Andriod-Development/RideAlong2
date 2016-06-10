@@ -66,6 +66,7 @@ public class PassengerListActivityFragment extends Fragment {
     ArrayList<User> users=new ArrayList<User>();
     String driverFrm;
     String driverTo;
+    String leavingDate;
     RecyclerView recyclerView;
     private PassengerListAdapter mAdapter;
 
@@ -94,8 +95,10 @@ public class PassengerListActivityFragment extends Fragment {
 
         driverFrm = getActivity().getIntent().getExtras().getString("drStartPt");
         driverTo = getActivity().getIntent().getExtras().getString("drDestPt");
+        leavingDate = getActivity().getIntent().getExtras().getString("drDate");
         Log.v("driver from",driverFrm);
         Log.v("driver to",driverTo);
+        Log.v("driver leaving date",leavingDate);
 
         getPassgrListUsingFrmAndTo();
 
@@ -109,6 +112,7 @@ public class PassengerListActivityFragment extends Fragment {
             JSONObject obj = new JSONObject();
             obj.put("driverFrom", driverFrm);
             obj.put("driverTo",driverTo);
+            obj.put("leavingDate",leavingDate);
             String jsonString = obj.toString();
             StringEntity stringEntity = new StringEntity(jsonString);
             stringEntity.setContentType("application/json");
