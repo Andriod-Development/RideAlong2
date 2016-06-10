@@ -52,6 +52,8 @@ public class PassengerActivityFragment extends Fragment implements View.OnClickL
     private SimpleDateFormat dateFormatter;
     private int userId;
 
+    private static final String LOG_TAG = PassengerActivityFragment.class.getSimpleName();
+
     public PassengerActivityFragment() {
     }
 
