@@ -50,7 +50,7 @@ public class DriverActivityFragment extends Fragment implements View.OnClickList
 
     private Button submitBtn;
     private int userId;
-
+    private int userId1;
     private EditText driverFrom, driverTo, carModel, license, leavingDate;
 
 

@@ -108,6 +108,8 @@ echo "passenger query UNsuccessful";
 
 
         $user["id"] = $data -> sno;
+		echo "ID";
+		error_log($data -> sno);
 		$user["name"] = $data -> name;
         $user["email"] = $data -> email;
         $user["unique_id"] = $data -> unique_id;
@@ -295,6 +297,56 @@ return $data ;
     }
  }
 
+ 
+  public function checkPassExist($uid){
+
+    $sql = 'SELECT COUNT(*) from passenger WHERE uid =:uid';
+    $query = $this -> conn -> prepare($sql);
+    $query -> execute(array('email' => $uid));
+
+    if($query){
+
+        $row_count = $query -> fetchColumn();
+
+        if ($row_count == 0){
+
+            return false;
+
+        } else {
+
+            return true;
+
+        }
+    } else {
+
+        return false;
+    }
+ }
+ 
+  public function checkDriverExist($uid){
+
+    $sql = 'SELECT COUNT(*) from driver WHERE userid =:uid';
+    $query = $this -> conn -> prepare($sql);
+    $query -> execute(array('uid' => $uid));
+
+    if($query){
+
+        $row_count = $query -> fetchColumn();
+
+        if ($row_count == 0){
+
+            return false;
+
+        } else {
+
+            return true;
+
+        }
+    } else {
+
+        return false;
+    }
+ }
  public function getHash($password) {
 
      $salt = sha1(rand());

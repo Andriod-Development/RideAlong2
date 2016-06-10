@@ -1,5 +1,7 @@
 package com.ridealong;
 
+/*Reference for Maps is taken from Github*/
+
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;

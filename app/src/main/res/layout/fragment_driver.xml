@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/road">
 
-    android:background="@drawable/road"
 
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
@@ -24,7 +27,7 @@
         android:text="Driver Details"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="@color/abc_primary_text_material_dark" />
 
@@ -42,7 +45,7 @@
         android:hint=" From"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/dto"
@@ -59,7 +62,7 @@
         android:singleLine="true"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/dmodel"
@@ -73,7 +76,7 @@
         android:singleLine="true"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/dlicense"
@@ -87,7 +90,7 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textColorLink="@color/white"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <DatePicker
         android:id="@+id/datepicker1"
@@ -109,7 +112,7 @@
         android:hint=" Date"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
 
     <Button
@@ -123,7 +126,8 @@
         android:text="Submit"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:background="#4d7a1f" />
 </LinearLayout>
 
+</ScrollView>
