@@ -70,6 +70,11 @@
         android:inputType="textPassword"
         android:textColor="@color/abc_primary_text_disable_only_material_dark" />
 
+    <EditText
+        android:id="@+id/ephone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/eregister"
         android:layout_width="186dp"
