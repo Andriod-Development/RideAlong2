@@ -1,6 +1,7 @@
 package com.ridealong.Modules;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ridealong.DriverDetailActivity;
 import com.ridealong.R;
 import com.ridealong.models.User;
 
@@ -40,6 +42,9 @@ public class DriverListAdapter extends RecyclerView.Adapter<DriverListAdapter.Li
         holder.driverName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent driverDetailIntent = new Intent(context, DriverDetailActivity.class);
+                driverDetailIntent.putExtra("userId",users.get(position).getId());
+                context.startActivity(driverDetailIntent);
                 Log.d("DriverListAdapter",users.get(position).getName() + " "+users.get(position).getId() );
             }
         });

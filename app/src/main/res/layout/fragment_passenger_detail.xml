@@ -10,7 +10,23 @@
     tools:showIn="@layout/activity_passenger_detail">
 
     <TextView
-        android:id="@+id/passengerListDetail"
+        android:id="@+id/passgrName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/passgrEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/passgrFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/passgrDest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/passgrLeavingDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
